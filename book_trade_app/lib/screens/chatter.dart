@@ -28,7 +28,8 @@ class _ChatterState extends State<Chatter> {
       String myuser = help.user.name;
       readJson(myuser);
     });
-    startTask();
+    //startTask();
+    //if use autp cron  job, rmb  to dispose  or else will have a green leak
   }
 
   var data2;

@@ -44,7 +44,7 @@ class _ChatListState extends State<ChatList> {
       String realusername = help.user.name;
       readJson(realusername);
     });
-    startTask();
+    //startTask();
   }
 
   startTask() {
