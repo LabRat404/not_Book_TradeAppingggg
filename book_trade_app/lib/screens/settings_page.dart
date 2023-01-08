@@ -10,21 +10,6 @@ import 'package:trade_app/provider/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'dart:convert';
-import 'package:trade_app/screens/bookInfodetail_forsearch.dart';
-import 'package:provider/provider.dart';
-import 'package:trade_app/provider/user_provider.dart';
-import 'package:http/http.dart' as http;
-import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:trade_app/widgets/reusable_widget.dart';
-import 'package:http/http.dart' as http;
-import 'package:url_launcher/url_launcher.dart';
-import 'package:trade_app/screens/showOtherUser.dart';
-import 'package:trade_app/screens/chatter.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);

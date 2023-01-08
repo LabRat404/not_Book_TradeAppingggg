@@ -4,15 +4,12 @@ import 'package:audioplayers/audioplayers.dart';
 import "package:cached_network_image/cached_network_image.dart";
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:flutter/services.dart';
 import 'package:trade_app/provider/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'dart:math';
 import 'package:intl/intl.dart';
 import 'package:cron/cron.dart';
 import 'dart:async';
-import 'package:flutter/material.dart';
-import "dart:async";
 
 class Chatter extends StatefulWidget {
   final String title;

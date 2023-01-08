@@ -1,4 +1,3 @@
-import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:trade_app/widgets/reusable_widget.dart';
 import 'package:trade_app/screens/bookInfodetail.dart';
