@@ -55,10 +55,6 @@ class _HomePageState extends State<HomePage> {
       if (data1["imageLinks"] != null)
         blink = data1["imageLinks"]["smallThumbnail"].toString();
       setState(() {});
-      print("title:" + btitle);
-      print("bauthors:" + bauthors);
-      print("infoLink:" + binfoLink);
-      print("blink:" + blink);
     }
     for (var i = 0; i < Recommendation.length; i++) {
       var res2 = await http.post(
@@ -80,10 +76,7 @@ class _HomePageState extends State<HomePage> {
       if (data2["infoLink"] != null) binfoLink = data2["infoLink"].toString();
       if (data2["imageLinks"] != null)
         blink = data2["imageLinks"]["smallThumbnail"].toString();
-      print("title:" + btitle);
-      print("bauthors:" + bauthors);
-      print("infoLink:" + binfoLink);
-      print("blink:" + blink);
+
       setState(() {});
     }
   }
@@ -178,27 +171,54 @@ class _HomePageState extends State<HomePage> {
     autoPlayInterval: 3000,
     isLoop: true,
     children: [
-      TextButton.icon(
-        style: ButtonStyle(backgroundColor: null),
-        onPressed: () async {
-          if (await canLaunchUrl(Uri.parse(
-              "http://books.google.com.hk/books?id=jD8iswEACAAJ&dq=isbn:9780984782857&hl=&source=gbs_api"))) {
-            launchUrl(Uri.parse(
-                "http://books.google.com.hk/books?id=jD8iswEACAAJ&dq=isbn:9780984782857&hl=&source=gbs_api"));
-          }
-        },
-        icon: Image.network(
-            "http://books.google.com/books/content?id=jD8iswEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api"),
-        label: Text(
-          'Cracking the Coding Interview' +
-              '\n' +
-              'By ' +
-              'Gayle Laakmann McDowell',
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
+      Column(
+        children: [
+          TextButton.icon(
+            style: ButtonStyle(backgroundColor: null),
+            onPressed: () async {
+              if (await canLaunchUrl(Uri.parse(
+                  "http://books.google.com.hk/books?id=jD8iswEACAAJ&dq=isbn:9780984782857&hl=&source=gbs_api"))) {
+                launchUrl(Uri.parse(
+                    "http://books.google.com.hk/books?id=jD8iswEACAAJ&dq=isbn:9780984782857&hl=&source=gbs_api"));
+              }
+            },
+            icon: Image.network(
+                "http://books.google.com/books/content?id=jD8iswEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api"),
+            label: Text(
+              'Cracking the Coding Interview' +
+                  '\n' +
+                  'By ' +
+                  'Gayle Laakmann McDowell',
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
-        ),
+          ButtonBar(children: [
+            ElevatedButton.icon(
+              icon: Icon(Icons.recycling),
+              label: Text("Chat with user "),
+              onPressed: () async {
+                // print("Trade!Book hash is " + info[7]);
+                // ScaffoldMessenger.of(context).showSnackBar(
+                //   const SnackBar(
+                //       content: Text('Trade Request Sent!')),
+                // );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => Chatter(title: info[3]),
+                //   ),
+                // );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+                shadowColor: Colors.orange,
+              ),
+            ),
+          ])
+        ],
       ),
       TextButton.icon(
         style: ButtonStyle(backgroundColor: null),
