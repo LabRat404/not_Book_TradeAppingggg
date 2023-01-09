@@ -6,15 +6,8 @@ import 'package:provider/provider.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:trade_app/widgets/reusable_widget.dart';
-import 'package:provider/provider.dart';
-import 'package:trade_app/provider/user_provider.dart';
-import 'package:http/http.dart' as http;
-import 'package:url_launcher/url_launcher.dart';
-import 'package:trade_app/widgets/nav_bar.dart';
 import 'dart:async';
+import 'package:trade_app/screens/chatter.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = '/home';
@@ -36,7 +29,7 @@ class _HomePageState extends State<HomePage> {
     //loadBookData();
   }
 
-  List _items = [];
+  late List _items = [];
   // Fetch content from the json file
   Future<void> readJson(realusername) async {
     //load  the json here!!
@@ -197,85 +190,89 @@ class _HomePageState extends State<HomePage> {
     ],
   );
   //I dont like this, its hard coding and I tried not to, but maybe will fix it later
-  final loopRec = ImageSlideshow(
-    indicatorColor: Colors.white,
-    onPageChanged: (value) {
-      //debugPrint('Page changed: $value');
-    },
-    autoPlayInterval: 3000,
-    isLoop: true,
-    children: [
-      Column(
-        children: [
+  loopRec() {
+    return ImageSlideshow(
+      indicatorColor: Colors.white,
+      onPageChanged: (value) {
+        //debugPrint('Page changed: $value');
+      },
+      autoPlayInterval: 3000,
+      isLoop: true,
+      children: [
+        if (_items.isNotEmpty)
+          for (int i = 0; i < _items.length; i++)
+            Column(
+              children: [
+                TextButton.icon(
+                  style: ButtonStyle(backgroundColor: null),
+                  onPressed: () async {
+                    if (await canLaunchUrl(
+                        Uri.parse(_items[i]["googlelink"]))) {
+                      launchUrl(Uri.parse(_items[i]["googlelink"]));
+                    }
+                  },
+                  icon: Image.network(_items[i]["url"],
+                      width: 140, height: 180, fit: BoxFit.fill),
+                  label: Text(
+                    _items[i]["booktitle"] + '\n' + 'By ' + _items[i]["author"],
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Center(
+                    child: ButtonBar(mainAxisSize: MainAxisSize.min, children: [
+                  ElevatedButton.icon(
+                    icon: Icon(Icons.recycling),
+                    label: Text(
+                        "Chat with user " + _items[i]["username"].toString()),
+                    onPressed: () async {
+                      print(
+                          "Trade!Book hash is " + _items[i]["name"].toString());
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Trade Request Sent!')),
+                      );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              Chatter(title: _items[i]["username"].toString()),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
+                      shadowColor: Colors.orange,
+                    ),
+                  ),
+                ]))
+              ],
+            )
+        else
           TextButton.icon(
             style: ButtonStyle(backgroundColor: null),
             onPressed: () async {
               if (await canLaunchUrl(Uri.parse(
-                  "http://books.google.com.hk/books?id=jD8iswEACAAJ&dq=isbn:9780984782857&hl=&source=gbs_api"))) {
+                  "http://books.google.com.hk/books?id=AEO7bwAACAAJ&dq=isbn:9781406317848&hl=&source=gbs_api"))) {
                 launchUrl(Uri.parse(
-                    "http://books.google.com.hk/books?id=jD8iswEACAAJ&dq=isbn:9780984782857&hl=&source=gbs_api"));
+                    "http://books.google.com.hk/books?id=AEO7bwAACAAJ&dq=isbn:9781406317848&hl=&source=gbs_api"));
               }
             },
             icon: Image.network(
-                "http://books.google.com/books/content?id=jD8iswEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api"),
+                "http://books.google.com/books/content?id=AEO7bwAACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api"),
             label: Text(
-              'Cracking the Coding Interview' +
-                  '\n' +
-                  'By ' +
-                  'Gayle Laakmann McDowell',
+              "Rosen's Sad Book" + '\n' + 'By ' + 'Michael Rosen',
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
               ),
             ),
-          ),
-          Center(
-              child: ButtonBar(mainAxisSize: MainAxisSize.min, children: [
-            ElevatedButton.icon(
-              icon: Icon(Icons.recycling),
-              label: Text("Chat with user "),
-              onPressed: () async {
-                // print("Trade!Book hash is " + info[7]);
-                // ScaffoldMessenger.of(context).showSnackBar(
-                //   const SnackBar(
-                //       content: Text('Trade Request Sent!')),
-                // );
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => Chatter(title: info[3]),
-                //   ),
-                // );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                shadowColor: Colors.orange,
-              ),
-            ),
-          ]))
-        ],
-      ),
-      TextButton.icon(
-        style: ButtonStyle(backgroundColor: null),
-        onPressed: () async {
-          if (await canLaunchUrl(Uri.parse(
-              "http://books.google.com.hk/books?id=AEO7bwAACAAJ&dq=isbn:9781406317848&hl=&source=gbs_api"))) {
-            launchUrl(Uri.parse(
-                "http://books.google.com.hk/books?id=AEO7bwAACAAJ&dq=isbn:9781406317848&hl=&source=gbs_api"));
-          }
-        },
-        icon: Image.network(
-            "http://books.google.com/books/content?id=AEO7bwAACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api"),
-        label: Text(
-          "Rosen's Sad Book" + '\n' + 'By ' + 'Michael Rosen',
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      )
-    ],
-  );
+          )
+      ],
+    );
+  }
+
   final bm = Text.rich(
     TextSpan(
       text: 'Books of the month! ',
@@ -315,7 +312,7 @@ class _HomePageState extends State<HomePage> {
           loopBOM,
 
           heading,
-          loopRec,
+          loopRec(),
 
           //category_text,
         ],
