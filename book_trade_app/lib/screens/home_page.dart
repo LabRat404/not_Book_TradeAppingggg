@@ -43,8 +43,7 @@ class _HomePageState extends State<HomePage> {
     //fetch here
     print(realusername);
     http.Response resaa = await http.get(
-        Uri.parse(
-            'http://172.20.10.3:3000/api/grabrecommendation/$realusername'),
+        Uri.parse('http://172.20.10.3:3000/api/grabrec/$realusername'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         });
