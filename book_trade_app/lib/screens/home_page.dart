@@ -34,15 +34,14 @@ class _HomePageState extends State<HomePage> {
   Future<void> readJson(realusername) async {
     //load  the json here!!
     //fetch here
-    print(realusername);
+
     http.Response resaa = await http.get(
         Uri.parse('http://172.20.10.3:3000/api/grabrec/$realusername'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         });
     //print(resaa);
-    print("end");
-    print(resaa.body);
+
     final data = await json.decode(resaa.body);
     setState(() {
       _items = data;
@@ -228,8 +227,8 @@ class _HomePageState extends State<HomePage> {
                     label: Text(
                         "Chat with user " + _items[i]["username"].toString()),
                     onPressed: () async {
-                      print(
-                          "Trade!Book hash is " + _items[i]["name"].toString());
+                      // print(
+                      //     "Trade!Book hash is " + _items[i]["name"].toString());
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Trade Request Sent!')),
                       );

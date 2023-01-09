@@ -186,7 +186,7 @@ authRouter.get("/api/grabuserdata/:username", async (req, res) => {
 });
 
 authRouter.get("/api/grabrec/:notthis", async (req, res) => {
-  console.log(req.params["notthis"]);
+  //console.log(req.params["notthis"]);
   Image2
   .aggregate([
     { $match: { username : { $not : { $eq : req.params["notthis"]}}}},
@@ -196,12 +196,12 @@ authRouter.get("/api/grabrec/:notthis", async (req, res) => {
       if (e)
         res.send("Error not known");
     else if(results == null){  
-       console.log("results");  
+       //console.log("results");  
      res.send("404 not found. No records found!", 404);}
      
       else{
       res.send(results);
-      console.log(results);
+      //console.log(results);
       }
    }
    );
