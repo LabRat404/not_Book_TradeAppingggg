@@ -185,6 +185,27 @@ authRouter.get("/api/grabuserdata/:username", async (req, res) => {
 
 });
 
+authRouter.get("/api/grabrecommendation/:notthis", async (req, res) => {
+  console.log(req.params["notthis"]);
+  Image2
+  .aggregate([
+    { $ne: { username : req.params["notthis"]}},
+    { $sample: { size: 3 } }
+  ])
+  .exec( (e, results) => {
+      if (e)
+        res.send("Error not known");
+    else if(results == null)
+        res.send("404 not found. No records found!", 404);
+      else{
+      res.send(results);
+      //console.log(results);
+      }
+   }
+   );
+
+});
+
 
 authRouter.put("/api/changeavatar/:username", async (req, res) => {
     //console.log(req.params["username"]+ req.body['url']);

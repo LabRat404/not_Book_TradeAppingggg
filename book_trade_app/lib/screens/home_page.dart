@@ -6,6 +6,15 @@ import 'package:provider/provider.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:trade_app/widgets/reusable_widget.dart';
+import 'package:provider/provider.dart';
+import 'package:trade_app/provider/user_provider.dart';
+import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
+import 'package:trade_app/widgets/nav_bar.dart';
+import 'dart:async';
 
 class HomePage extends StatefulWidget {
   static const String routeName = '/home';
@@ -19,7 +28,33 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final help = Provider.of<UserProvider>(context, listen: false);
+      String realusername = help.user.name;
+      readJson(realusername);
+    });
     //loadBookData();
+  }
+
+  List _items = [];
+  // Fetch content from the json file
+  Future<void> readJson(realusername) async {
+    //load  the json here!!
+    //fetch here
+    print(realusername);
+    http.Response resaa = await http.get(
+        Uri.parse(
+            'http://172.20.10.3:3000/api/grabrecommendation/$realusername'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        });
+    //print(resaa);
+    print("end");
+    print(resaa.body);
+    final data = await json.decode(resaa.body);
+    setState(() {
+      _items = data;
+    });
   }
 
   //I dont like this, its hard coding and I tried not to, but maybe will fix it later
@@ -195,7 +230,8 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          ButtonBar(children: [
+          Center(
+              child: ButtonBar(mainAxisSize: MainAxisSize.min, children: [
             ElevatedButton.icon(
               icon: Icon(Icons.recycling),
               label: Text("Chat with user "),
@@ -217,7 +253,7 @@ class _HomePageState extends State<HomePage> {
                 shadowColor: Colors.orange,
               ),
             ),
-          ])
+          ]))
         ],
       ),
       TextButton.icon(
@@ -245,15 +281,15 @@ class _HomePageState extends State<HomePage> {
     TextSpan(
       text: 'Books of the month! ',
 
-      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
       // default text style
     ),
     textAlign: TextAlign.left,
   );
   final heading = Text.rich(
     TextSpan(
-      text: 'Our Recommendations! ',
-      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+      text: 'Trade Recommendations! ',
+      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
       // default text style
     ),
   );
@@ -261,7 +297,7 @@ class _HomePageState extends State<HomePage> {
   final category_text = Text.rich(
     TextSpan(
       text: 'Recommended Categories',
-      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
       // default text style
     ),
   );
@@ -274,15 +310,14 @@ class _HomePageState extends State<HomePage> {
       appBar: ReusableWidgets.LoginPageAppBar('Welcome Back! $username'),
       body: Column(
         children: <Widget>[
-          SizedBox(height: 70.0),
+          SizedBox(height: 30.0),
           bm,
-          SizedBox(height: 20.0),
+
           loopBOM,
-          SizedBox(height: 70.0),
+
           heading,
-          SizedBox(height: 20.0),
           loopRec,
-          SizedBox(height: 20.0),
+
           //category_text,
         ],
       ),
