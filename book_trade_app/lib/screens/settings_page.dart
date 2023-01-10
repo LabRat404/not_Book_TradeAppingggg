@@ -11,6 +11,8 @@ import 'package:provider/provider.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+var ipaddr = "18.210.46.64:3000";
+
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
 
@@ -50,7 +52,7 @@ class _SettingsPageState extends State<SettingsPage> {
     //fetch here
     print("username is:" + realusername);
     http.Response resaa = await http.get(
-        Uri.parse('http://172.20.10.3:3000/api/grabuserdata/$realusername'),
+        Uri.parse('http://$ipaddr/api/grabuserdata/$realusername'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         });

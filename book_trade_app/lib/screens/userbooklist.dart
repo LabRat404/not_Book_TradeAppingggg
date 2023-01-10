@@ -7,6 +7,8 @@ import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:trade_app/widgets/nav_bar.dart';
 
+var ipaddr = "18.210.46.64:3000";
+
 class ISBN_info {
   final String title;
   final String publishedDate;
@@ -57,7 +59,7 @@ class _UserListState extends State<UserList> {
     //load  the json here!!
     //fetch here
     http.Response resaa = await http.get(
-        Uri.parse('http://172.20.10.3:3000/api/grabuserlist/$realusername'),
+        Uri.parse('http://$ipaddr/api/grabuserlist/$realusername'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         });
@@ -139,7 +141,7 @@ class _UserListState extends State<UserList> {
                                       //print("input is:  " +_items[index]["name"]);
                                       var res = await http.delete(
                                           Uri.parse(
-                                              'http://172.20.10.3:3000/api/dellist/$delname'),
+                                              'http://$ipaddr/api/dellist/$delname'),
                                           headers: <String, String>{
                                             'Content-Type':
                                                 'application/json; charset=UTF-8',

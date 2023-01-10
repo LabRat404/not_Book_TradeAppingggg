@@ -8,6 +8,8 @@ import 'package:trade_app/screens/login_page.dart';
 import 'package:provider/provider.dart';
 import 'package:trade_app/provider/user_provider.dart';
 
+var ipaddr = "18.210.46.64:3000";
+
 class AuthService {
   void signInUser({
     required BuildContext context,
@@ -16,7 +18,7 @@ class AuthService {
   }) async {
     try {
       http.Response res =
-          await http.post(Uri.parse('http://172.20.10.3:3000/api/signin'),
+          await http.post(Uri.parse('http://$ipaddr/api/signin'),
               //await http.post(Uri.parse('http://localhost:3000/api/signin'),
               body: jsonEncode({
                 'email': email,
@@ -56,7 +58,7 @@ class AuthService {
     try {
       http.Response res =
           //await http.post(Uri.parse('http://localhost:3000/api/signup'),
-          await http.post(Uri.parse('http://172.20.10.3:3000/api/signup'),
+          await http.post(Uri.parse('http://$ipaddr/api/signup'),
               body: jsonEncode({
                 'name': name,
                 'email': email,
@@ -99,7 +101,7 @@ class AuthService {
     try {
       http.Response res =
           //await http.post(Uri.parse('http://localhost:3000/api/signup'),
-          await http.post(Uri.parse('http://172.20.10.3:3000/api/uploading'),
+          await http.post(Uri.parse('http://$ipaddr/api/uploading'),
               body: jsonEncode({
                 'name': name,
                 'url': url,

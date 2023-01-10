@@ -9,6 +9,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
 import 'package:trade_app/screens/chatter.dart';
 
+var ipaddr = "18.210.46.64:3000";
+
 class HomePage extends StatefulWidget {
   static const String routeName = '/home';
   const HomePage({Key? key}) : super(key: key);
@@ -36,7 +38,7 @@ class _HomePageState extends State<HomePage> {
     //fetch here
 
     http.Response resaa = await http.get(
-        Uri.parse('http://172.20.10.3:3000/api/grabrec/$realusername'),
+        Uri.parse('http://$ipaddr/api/grabrec/$realusername'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         });
@@ -64,7 +66,7 @@ class _HomePageState extends State<HomePage> {
       var res = await http.post(
           //localhost
           //Uri.parse('http://172.20.10.3:3000/api/bookinfo'),
-          Uri.parse('http://172.20.10.3:3000/api/bookinfo'),
+          Uri.parse('http://$ipaddr/api/bookinfo'),
           body: jsonEncode({"book_isbn": BookOfMonth[i]}),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
@@ -86,7 +88,7 @@ class _HomePageState extends State<HomePage> {
       var res2 = await http.post(
           //localhost
           //Uri.parse('http://172.20.10.3:3000/api/bookinfo'),
-          Uri.parse('http://172.20.10.3:3000/api/bookinfo'),
+          Uri.parse('http://$ipaddr/api/bookinfo'),
           body: jsonEncode({"book_isbn": Recommendation[i]}),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',

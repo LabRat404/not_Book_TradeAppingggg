@@ -8,6 +8,8 @@ import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:trade_app/screens/chatter.dart';
 
+var ipaddr = "18.210.46.64:3000";
+
 class SearchPage extends StatefulWidget {
   static const String routeName = '/Search';
   const SearchPage({Key? key}) : super(key: key);
@@ -41,7 +43,7 @@ class _SearchPageState extends State<SearchPage> {
     //load  the json here!!
     //fetch here
     http.Response resaa = await http.get(
-        Uri.parse('http://172.20.10.3:3000/api/graballuserbook'),
+        Uri.parse('http://$ipaddr/api/graballuserbook'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         });

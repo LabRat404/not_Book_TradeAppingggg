@@ -8,6 +8,8 @@ import 'package:trade_app/screens/showOtherUser.dart';
 import 'package:trade_app/screens/chatter.dart';
 import 'package:provider/provider.dart';
 
+var ipaddr = "18.210.46.64:3000";
+
 class InfoDetailPageSearch extends StatefulWidget {
   final String hashname;
   InfoDetailPageSearch({required this.hashname, Key? key}) : super(key: key);
@@ -29,7 +31,7 @@ class _InfoDetailPageSearchState extends State<InfoDetailPageSearch> {
     http.Response resa = await http.get(
         //localhost
         //Uri.parse('http://172.20.10.3:3000/api/bookinfo'),
-        Uri.parse('http://172.20.10.3:3000/api/grabdbbook/$hashname'),
+        Uri.parse('http://$ipaddr/api/grabdbbook/$hashname'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         });

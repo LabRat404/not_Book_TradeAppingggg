@@ -11,6 +11,8 @@ import 'package:intl/intl.dart';
 import 'package:cron/cron.dart';
 import 'dart:async';
 
+var ipaddr = "18.210.46.64:3000";
+
 class Chatter extends StatefulWidget {
   final String title;
   Chatter({Key? key, required this.title}) : super(key: key);
@@ -45,7 +47,7 @@ class _ChatterState extends State<Chatter> {
     // final data = await json.decode(response);
 
     http.Response data =
-        await http.post(Uri.parse('http://172.20.10.3:3000/api/grabchat'),
+        await http.post(Uri.parse('http://$ipaddr/api/grabchat'),
             body: jsonEncode({
               "self": myuser,
               "notself": widget.title,
@@ -98,7 +100,7 @@ class _ChatterState extends State<Chatter> {
     var resul = await http.post(
         //localhost
         //Uri.parse('http://172.20.10.3:3000/api/bookinfo'),
-        Uri.parse('http://172.20.10.3:3000/api/createnloadChat'),
+        Uri.parse('http://$ipaddr/api/createnloadChat'),
         body: jsonEncode({
           "self": self,
           "notself": widget.title,

@@ -12,6 +12,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
+var ipaddr = "18.210.46.64:3000";
+
 class AvatarChange extends StatefulWidget {
   const AvatarChange({Key? key}) : super(key: key);
   @override
@@ -123,7 +125,7 @@ class _AvatarChangeState extends State<AvatarChange> {
       String url2 = result['data']['link'];
       print("this is uname ->" + realusername + "the url is: " + url2);
       var ress = await http.put(
-          Uri.parse('http://172.20.10.3:3000/api/changeavatar/$realusername'),
+          Uri.parse('http://$ipaddr/api/changeavatar/$realusername'),
           body: jsonEncode({"url": url2}),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',

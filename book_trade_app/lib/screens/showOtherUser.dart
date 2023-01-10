@@ -8,6 +8,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:trade_app/screens/chatter.dart';
 import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
 
+var ipaddr = "18.210.46.64:3000";
+
 class ISBN_info {
   final String title;
   final String publishedDate;
@@ -58,7 +60,7 @@ class _ShowotherUserState extends State<ShowotherUser> {
     //load  the json here!!
     //fetch here
     http.Response resaa = await http.get(
-        Uri.parse('http://172.20.10.3:3000/api/grabuserlist/$realusername'),
+        Uri.parse('http://$ipaddr/api/grabuserlist/$realusername'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         });
@@ -76,7 +78,7 @@ class _ShowotherUserState extends State<ShowotherUser> {
     //fetch here
     print("username is:" + realusername);
     http.Response resaa = await http.get(
-        Uri.parse('http://172.20.10.3:3000/api/grabuserdata/$realusername'),
+        Uri.parse('http://$ipaddr/api/grabuserdata/$realusername'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         });

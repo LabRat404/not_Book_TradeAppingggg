@@ -15,6 +15,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:trade_app/services/auth/connector.dart';
 
+var ipaddr = "18.210.46.64:3000";
+
 class UploadPage extends StatefulWidget {
   const UploadPage({Key? key, this.title}) : super(key: key);
   final String? title;
@@ -116,7 +118,7 @@ class _UploadPageState extends State<UploadPage> {
       var res = await http.post(
           //localhost
           //Uri.parse('http://172.20.10.3:3000/api/bookinfo'),
-          Uri.parse('http://172.20.10.3:3000/api/bookinfo'),
+          Uri.parse('http://$ipaddr/bookinfo'),
           body: jsonEncode({"book_isbn": ISBNController.text}),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',

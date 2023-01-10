@@ -4,6 +4,8 @@ import 'package:trade_app/widgets/reusable_widget.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 
+var ipaddr = "18.210.46.64:3000";
+
 class InfoDetailPage extends StatefulWidget {
   final String isbncode;
   InfoDetailPage({required this.isbncode, Key? key}) : super(key: key);
@@ -25,7 +27,7 @@ class _InfoDetailPageState extends State<InfoDetailPage> {
     http.Response resa = await http.post(
         //localhost
         //Uri.parse('http://172.20.10.3:3000/api/bookinfo'),
-        Uri.parse('http://172.20.10.3:3000/api/bookinfo'),
+        Uri.parse('http://$ipaddr/api/bookinfo'),
         body: jsonEncode({"book_isbn": isbncodes}),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
