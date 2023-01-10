@@ -165,6 +165,32 @@ class _ChatterState extends State<Chatter> {
                               ? false
                               : true,
                         ),
+                        Center(
+                            child: ButtonBar(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                              ElevatedButton.icon(
+                                icon: Icon(Icons.recycling),
+                                label: Text("Chat with user "),
+                                onPressed: () async {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text('Trade Request Sent!')),
+                                  );
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          Chatter(title: self),
+                                    ),
+                                  );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.green,
+                                  shadowColor: Colors.orange,
+                                ),
+                              ),
+                            ])),
                         //printchat(),data2["chats"].forEach((value) {
                         //   value["chatter"].forEach((userchat) {
                         //     if (userchat["user"] == "tanjaii") {

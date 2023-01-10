@@ -163,7 +163,10 @@ class _ChatListState extends State<ChatList> {
                                 ),
                                 subtitle: Text(
                                     _items[index]["chatter"][long - 1]["text"]),
-                                trailing: Icon(Icons.more_vert),
+                                trailing: IconButton(
+                                  icon: new Icon(Icons.more_vert),
+                                  onPressed: () {/* Your code */},
+                                ),
                                 onTap: () async {
                                   final text = await Navigator.push(
                                     context,
