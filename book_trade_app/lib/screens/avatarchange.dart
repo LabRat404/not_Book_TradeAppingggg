@@ -11,8 +11,9 @@ import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:trade_app/routes/ip.dart' as globals;
 
-var ipaddr = "18.210.46.64:3000";
+var ipaddr = globals.ip;
 
 class AvatarChange extends StatefulWidget {
   const AvatarChange({Key? key}) : super(key: key);

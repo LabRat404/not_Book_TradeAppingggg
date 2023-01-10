@@ -3,8 +3,9 @@ import 'dart:convert';
 import 'package:trade_app/widgets/reusable_widget.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
+import 'package:trade_app/routes/ip.dart' as globals;
 
-var ipaddr = "18.210.46.64:3000";
+var ipaddr = globals.ip;
 
 class InfoDetailPage extends StatefulWidget {
   final String isbncode;

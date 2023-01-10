@@ -7,8 +7,9 @@ import '../../constants/error_handling.dart';
 import 'package:trade_app/screens/login_page.dart';
 import 'package:provider/provider.dart';
 import 'package:trade_app/provider/user_provider.dart';
+import 'package:trade_app/routes/ip.dart' as globals;
 
-var ipaddr = "18.210.46.64:3000";
+var ipaddr = globals.ip;
 
 class AuthService {
   void signInUser({

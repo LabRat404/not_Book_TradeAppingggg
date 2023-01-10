@@ -8,8 +8,9 @@ import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
 import 'package:trade_app/screens/chatter.dart';
+import 'package:trade_app/routes/ip.dart' as globals;
 
-var ipaddr = "18.210.46.64:3000";
+var ipaddr = globals.ip;
 
 class HomePage extends StatefulWidget {
   static const String routeName = '/home';

@@ -14,8 +14,9 @@ import 'package:path_provider/path_provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:trade_app/services/auth/connector.dart';
+import 'package:trade_app/routes/ip.dart' as globals;
 
-var ipaddr = "18.210.46.64:3000";
+var ipaddr = globals.ip;
 
 class UploadPage extends StatefulWidget {
   const UploadPage({Key? key, this.title}) : super(key: key);

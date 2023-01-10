@@ -7,8 +7,9 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:trade_app/screens/showOtherUser.dart';
 import 'package:trade_app/screens/chatter.dart';
 import 'package:provider/provider.dart';
+import 'package:trade_app/routes/ip.dart' as globals;
 
-var ipaddr = "18.210.46.64:3000";
+var ipaddr = globals.ip;
 
 class InfoDetailPageSearch extends StatefulWidget {
   final String hashname;
