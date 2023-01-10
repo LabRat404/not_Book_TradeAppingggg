@@ -68,7 +68,7 @@ class _ChatListState extends State<ChatList> {
     //load  the json here!!
     //fetch here
     http.Response resaa = await http.get(
-        Uri.parse('http://172.20.10.3:3000/api/graballchat/$realusername'),
+        Uri.parse('http://18.210.46.64:3000/api/graballchat/$realusername'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         });
