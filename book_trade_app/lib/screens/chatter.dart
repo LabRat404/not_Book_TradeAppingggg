@@ -177,13 +177,13 @@ class _ChatterState extends State<Chatter> {
                                     const SnackBar(
                                         content: Text('Trade Request Sent!')),
                                   );
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          Chatter(title: self),
-                                    ),
-                                  );
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //     builder: (context) =>
+                                  //         Chatter(title: self),
+                                  //   ),
+                                  // );
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.green,
