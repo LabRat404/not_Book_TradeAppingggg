@@ -163,9 +163,25 @@ class _ChatListState extends State<ChatList> {
                                 ),
                                 subtitle: Text(
                                     _items[index]["chatter"][long - 1]["text"]),
-                                trailing: IconButton(
-                                  icon: new Icon(Icons.more_vert),
-                                  onPressed: () {/* Your code */},
+                                trailing: PopupMenuButton(
+                                  itemBuilder: (context) {
+                                    return [
+                                      // PopupMenuItem(
+                                      //   value: 'edit',
+                                      //   child: Text('Edit'),
+                                      // ),
+                                      PopupMenuItem(
+                                        value: 'delete',
+                                        child: Text('Delete'),
+                                        onTap: () => {
+                                          print("hiihhiih"),
+                                        },
+                                      )
+                                    ];
+                                  },
+                                  onSelected: (String value) {
+                                    print('You Click on po up menu item');
+                                  },
                                 ),
                                 onTap: () async {
                                   final text = await Navigator.push(
