@@ -200,7 +200,8 @@ class _ShowotherUserState extends State<ShowotherUser> {
                                         _items[index]["name"]);
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
-                                          content: Text('Trade Request Sent!')),
+                                          content: Text(
+                                              "Still developing (ノಠ益ಠ) ノ彡 ┻━┻")),
                                     );
                                   },
                                   style: ElevatedButton.styleFrom(

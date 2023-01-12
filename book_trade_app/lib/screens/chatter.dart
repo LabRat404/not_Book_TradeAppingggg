@@ -11,43 +11,7 @@ import 'package:intl/intl.dart';
 import 'package:cron/cron.dart';
 import 'dart:async';
 import 'package:trade_app/routes/ip.dart' as globals;
-import 'package:flutter/material.dart';
-import 'package:trade_app/widgets/reusable_widget.dart';
-import 'package:trade_app/screens/bookInfodetail.dart';
-import '/../widgets/camera.dart';
-import 'package:trade_app/provider/user_provider.dart';
-import 'dart:async';
-import 'dart:io';
-import 'dart:convert';
-import 'package:trade_app/widgets/nav_bar.dart';
-import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
-import 'package:flutter/foundation.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
-import 'package:trade_app/services/auth/connector.dart';
-import 'package:trade_app/routes/ip.dart' as globals;
-import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:trade_app/widgets/reusable_widget.dart';
-import 'package:provider/provider.dart';
-import 'package:trade_app/provider/user_provider.dart';
-import 'package:http/http.dart' as http;
-import 'package:trade_app/screens/chatter.dart';
-import 'package:cron/cron.dart';
-import 'dart:async';
-import 'package:trade_app/routes/ip.dart' as globals;
-import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:trade_app/provider/user_provider.dart';
-import 'package:trade_app/widgets/reusable_widget.dart';
-import 'package:http/http.dart' as http;
-import 'package:url_launcher/url_launcher.dart';
 import 'package:trade_app/screens/showOtherUser.dart';
-import 'package:trade_app/screens/chatter.dart';
-import 'package:provider/provider.dart';
-import 'package:trade_app/routes/ip.dart' as globals;
 
 var ipaddr = globals.ip;
 
@@ -247,15 +211,9 @@ class _ChatterState extends State<Chatter> {
                                 onPressed: () async {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
-                                        content: Text('Trade Request Sent!')),
+                                        content: Text(
+                                            "Still developing (ノಠ益ಠ) ノ彡 ┻━┻")),
                                   );
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //     builder: (context) =>
-                                  //         Chatter(title: self),
-                                  //   ),
-                                  // );
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.green,

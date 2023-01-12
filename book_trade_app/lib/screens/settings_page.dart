@@ -102,7 +102,12 @@ class _SettingsPageState extends State<SettingsPage> {
                     subtitle: "Change your avatar!",
                   ),
                   SettingsItem(
-                    onTap: () {},
+                    onTap: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text("Still developing (ノಠ益ಠ) ノ彡 ┻━┻")),
+                      );
+                    },
                     icons: Icons.fingerprint,
                     iconStyle: IconStyle(
                       iconsColor: Colors.white,
@@ -113,7 +118,12 @@ class _SettingsPageState extends State<SettingsPage> {
                     subtitle: "Choose what to share!",
                   ),
                   SettingsItem(
-                    onTap: () {},
+                    onTap: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text("Still developing (ノಠ益ಠ) ノ彡 ┻━┻")),
+                      );
+                    },
                     icons: Icons.dark_mode_rounded,
                     iconStyle: IconStyle(
                       iconsColor: Colors.white,
@@ -124,7 +134,12 @@ class _SettingsPageState extends State<SettingsPage> {
                     subtitle: "Automatic",
                     trailing: Switch.adaptive(
                       value: false,
-                      onChanged: (value) {},
+                      onChanged: (value) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              content: Text("Still developing (ノಠ益ಠ) ノ彡 ┻━┻")),
+                        );
+                      },
                     ),
                   ),
                 ],
@@ -174,7 +189,11 @@ class _SettingsPageState extends State<SettingsPage> {
                     title: "Change email/password",
                   ),
                   SettingsItem(
-                    onTap: () {},
+                    onTap: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("Function locked!")),
+                      );
+                    },
                     icons: CupertinoIcons.delete_solid,
                     title: "Delete account",
                     titleStyle: TextStyle(
