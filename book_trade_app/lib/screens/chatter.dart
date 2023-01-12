@@ -11,6 +11,43 @@ import 'package:intl/intl.dart';
 import 'package:cron/cron.dart';
 import 'dart:async';
 import 'package:trade_app/routes/ip.dart' as globals;
+import 'package:flutter/material.dart';
+import 'package:trade_app/widgets/reusable_widget.dart';
+import 'package:trade_app/screens/bookInfodetail.dart';
+import '/../widgets/camera.dart';
+import 'package:trade_app/provider/user_provider.dart';
+import 'dart:async';
+import 'dart:io';
+import 'dart:convert';
+import 'package:trade_app/widgets/nav_bar.dart';
+import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter/foundation.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:trade_app/services/auth/connector.dart';
+import 'package:trade_app/routes/ip.dart' as globals;
+import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:trade_app/widgets/reusable_widget.dart';
+import 'package:provider/provider.dart';
+import 'package:trade_app/provider/user_provider.dart';
+import 'package:http/http.dart' as http;
+import 'package:trade_app/screens/chatter.dart';
+import 'package:cron/cron.dart';
+import 'dart:async';
+import 'package:trade_app/routes/ip.dart' as globals;
+import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:trade_app/provider/user_provider.dart';
+import 'package:trade_app/widgets/reusable_widget.dart';
+import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
+import 'package:trade_app/screens/showOtherUser.dart';
+import 'package:trade_app/screens/chatter.dart';
+import 'package:provider/provider.dart';
+import 'package:trade_app/routes/ip.dart' as globals;
 
 var ipaddr = globals.ip;
 
@@ -137,6 +174,7 @@ class _ChatterState extends State<Chatter> {
 
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: Text(widget.title),
           leading: GestureDetector(
             child: Icon(
@@ -147,6 +185,33 @@ class _ChatterState extends State<Chatter> {
               Navigator.pop(context, "something");
             },
           ),
+          actions: [
+            Material(
+              shape: CircleBorder(),
+              clipBehavior: Clip.hardEdge,
+              color: Colors.transparent,
+              child: Ink.image(
+                image: NetworkImage("https://i.imgur.com/k2XHNOy.jpg"),
+                fit: BoxFit.cover,
+                width: 40.0,
+                height: 40.0,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ShowotherUser(otherusername: widget.title),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+            Material(
+              color: Colors.transparent,
+            )
+          ],
         ),
         body: data2 != null
             ? Stack(
