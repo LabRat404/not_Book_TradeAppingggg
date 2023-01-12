@@ -119,7 +119,7 @@ class _UploadPageState extends State<UploadPage> {
       var res = await http.post(
           //localhost
           //Uri.parse('http://172.20.10.3:3000/api/bookinfo'),
-          Uri.parse('http://$ipaddr/bookinfo'),
+          Uri.parse('http://$ipaddr/api/bookinfo'),
           body: jsonEncode({"book_isbn": ISBNController.text}),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',

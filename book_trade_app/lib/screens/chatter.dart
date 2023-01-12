@@ -73,14 +73,14 @@ class _ChatterState extends State<Chatter> {
   }
 
   var data2;
-
+  String linkicon = "";
   List _items = [];
 
   // Fetch content from the json file
   Future<String> readJson(myuser) async {
     //load  the json here!!
     //fetch here
-
+    String notself = widget.title;
     // final String response = await rootBundle.loadString('assets/chatter.json');
     // final data = await json.decode(response);
 
@@ -94,6 +94,12 @@ class _ChatterState extends State<Chatter> {
           'Content-Type': 'application/json; charset=UTF-8',
         });
 
+    http.Response iconlink = await http.get(
+        Uri.parse('http://$ipaddr/api/loaduserimage/$notself'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        });
+
     // print(resaa);
     print("Im reading and doinng...");
     //final data = await json.decode(response);
@@ -102,6 +108,7 @@ class _ChatterState extends State<Chatter> {
       // _items = data["items"];
       // _items = data;
       //data2 = data;
+      linkicon = iconlink.body;
       data2 = abc[0];
     });
 
@@ -191,7 +198,7 @@ class _ChatterState extends State<Chatter> {
               clipBehavior: Clip.hardEdge,
               color: Colors.transparent,
               child: Ink.image(
-                image: NetworkImage("https://i.imgur.com/k2XHNOy.jpg"),
+                image: NetworkImage(linkicon),
                 fit: BoxFit.cover,
                 width: 40.0,
                 height: 40.0,

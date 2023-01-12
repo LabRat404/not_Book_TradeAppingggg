@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:http/http.dart' as http;
+import 'package:trade_app/routes/ip.dart' as globals;
+
+var ipaddr = globals.ip;
 
 class ISBN_info {
   final String title;
@@ -39,7 +42,7 @@ class _CameraState extends State<Camera> {
         var res = await http.post(
             //localhost
             //Uri.parse('http://172.20.10.3:3000/api/bookinfo'),
-            Uri.parse('http://172.20.10.3:3000/api/bookinfo'),
+            Uri.parse('http://$ipaddr/api/bookinfo'),
             body: jsonEncode({"book_isbn": code}),
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
