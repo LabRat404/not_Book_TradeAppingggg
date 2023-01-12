@@ -38,7 +38,8 @@ class ReusableWidgets {
       backgroundColor: Colors.green,
       actions: [
         IconButton(
-          icon: const Icon(Icons.info_outline),
+          icon: const Icon(Icons.info_outline, size: 35),
+          color: Color.fromARGB(255, 255, 255, 255),
           tooltip: 'Upload Book Menu',
           onPressed: () async {
             // handle the press
@@ -61,7 +62,8 @@ class ReusableWidgets {
       ),
       actions: [
         IconButton(
-          icon: const Icon(Icons.info_outline),
+          icon: const Icon(Icons.info_outline, size: 35),
+          color: Color.fromARGB(255, 255, 255, 255),
           tooltip: 'Change Avatar Menu',
           onPressed: () async {
             // handle the press
