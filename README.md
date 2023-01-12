@@ -4,6 +4,7 @@ Email me if u wana join as a beta tester! ggwp12335@gmail.com
 
 
 To Do List (FE_Iron lol): 
+Chatter: (Chat Icon using hardcode)
 WinDoriaHeartBack(So far far away QAQ)
 Showotheruser_page: remove duplicated chat with user
 Home page: chat with user becomes a trade request
