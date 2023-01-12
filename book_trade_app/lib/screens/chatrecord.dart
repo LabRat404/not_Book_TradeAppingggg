@@ -113,6 +113,7 @@ class _ChatListState extends State<ChatList> {
     return ("tried");
   }
 
+  delchat() {}
   // getdata(dbisbn) async {
   //   var res = await http.post(
   //       //localhost
@@ -173,8 +174,28 @@ class _ChatListState extends State<ChatList> {
                                       PopupMenuItem(
                                         value: 'delete',
                                         child: Text('Delete'),
-                                        onTap: () => {
-                                          print("hiihhiih"),
+                                        onTap: () async {
+                                          var delhash =
+                                              _items[index]["randomhash"];
+                                          var delres = await http.delete(
+                                              Uri.parse(
+                                                  'http://$ipaddr/api/delchat/$delhash'),
+                                              headers: <String, String>{
+                                                'Content-Type':
+                                                    'application/json; charset=UTF-8',
+                                              });
+                                          print(delres.body);
+                                          print("doneeeee");
+                                          if (delres.body.toString() == 'ok') {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              const SnackBar(
+                                                  content:
+                                                      Text('Chat deleted!')),
+                                            );
+                                            var test2 =
+                                                await readJson(myselfname);
+                                          }
                                         },
                                       )
                                     ];
