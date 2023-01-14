@@ -9,6 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
 import 'package:trade_app/screens/chatter.dart';
 import 'package:trade_app/routes/ip.dart' as globals;
+import 'package:trade_app/screens/tradeSelectList.dart';
 
 var ipaddr = globals.ip;
 
@@ -235,13 +236,21 @@ class _HomePageState extends State<HomePage> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Trade Request Sent!')),
                       );
+
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              Chatter(title: _items[i]["username"].toString()),
+                          builder: (context) => TradeList(),
                         ),
                       );
+
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) =>
+                      //         Chatter(title: _items[i]["username"].toString()),
+                      //   ),
+                      // );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
