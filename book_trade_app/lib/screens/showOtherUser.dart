@@ -137,10 +137,10 @@ class _ShowotherUserState extends State<ShowotherUser> {
                               userName: username,
                               userProfilePic: NetworkImage(links),
                             ),
-                          if (index == 0 || username != self)
+                          if (index == 0 && username != self)
                             ButtonBar(children: [
                               ElevatedButton.icon(
-                                icon: Icon(Icons.recycling),
+                                icon: Icon(Icons.chat_outlined),
                                 label: Text("Chat with user " + username),
                                 onPressed: () async {
                                   ScaffoldMessenger.of(context).showSnackBar(

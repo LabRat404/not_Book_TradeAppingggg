@@ -226,7 +226,7 @@ class _HomePageState extends State<HomePage> {
                 Center(
                     child: ButtonBar(mainAxisSize: MainAxisSize.min, children: [
                   ElevatedButton.icon(
-                    icon: Icon(Icons.recycling),
+                    icon: Icon(Icons.chat_outlined),
                     label: Text(
                         "Chat with user " + _items[i]["username"].toString()),
                     onPressed: () async {
