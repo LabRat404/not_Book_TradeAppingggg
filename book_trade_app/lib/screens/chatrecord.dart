@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:trade_app/screens/chatter.dart';
 import 'package:cron/cron.dart';
 import 'dart:async';
+import 'package:trade_app/screens/showOtherUser.dart';
 import 'package:trade_app/routes/ip.dart' as globals;
 
 var ipaddr = globals.ip;
@@ -184,8 +185,6 @@ class _ChatListState extends State<ChatList> {
                                                 'Content-Type':
                                                     'application/json; charset=UTF-8',
                                               });
-                                          print(delres.body);
-                                          print("doneeeee");
                                           if (delres.body.toString() == 'ok') {
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(
@@ -197,7 +196,25 @@ class _ChatListState extends State<ChatList> {
                                                 await readJson(myselfname);
                                           }
                                         },
-                                      )
+                                      ),
+                                      // PopupMenuItem(
+                                      //   value: 'View profile',
+                                      //   child: Text('View profile'),
+                                      //   onTap: () async {
+                                      //     // print("Trade!Book hash is " + info[7]);
+                                      //     Navigator.pop(
+                                      //       context,
+                                      //       MaterialPageRoute(
+                                      //         builder: (context) =>
+                                      //             ShowotherUser(
+                                      //                 otherusername:
+                                      //                     _items[index]
+                                      //                         ["notself"]),
+                                      //       ),
+                                      //     );
+                                      //     print("testing...");
+                                      //   },
+                                      // )
                                     ];
                                   },
                                   onSelected: (String value) {
