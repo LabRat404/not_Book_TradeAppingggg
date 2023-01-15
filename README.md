@@ -9,7 +9,7 @@ WinDoriaHeartBack(So far far away QAQ)\
 ~~Chatter: (Chat Icon using hardcode)~~\
 ~~Showotheruser_page: remove duplicated chat with user~~\
 Home page: chat with user becomes a trade request\
-Upload page: Remove the Add optional  parameters menu,  maybe remake the interface\
+~~Upload page: Remove the Add optional  parameters menu,  maybe remake the interface~~\
 ~~ChatRecord: 3 dots add see user profile? ~~\
 Chatter: add  upload image and take  photo in chat\
 Chatter: Chat with  userbutton can show trade list \
