@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
 import 'package:trade_app/screens/information_page.dart';
 import 'package:trade_app/screens/login_page.dart';
-import 'package:trade_app/screens/change_page.dart';
+import 'package:trade_app/screens/changeac_page.dart';
 import 'package:trade_app/screens/avatarchange.dart';
 import 'package:trade_app/widgets/reusable_widget.dart';
 import 'package:trade_app/provider/user_provider.dart';
