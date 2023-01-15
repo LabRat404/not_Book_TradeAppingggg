@@ -193,6 +193,22 @@ class _UploadPageState extends State<UploadPage> {
     // your code
   }
 
+  selectedimage(BuildContext context, OnPickImageCallback onPick) {
+    final double? width = maxWidthController.text.isNotEmpty
+        ? double.parse(maxWidthController.text)
+        : null;
+    final double? height = maxHeightController.text.isNotEmpty
+        ? double.parse(maxHeightController.text)
+        : null;
+    final int? quality = qualityController.text.isNotEmpty
+        ? int.parse(qualityController.text)
+        : null;
+    return onPick(
+        double.parse(maxWidthController.text),
+        double.parse(maxHeightController.text),
+        int.parse(qualityController.text));
+  }
+
   @override
   void dispose() {
     maxWidthController.dispose();
@@ -273,63 +289,7 @@ class _UploadPageState extends State<UploadPage> {
 
   Future<void> _displayPickImageDialog(
       BuildContext context, OnPickImageCallback onPick) async {
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Add optional parameters'),
-            content: Column(
-              children: <Widget>[
-                TextField(
-                  controller: maxWidthController,
-                  keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
-                  decoration: const InputDecoration(
-                      hintText: 'Enter maxWidth (please enter 300)'),
-                ),
-                TextField(
-                  controller: maxHeightController,
-                  keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
-                  decoration: const InputDecoration(
-                      hintText: 'Enter maxHeight (please enter 300)'),
-                ),
-                TextField(
-                  controller: qualityController,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                      hintText: 'Enter quality (please enter 60)'),
-                ),
-              ],
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: const Text('CANCEL'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              TextButton(
-                  child: const Text('PICK'),
-                  onPressed: () {
-                    final double? width = maxWidthController.text.isNotEmpty
-                        ? double.parse(maxWidthController.text)
-                        : null;
-                    final double? height = maxHeightController.text.isNotEmpty
-                        ? double.parse(maxHeightController.text)
-                        : null;
-                    final int? quality = qualityController.text.isNotEmpty
-                        ? int.parse(qualityController.text)
-                        : null;
-                    onPick(
-                        double.parse(maxWidthController.text),
-                        double.parse(maxHeightController.text),
-                        int.parse(qualityController.text));
-                    Navigator.of(context).pop();
-                  }),
-            ],
-          );
-        });
+    return selectedimage(context, onPick);
   }
 
   @override
