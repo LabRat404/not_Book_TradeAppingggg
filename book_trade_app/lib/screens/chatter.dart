@@ -7,11 +7,36 @@ import 'package:http/http.dart' as http;
 import 'package:trade_app/provider/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'dart:math';
+import 'dart:math' as math;
 import 'package:intl/intl.dart';
 import 'package:cron/cron.dart';
 import 'dart:async';
 import 'package:trade_app/routes/ip.dart' as globals;
 import 'package:trade_app/screens/showOtherUser.dart';
+import 'package:flutter/material.dart';
+import 'package:trade_app/widgets/reusable_widget.dart';
+import 'package:trade_app/screens/bookInfodetail.dart';
+import '/../widgets/camera.dart';
+import 'package:trade_app/provider/user_provider.dart';
+import 'dart:async';
+import 'dart:io';
+import 'dart:convert';
+import 'package:trade_app/widgets/nav_bar.dart';
+import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter/foundation.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:trade_app/services/auth/connector.dart';
+import 'package:trade_app/routes/ip.dart' as globals;
+
+import 'package:trade_app/screens/bookInfodetail.dart';
+import '/../widgets/camera.dart';
+import 'dart:io';
+import 'package:flutter/foundation.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:image_picker/image_picker.dart';
 
 var ipaddr = globals.ip;
 
@@ -24,6 +49,14 @@ class Chatter extends StatefulWidget {
 }
 
 class _ChatterState extends State<Chatter> {
+  final ImagePicker _picker = ImagePicker();
+  var maxWidthController = TextEditingController();
+  var maxHeightController = TextEditingController();
+  var qualityController = TextEditingController();
+
+  var ISBNController = TextEditingController();
+  var commentsController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -32,8 +65,217 @@ class _ChatterState extends State<Chatter> {
       String myuser = help.user.name;
       readJson(myuser);
     });
+    maxHeightController = new TextEditingController(text: '375');
+    maxWidthController = new TextEditingController(text: '375');
+    qualityController = new TextEditingController(text: '100');
     //startTask();
     //if use autp cron  job, rmb  to dispose  or else will have a green leak
+  }
+
+  Future<Directory?>? _tempDirectory;
+
+  void _requestTempDirectory() {
+    setState(() {
+      _tempDirectory = getTemporaryDirectory();
+    });
+  }
+
+  List<XFile>? _imageFileList;
+  void _setImageFileListFromFile(XFile? value) {
+    _imageFileList = value == null ? null : <XFile>[value];
+  }
+
+  dynamic _pickImageError;
+  bool isVideo = false;
+  String? _retrieveDataError;
+
+  Future<void> _onImageButtonPressed(ImageSource source,
+      {BuildContext? context, bool isMultiImage = false}) async {
+    if (isMultiImage) {
+      await _displayPickImageDialog(context!,
+          (double? maxWidth, double? maxHeight, int? quality) async {
+        try {
+          final List<XFile> pickedFileList = await _picker.pickMultiImage(
+            maxWidth: maxWidth,
+            maxHeight: maxHeight,
+            imageQuality: quality,
+          );
+          setState(() {
+            _imageFileList = pickedFileList;
+          });
+        } catch (e) {
+          setState(() {
+            _pickImageError = e;
+          });
+        }
+      });
+    } else {
+      await _displayPickImageDialog(context!,
+          (double? maxWidth, double? maxHeight, int? quality) async {
+        try {
+          final XFile? pickedFile = await _picker.pickImage(
+            source: source,
+            maxWidth: maxWidth,
+            maxHeight: maxHeight,
+            imageQuality: quality,
+          );
+          setState(() {
+            _setImageFileListFromFile(pickedFile);
+          });
+          print("hi");
+          String link = await uploading(widget.title);
+          print(link);
+          print("Heyyy");
+        } catch (e) {
+          setState(() {
+            _pickImageError = e;
+          });
+        }
+      });
+    }
+  }
+
+  @override
+  void deactivate() {
+    super.deactivate();
+  }
+
+  uploading(realusername) async {
+    if (_imageFileList != null) {
+      var request = http.MultipartRequest(
+          "POST", Uri.parse("https://api.imgur.com/3/image"));
+      request.fields['title'] = "dummyImage";
+      request.headers['Authorization'] = "Client-ID " + "4556ad76cb684d8";
+
+      String tempPath = "";
+      String appDocPath = "";
+      Directory appDocDir = await getApplicationDocumentsDirectory();
+      appDocPath = appDocDir.path;
+      print(appDocPath);
+      //get item num api
+      final File newImage =
+          await File(_imageFileList![0].path).copy('$appDocPath/tmp.png');
+      var picture = http.MultipartFile.fromBytes('image',
+          (await rootBundle.load('$appDocPath/tmp.png')).buffer.asUint8List(),
+          filename: 'test1.png');
+      request.files.add(picture);
+      var response = await request.send();
+      var responseData = await response.stream.toBytes();
+      var tmp2 = String.fromCharCodes(responseData);
+      Map<String, dynamic> result = json.decode(tmp2);
+      print(result);
+      return result['data']['link'];
+      // String name2 = result['data']['id'];
+      // String url2 = result['data']['link'];
+      // String delhash = result['data']['deletehash'];
+      // String dbISBN = ISBNController.text;
+      // String dbcomments = commentsController.text;
+      // String googlelink = resBody['infoLink'];
+      // String booktitle = resBody['title'];
+      // String author = resBody['authors'][0];
+      // print("this is googlelink ->" + googlelink);
+      // print("this is booktitle ->" + booktitle);
+      // print("this is author ->" + author);
+      // // if (result != null) {
+      // AuthService().uploadIng(
+      //   name: name2,
+      //   url: url2,
+      //   delhash: delhash,
+      //   dbISBN: dbISBN,
+      //   comments: dbcomments,
+      //   username: realusername,
+      //   googlelink: googlelink,
+      //   booktitle: booktitle,
+      //   author: author,
+      // );
+      // // }
+      // print("this is uname ->" + realusername);
+      // print("this is name ->" + name2);
+      // print("this is url ->" + url2);
+      // print("this is isbn ->" + dbISBN);
+      //output img num and such and the luv to ah bee
+    }
+    // your code
+  }
+
+  selectedimage(BuildContext context, OnPickImageCallback onPick) {
+    final double? width = maxWidthController.text.isNotEmpty
+        ? double.parse(maxWidthController.text)
+        : null;
+    final double? height = maxHeightController.text.isNotEmpty
+        ? double.parse(maxHeightController.text)
+        : null;
+    final int? quality = qualityController.text.isNotEmpty
+        ? int.parse(qualityController.text)
+        : null;
+    return onPick(
+        double.parse(maxWidthController.text),
+        double.parse(maxHeightController.text),
+        int.parse(qualityController.text));
+  }
+
+  @override
+  void dispose() {
+    maxWidthController.dispose();
+    maxHeightController.dispose();
+    qualityController.dispose();
+    ISBNController.dispose();
+    commentsController.dispose();
+    super.dispose();
+  }
+
+  Widget _previewImages() {
+    final Text? retrieveError = _getRetrieveErrorWidget();
+    if (retrieveError != null) {
+      return retrieveError;
+    }
+    if (_imageFileList != null) {
+      return Semantics(
+        label: 'image_picker_example_picked_images',
+        child: ListView.builder(
+          key: UniqueKey(),
+          itemBuilder: (BuildContext context, int index) {
+            // Why network for web?
+            // See https://pub.dev/packages/image_picker#getting-ready-for-the-web-platform
+            return Semantics(
+              label: 'image_picker_example_picked_image',
+              child: kIsWeb
+                  ? Image.network(_imageFileList![index].path)
+                  : Image.file(File(_imageFileList![0].path)),
+            );
+          },
+          itemCount: _imageFileList!.length,
+        ),
+      );
+    } else if (_pickImageError != null) {
+      return Text(
+        'Pick image error: $_pickImageError',
+        textAlign: TextAlign.center,
+      );
+    } else {
+      return const Text(
+        'Preview your Image here! ',
+        textAlign: TextAlign.center,
+      );
+    }
+  }
+
+  Widget _handlePreview() {
+    return _previewImages();
+  }
+
+  Text? _getRetrieveErrorWidget() {
+    if (_retrieveDataError != null) {
+      final Text result = Text(_retrieveDataError!);
+      _retrieveDataError = null;
+      return result;
+    }
+    return null;
+  }
+
+  Future<void> _displayPickImageDialog(
+      BuildContext context, OnPickImageCallback onPick) async {
+    return selectedimage(context, onPick);
   }
 
   var data2;
@@ -139,6 +381,80 @@ class _ChatterState extends State<Chatter> {
 
   @override
   Widget build(BuildContext context) {
+    Future<void> _cameraResults(BuildContext context) async {
+      final isbn = await Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const Camera()));
+      if (!mounted) return;
+      ISBNController.text = isbn;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Book Scanned with ISBN: $isbn")),
+      );
+    }
+
+    final CancelButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.redAccent,
+        minimumSize: const Size(350, 50),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+      ),
+      onPressed: () {
+        isVideo = false;
+        _onImageButtonPressed(ImageSource.gallery, context: context);
+      },
+      child: const Text('Upload image of the item'),
+    );
+
+    final Display = FutureBuilder<void>(
+      //future: retrieveLostData(),
+      builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.none:
+          case ConnectionState.waiting:
+            return const Text(
+              'You have not yet picked an image.  2',
+              textAlign: TextAlign.center,
+            );
+          case ConnectionState.done:
+            return _handlePreview();
+          default:
+            if (snapshot.hasError) {
+              return Text(
+                'Pick image/video error: ${snapshot.error}}',
+                textAlign: TextAlign.center,
+              );
+            } else {
+              return const Text(
+                'You have not yet picked an image. 3',
+                textAlign: TextAlign.center,
+              );
+            }
+        }
+      },
+    );
+
+    final ViewDetailsButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.pinkAccent,
+        minimumSize: const Size(350, 50),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+      ),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => InfoDetailPage(
+                    isbncode: ISBNController.text,
+                  )),
+        );
+        //this button should be disabled at first, if there is data fetched from ISBN, then it is enabled
+      },
+      child: const Text('View details'),
+    );
+
     Random random = new Random();
     var self = context.watch<UserProvider>().user.name;
     final now = new DateTime.now();
@@ -188,12 +504,15 @@ class _ChatterState extends State<Chatter> {
             ? Stack(
                 children: [
                   SingleChildScrollView(
+                    reverse: true,
                     child: Column(
                       children: <Widget>[
                         BubbleNormalImage(
                           id: 'id001',
-                          image: _image(),
-                          color: Colors.purpleAccent,
+                          image: _image("https://i.imgur.com/tmbVSc7.jpg"),
+                          color: Color((math.Random().nextDouble() * 0xFFFFFF)
+                                  .toInt())
+                              .withOpacity(1.0),
                           tail: true,
                           delivered: true,
                           isSender: data2["chatter"][1]["user"].toString() !=
@@ -207,7 +526,7 @@ class _ChatterState extends State<Chatter> {
                                 children: [
                               ElevatedButton.icon(
                                 icon: Icon(Icons.recycling),
-                                label: Text("Chat with user "),
+                                label: Text("View Trade Bucket"),
                                 onPressed: () async {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
@@ -234,6 +553,19 @@ class _ChatterState extends State<Chatter> {
                             DateChip(
                                 date: DateTime.parse(
                                     data2["chatter"][i]["dates"]))
+                          else if (data2["chatter"][i]["imges"] != null)
+                            BubbleNormalImage(
+                              id: data2["chatter"][i]["imges"],
+                              image: _image(data2["chatter"][i]["imges"]),
+                              color: Colors.greenAccent,
+                              tail: true,
+                              delivered: true,
+                              isSender:
+                                  data2["chatter"][1]["user"].toString() !=
+                                          widget.title
+                                      ? false
+                                      : true,
+                            )
                           else
                             BubbleSpecialOne(
                               text: data2["chatter"][i]["text"].toString(),
@@ -269,7 +601,11 @@ class _ChatterState extends State<Chatter> {
                           color: Colors.black,
                           size: 30,
                         ),
-                        onTap: () {},
+                        onTap: () {
+                          isVideo = false;
+                          _onImageButtonPressed(ImageSource.gallery,
+                              context: context);
+                        },
                       ),
                       Padding(
                         padding: EdgeInsets.only(left: 8, right: 8),
@@ -279,7 +615,11 @@ class _ChatterState extends State<Chatter> {
                             color: Colors.green,
                             size: 30,
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            isVideo = false;
+                            _onImageButtonPressed(ImageSource.camera,
+                                context: context);
+                          },
                         ),
                       ),
                     ],
@@ -338,14 +678,14 @@ class _ChatterState extends State<Chatter> {
         );
   }
 
-  Widget _image() {
+  Widget _image(String imglink) {
     return Container(
       constraints: BoxConstraints(
         minHeight: 20.0,
         minWidth: 20.0,
       ),
       child: CachedNetworkImage(
-        imageUrl: 'https://i.ibb.co/JCyT1kT/Asset-1.png',
+        imageUrl: imglink,
         progressIndicatorBuilder: (context, url, downloadProgress) =>
             CircularProgressIndicator(value: downloadProgress.progress),
         errorWidget: (context, url, error) => const Icon(Icons.error),
@@ -388,3 +728,6 @@ class _ChatterState extends State<Chatter> {
     });
   }
 }
+
+typedef OnPickImageCallback = void Function(
+    double? maxWidth, double? maxHeight, int? quality);

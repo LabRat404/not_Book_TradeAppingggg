@@ -163,8 +163,12 @@ class _ChatListState extends State<ChatList> {
                                 title: Text(
                                   who,
                                 ),
-                                subtitle: Text(
-                                    _items[index]["chatter"][long - 1]["text"]),
+                                subtitle: _items[index]["chatter"][long - 1]
+                                            ["image"] !=
+                                        null
+                                    ? Text("image")
+                                    : Text(_items[index]["chatter"][long - 1]
+                                        ["text"]),
                                 trailing: PopupMenuButton(
                                   itemBuilder: (context) {
                                     return [

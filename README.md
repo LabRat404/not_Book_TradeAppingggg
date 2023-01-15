@@ -11,7 +11,7 @@ WinDoriaHeartBack(So far far away QAQ)\
 Home page: chat with user becomes a trade request\
 ~~Upload page: Remove the Add optional  parameters menu,  maybe remake the interface~~\
 ~~ChatRecord: 3 dots add see user profile? ~~\
-Chatter: add  upload image and take  photo in chat\
+Chatter: add  upload image and take photo in chat\
 Chatter: Chat with  userbutton can show trade list \
 Settings: Privacy-> no display icon? \
 Settings: Dark mode?\
