@@ -21,6 +21,7 @@ Settings: Delete account\
 (FE) Your inventory page: maybe add search? \
 (FE) Trade Interface: Selection list for selecting self and other inventory\
 (FE) TradeB (trade Busket) for displaying the trading items\
+(FE) Remember me function for savingup account credentials
 
 Done List: \
 Upload page\

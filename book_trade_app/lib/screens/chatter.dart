@@ -49,6 +49,7 @@ class Chatter extends StatefulWidget {
 }
 
 class _ChatterState extends State<Chatter> {
+  Timer mytimer = Timer.periodic(Duration(), (timer) {});
   final ImagePicker _picker = ImagePicker();
   var maxWidthController = TextEditingController();
   var maxHeightController = TextEditingController();
@@ -60,11 +61,15 @@ class _ChatterState extends State<Chatter> {
   @override
   void initState() {
     super.initState();
+    run("run");
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       final help = Provider.of<UserProvider>(context, listen: false);
       String myuser = help.user.name;
       readJson(myuser);
     });
+
+    //Timer but need to think of disposing it
+
     maxHeightController = new TextEditingController(text: '375');
     maxWidthController = new TextEditingController(text: '375');
     qualityController = new TextEditingController(text: '100');
@@ -122,10 +127,7 @@ class _ChatterState extends State<Chatter> {
           setState(() {
             _setImageFileListFromFile(pickedFile);
           });
-          print("hi");
-          String link = await uploading(widget.title);
-          print(link);
-          print("Heyyy");
+          String link = await uploading();
         } catch (e) {
           setState(() {
             _pickImageError = e;
@@ -140,7 +142,10 @@ class _ChatterState extends State<Chatter> {
     super.deactivate();
   }
 
-  uploading(realusername) async {
+  uploading() async {
+    final help = Provider.of<UserProvider>(context, listen: false);
+    String myuser = help.user.name;
+
     if (_imageFileList != null) {
       var request = http.MultipartRequest(
           "POST", Uri.parse("https://api.imgur.com/3/image"));
@@ -151,7 +156,7 @@ class _ChatterState extends State<Chatter> {
       String appDocPath = "";
       Directory appDocDir = await getApplicationDocumentsDirectory();
       appDocPath = appDocDir.path;
-      print(appDocPath);
+
       //get item num api
       final File newImage =
           await File(_imageFileList![0].path).copy('$appDocPath/tmp.png');
@@ -163,8 +168,41 @@ class _ChatterState extends State<Chatter> {
       var responseData = await response.stream.toBytes();
       var tmp2 = String.fromCharCodes(responseData);
       Map<String, dynamic> result = json.decode(tmp2);
-      print(result);
-      return result['data']['link'];
+
+      Random random = new Random();
+      final now = new DateTime.now();
+      print("heres the link");
+      print(result['data']['link']);
+
+      var res = await http.post(
+          //localhost
+          //Uri.parse('http://172.20.10.3:3000/api/bookinfo'),
+          Uri.parse('http://$ipaddr/api/bookinfo'),
+          body: jsonEncode({"book_isbn": ISBNController.text}),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          });
+
+      var returnstring =
+          await http.post(Uri.parse('http://$ipaddr/api/PhotoChat'),
+              body: jsonEncode({
+                "self": myuser,
+                "notself": widget.title,
+                "images": result['data']['link'],
+                "randomhash": random.nextInt(100000) + 10,
+                "dates": new DateFormat('yyyy-MM-dd')
+                    .format(new DateTime.now())
+                    .toString(),
+              }),
+              headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          });
+
+      if (returnstring.body == "done") {
+        sendmsg(myuser, "loadimgloading", random.nextInt(100000) + 10);
+      }
+
+      return returnstring.body;
       // String name2 = result['data']['id'];
       // String url2 = result['data']['link'];
       // String delhash = result['data']['deletehash'];
@@ -214,6 +252,15 @@ class _ChatterState extends State<Chatter> {
         int.parse(qualityController.text));
   }
 
+  run(String value) {
+    mytimer = Timer.periodic(Duration(seconds: 3), (timer) {
+      final help = Provider.of<UserProvider>(context, listen: false);
+      String myuser = help.user.name;
+      readJson(myuser);
+    });
+    if (value == "norun") mytimer.cancel();
+  }
+
   @override
   void dispose() {
     maxWidthController.dispose();
@@ -221,6 +268,8 @@ class _ChatterState extends State<Chatter> {
     qualityController.dispose();
     ISBNController.dispose();
     commentsController.dispose();
+
+    mytimer.cancel();
     super.dispose();
   }
 
@@ -553,20 +602,38 @@ class _ChatterState extends State<Chatter> {
                             DateChip(
                                 date: DateTime.parse(
                                     data2["chatter"][i]["dates"]))
-                          else if (data2["chatter"][i]["imges"] != null)
+                          else if (data2["chatter"][i]["images"] != null)
                             BubbleNormalImage(
-                              id: data2["chatter"][i]["imges"],
-                              image: _image(data2["chatter"][i]["imges"]),
-                              color: Colors.greenAccent,
+                              id: data2["chatter"][i]["images"],
+                              image: Container(
+                                constraints: BoxConstraints(
+                                  minHeight: 20.0,
+                                  minWidth: 20.0,
+                                ),
+                                child: CachedNetworkImage(
+                                  imageUrl: data2["chatter"][i]["images"],
+                                  progressIndicatorBuilder:
+                                      (context, url, downloadProgress) =>
+                                          CircularProgressIndicator(
+                                              value: downloadProgress.progress),
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(Icons.error),
+                                ),
+                              ),
+                              color: Color(
+                                      (math.Random().nextDouble() * 0xFFFFFF)
+                                          .toInt())
+                                  .withOpacity(1.0),
                               tail: true,
                               delivered: true,
                               isSender:
-                                  data2["chatter"][1]["user"].toString() !=
+                                  data2["chatter"][i]["user"].toString() !=
                                           widget.title
-                                      ? false
-                                      : true,
+                                      ? true
+                                      : false,
                             )
-                          else
+                          else if (data2["chatter"][i]["text"].toString() !=
+                              "loadimgloading")
                             BubbleSpecialOne(
                               text: data2["chatter"][i]["text"].toString(),
                               isSender:

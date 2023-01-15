@@ -33,6 +33,7 @@ class ChatList extends StatefulWidget {
 }
 
 class _ChatListState extends State<ChatList> {
+  Timer mytimer = Timer.periodic(Duration(), (timer) {});
   @override
   //String realusername = 'doria';
 
@@ -48,6 +49,7 @@ class _ChatListState extends State<ChatList> {
       String realusername = help.user.name;
       readJson(realusername);
     });
+    run("hi");
     //startTask();
   }
 
@@ -114,6 +116,21 @@ class _ChatListState extends State<ChatList> {
     return ("tried");
   }
 
+  run(String value) {
+    mytimer = Timer.periodic(Duration(seconds: 3), (timer) {
+      final help = Provider.of<UserProvider>(context, listen: false);
+      String myuser = help.user.name;
+      readJson(myuser);
+    });
+    if (value == "norun") mytimer.cancel();
+  }
+
+  @override
+  void dispose() {
+    mytimer.cancel();
+    super.dispose();
+  }
+
   delchat() {}
   // getdata(dbisbn) async {
   //   var res = await http.post(
@@ -164,11 +181,13 @@ class _ChatListState extends State<ChatList> {
                                   who,
                                 ),
                                 subtitle: _items[index]["chatter"][long - 1]
-                                            ["image"] !=
+                                            ["images"] !=
                                         null
-                                    ? Text("image")
+                                    ? Text("images")
                                     : Text(_items[index]["chatter"][long - 1]
                                         ["text"]),
+                                // : Text(_items[index]["chatter"][long - 1]
+                                //     ["text"]),
                                 trailing: PopupMenuButton(
                                   itemBuilder: (context) {
                                     return [
