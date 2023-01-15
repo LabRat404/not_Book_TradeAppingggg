@@ -253,7 +253,7 @@ class _ChatterState extends State<Chatter> {
   }
 
   run(String value) {
-    mytimer = Timer.periodic(Duration(seconds: 3), (timer) {
+    mytimer = Timer.periodic(Duration(seconds: 40), (timer) {
       final help = Provider.of<UserProvider>(context, listen: false);
       String myuser = help.user.name;
       readJson(myuser);
