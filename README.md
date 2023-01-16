@@ -3,14 +3,14 @@ The app is now available on testflight!\
 Email me if u wana join as a beta tester! ggwp12335@gmail.com\
 
 
-To Do List (FE_Iron lol): \
+To Do List (FE_Iron lol):
 
 WinDoriaHeartBack(So far far away QAQ)\
 ~~Chatter: (Chat Icon using hardcode)~~\
 ~~Showotheruser_page: remove duplicated chat with user~~\
 Home page: chat with user becomes a trade request\
 ~~Upload page: Remove the Add optional  parameters menu,  maybe remake the interface~~\
-~~ChatRecord: 3 dots add see user profile? ~~(cannot  prompt)\
+~~ChatRecord: 3 dots add see user profile?(cannot  prompt)~~\
 ~~Chatter: add  upload image and take photo in chat~~\
 ~~Chatter: Auto Load~~\
 Chatter: Chat with  userbutton can show trade list \
