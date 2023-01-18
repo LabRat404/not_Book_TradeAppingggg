@@ -9,7 +9,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
 import 'package:trade_app/screens/chatter.dart';
 import 'package:trade_app/routes/ip.dart' as globals;
-import 'package:trade_app/screens/tradeSelectList.dart';
 
 var ipaddr = globals.ip;
 
@@ -111,28 +110,12 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  // final slide = ImageSlideshow(
-  //   indicatorColor: Colors.white,
-  //   onPageChanged: (value) {},
-  //   autoPlayInterval: 3000,
-  //   isLoop: true,
-  //   children: [
-  //     Image.network(
-  //         "http://books.google.com/books/content?id=-VfNSAAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"),
-  //     Image.network(
-  //         "http://books.google.com/books/content?id=fltxyAEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api"),
-  //     Image.network(
-  //         "http://books.google.com/books/content?id=T929zgEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"),
-  //   ],
-  // );
-  //I dont like this, its hard coding and I tried not to, but maybe will fix it later
   final loopBOM = ImageSlideshow(
     indicatorColor: Colors.white,
     onPageChanged: (value) {},
     autoPlayInterval: 3000,
     isLoop: true,
     children: [
-      //for(int i=0, i<x; i++)
       TextButton.icon(
         style: ButtonStyle(backgroundColor: null),
         onPressed: () async {
@@ -192,7 +175,7 @@ class _HomePageState extends State<HomePage> {
       ),
     ],
   );
-  //I dont like this, its hard coding and I tried not to, but maybe will fix it later
+
   loopRec() {
     return ImageSlideshow(
       indicatorColor: Colors.white,
@@ -236,21 +219,13 @@ class _HomePageState extends State<HomePage> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Trade Request Sent!')),
                       );
-
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => TradeList(),
+                          builder: (context) =>
+                              Chatter(title: _items[i]["username"].toString()),
                         ),
                       );
-
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) =>
-                      //         Chatter(title: _items[i]["username"].toString()),
-                      //   ),
-                      // );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
@@ -287,7 +262,6 @@ class _HomePageState extends State<HomePage> {
   final bm = Text.rich(
     TextSpan(
       text: 'Books of the month! ',
-
       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
       // default text style
     ),
@@ -319,13 +293,9 @@ class _HomePageState extends State<HomePage> {
         children: <Widget>[
           SizedBox(height: 30.0),
           bm,
-
           loopBOM,
-
           heading,
           loopRec(),
-
-          //category_text,
         ],
       ),
     );
