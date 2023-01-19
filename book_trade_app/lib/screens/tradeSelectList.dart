@@ -27,7 +27,19 @@ class _TradeListState extends State<TradeList> {
             onTap: () => onTap(isSelected!, index),
             title: Text("${data['name']}"),
             subtitle: Text("${data['email']}"),
-            leading: _buildSelectIcon(isSelected!, data),
+            leading: Wrap(
+              spacing: 12, // space between two icons
+              children: <Widget>[
+                if (isSelected!)
+                  Icon(
+                    Icons.check_box_outline_blank,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                CircleAvatar(
+                  child: Text('${data['id']}'),
+                )
+              ],
+            ),
           );
         },
         itemCount: staticData.length,
@@ -54,18 +66,16 @@ class _TradeListState extends State<TradeList> {
     });
   }
 
-  Widget _buildSelectIcon(bool isSelected, Map data) {
-    if (isSelectionMode) {
-      return Icon(
-        isSelected ? Icons.check_box : Icons.check_box_outline_blank,
-        color: Theme.of(context).primaryColor,
-      );
-    } else {
-      return CircleAvatar(
-        child: Text('${data['id']}'),
-      );
-    }
-  }
+  // Widget _buildSelectIcon(bool isSelected, Map data) {
+  //   if (isSelectionMode) {
+  //     return Icon(
+  //       isSelected ? Icons.check_box : Icons.check_box_outline_blank,
+  //       color: Theme.of(context).primaryColor,
+  //     );
+  //   } else {
+  //     return
+  //   }
+  // }
 
   Widget? _buildSelectAllButton() {
     bool isFalseAvailable = selectedFlag.containsValue(false);
