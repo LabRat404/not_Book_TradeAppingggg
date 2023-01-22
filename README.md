@@ -17,7 +17,7 @@ Chatter: Chat with  userbutton can show trade list \
 Settings: Privacy-> no display icon? \
 Settings: Dark mode?\
 Settings: About -> website for intro\
-Settings: Change email/password\
+Settings: Change email/password\ In progress... (ahbee how u hash it QAQ)
 Settings: Delete account\
 (FE) Your inventory page: maybe add search? \
 (FE) Trade Interface: Selection list for selecting self and other inventory\
