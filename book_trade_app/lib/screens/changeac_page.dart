@@ -1,5 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:trade_app/widgets/reusable_widget.dart';
+import 'package:http/http.dart' as http;
+import 'package:trade_app/routes/ip.dart' as globals;
+import 'package:flutter/material.dart';
+import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
+import 'package:trade_app/widgets/reusable_widget.dart';
+import 'package:trade_app/provider/user_provider.dart';
+import 'package:provider/provider.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
+import 'dart:async';
+import 'package:trade_app/screens/chatter.dart';
+import 'package:trade_app/routes/ip.dart' as globals;
+
+var ipaddr = globals.ip;
 
 class ChangePage extends StatefulWidget {
   static String tag = 'change-page';
@@ -19,6 +34,24 @@ class _ChangePageState extends State<ChangePage> {
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
+  }
+
+//in progress (not sure how ah bee encrypts it...)
+  change() async {
+    final help = Provider.of<UserProvider>(context, listen: false);
+    String myuser = help.user.name;
+    var res = await http.post(
+        //localhost
+        //Uri.parse('http://172.20.10.3:3000/api/bookinfo'),
+        Uri.parse('http://$ipaddr/api/bookinfo'),
+        body: jsonEncode({
+          "username": myuser,
+          "email": emailController.text,
+          "password": passwordController.text
+        }),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        });
   }
 
   @override
@@ -84,7 +117,8 @@ class _ChangePageState extends State<ChangePage> {
           borderRadius: BorderRadius.circular(10.0),
         ),
       ),
-      onPressed: () {
+      onPressed: () async {
+        change();
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Still developing (ノಠ益ಠ) ノ彡 ┻━┻")),
         );
