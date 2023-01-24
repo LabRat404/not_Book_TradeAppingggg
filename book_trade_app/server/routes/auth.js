@@ -215,7 +215,7 @@ authRouter.put("/api/changeavatar/:username", async (req, res) => {
 
 });
 
-//not finished
+
 authRouter.put("/api/changegmailpw/", async (req, res) => {
   //console.log(req.params["username"]+ req.body['url']);
   User
@@ -229,7 +229,7 @@ authRouter.put("/api/changegmailpw/", async (req, res) => {
       results.email = req.body['email'];
       results.password = req.body['password'];
       results.save();
-      res.send(results);
+      res.send('ok');
       //console.log(results  + "ASdasdsadasdsad test" + req.body['url']);
       }
    }
