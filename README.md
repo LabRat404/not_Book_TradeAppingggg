@@ -1,6 +1,8 @@
 # new_start
 
 Taking a break ._.
+Why so many dam assignments QAQ
+I wana do more this
 
 The app is now available on testflight!\
 Email me if u wana join as a beta tester! ggwp12335@gmail.com\
