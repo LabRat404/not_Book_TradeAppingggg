@@ -659,13 +659,8 @@ class _ChatterState extends State<Chatter> {
                     ),
                   ),
                   MessageBar(
-                    onTextChanged: (String? newValue) {
-                      setState(() {
-                        MsgController.text = newValue!;
-                        newValue = MsgController.text;
-                      });
-                    },
                     onSend: (msg) => {
+                      print('tets'),
                       sendmsg(self, msg, random.nextInt(100000) + 10),
                     },
                     actions: [

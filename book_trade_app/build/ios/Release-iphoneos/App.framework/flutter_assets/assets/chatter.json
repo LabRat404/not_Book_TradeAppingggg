@@ -1,0 +1,29 @@
+{
+  "_id": {
+    "$oid": "63b70211b9a272499097e7bd"
+  },
+  "self": "tangjaii",
+  "notself": "doria",
+  "randomhash": "25345",
+  "lastdate": "2023-01-06",
+  "chatter": [
+    {
+      "dates": "2023-01-04"
+    },
+    {
+      "user": "tangjaii",
+      "text": "Love u babe <3"
+    },  {
+      "dates": "2023-01-06"
+    },
+    {
+      "user": "tangjaii",
+      "text": "Miss utoo QAQ"
+    },
+    {
+      "user": "doria",
+      "text": "ok"
+    }
+  ],
+  "__v": 0
+}
