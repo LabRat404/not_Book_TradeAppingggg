@@ -16,8 +16,10 @@ import 'package:trade_app/screens/showOtherUser.dart';
 import 'package:flutter/material.dart';
 import 'package:trade_app/widgets/reusable_widget.dart';
 import 'package:trade_app/screens/bookInfodetail.dart';
+import 'package:trade_app/screens/tradeshowlist.dart';
 import '/../widgets/camera.dart';
 import 'package:trade_app/provider/user_provider.dart';
+
 import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
@@ -582,6 +584,11 @@ class _ChatterState extends State<Chatter> {
                                     const SnackBar(
                                         content: Text(
                                             "Still developing (ノಠ益ಠ) ノ彡 ┻━┻")),
+                                  );
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => TradeShowList()),
                                   );
                                 },
                                 style: ElevatedButton.styleFrom(
