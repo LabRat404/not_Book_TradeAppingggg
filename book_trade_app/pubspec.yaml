@@ -61,7 +61,6 @@ dependencies:
   intl: ^0.17.0
   auto_reload: ^1.1.0
   cron: ^0.5.1
-  flutter_secure_storage: ^8.0.0
   
 
 dev_dependencies:

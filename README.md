@@ -27,9 +27,6 @@ Settings: Delete account\
 (FE) TradeB (trade Busket) for displaying the trading items\
 (FE) Remember me function for savingup account credentials
 nsv bsr caps  change and book -> uploadbook
-Tag list
-Trade history 
-
 
 Done List: \
 Upload page\
@@ -45,6 +42,6 @@ Basicsetting page\
 Auto refresh(Abord)\
 On Testflight\
 Real useable app on apple Beta Test with 2 testers\
-Add comment bug, no comment book will not upload
+
 
 Wish you all a good day!\

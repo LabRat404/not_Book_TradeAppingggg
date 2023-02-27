@@ -301,16 +301,8 @@ class _UploadPageState extends State<UploadPage> {
           context, MaterialPageRoute(builder: (context) => const Camera()));
       if (!mounted) return;
       ISBNController.text = isbn;
-
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Book Scanned with ISBN: $isbn")),
-      );
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => InfoDetailPage(
-                  isbncode: ISBNController.text,
-                )),
       );
     }
 
