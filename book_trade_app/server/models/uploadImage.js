@@ -32,7 +32,7 @@ var imageSchema = new mongoose.Schema({
         type: String,
     },
     comments: {
-        required: true,
+        required: false,
         type: String,
     },
     googlelink: {
