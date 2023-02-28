@@ -304,6 +304,13 @@ class _UploadPageState extends State<UploadPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Book Scanned with ISBN: $isbn")),
       );
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => InfoDetailPage(
+                  isbncode: ISBNController.text,
+                )),
+      );
     }
 
     final CancelButton = ElevatedButton(

@@ -561,7 +561,7 @@ class _ChatterState extends State<Chatter> {
                       children: <Widget>[
                         BubbleNormalImage(
                           id: 'id001',
-                          image: _image("https://i.imgur.com/tmbVSc7.jpg"),
+                          image: _image("https://i.imgur.com/vGgUHFg.jpg"),
                           color: Color((math.Random().nextDouble() * 0xFFFFFF)
                                   .toInt())
                               .withOpacity(1.0),
@@ -588,7 +588,8 @@ class _ChatterState extends State<Chatter> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => TradeShowList()),
+                                        builder: (context) => TradeShowList(
+                                            otherusername: widget.title)),
                                   );
                                 },
                                 style: ElevatedButton.styleFrom(
