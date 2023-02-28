@@ -2,16 +2,18 @@ const express = require('express');
 const User = require("../models/user");
 const Image2 = require("../models/uploadImage");
 const Chatters = require("../models/chatters");
+const TradeBucket = require("../models/tradebucket");
 const isbn = require('node-isbn');
 const bcryptjs = require('bcryptjs');
 const jwt = require("jsonwebtoken");
 const { text } = require('body-parser');
 const authRouter = express.Router();
 
+
 authRouter.get("/test", (req, res) => {
-    res.json({
-        test: "this is the testing api"
-    });
+  res.json({
+      test: "this is the testing api"
+  });
 });
 
 authRouter.post("/api/bookinfo", async (req, res) => {
@@ -521,5 +523,21 @@ authRouter.post("/api/PhotoChat", async (req, res) => {
   } catch (e) {
       res.status(500).json({ error: e.message });
   }
+});
+
+authRouter.get("/gettradebusket/:randomhash", (req, res) => {
+
+  TradeBucket
+  .find({randomhash : req.params["randomhash"]})
+  .exec( (e, results) => {
+      if (e)
+        res.send("Error not known");
+    else if(results == null)
+        res.send("404 not found. No records found!", 404);
+      else{
+      res.send(results);
+      }
+   }
+   ); 
 });
 module.exports = authRouter; //allow public access
