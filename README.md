@@ -22,13 +22,13 @@ Settings: Dark mode?\
 Settings: About -> website for intro\
 Settings: Change email/password\ In progress... (ahbee how u hash it QAQ)
 Settings: Delete account\
-(FE) Your inventory page: maybe add search? \
 (FE) Trade Interface: Selection list for selecting self and other inventory\
 (FE) TradeB (trade Busket) for displaying the trading items\
 (FE) Remember me function for savingup account credentials
 nsv bsr caps  change and book -> uploadbook
 
 Done List: \
+80% done???
 Upload page\
 Inventory List\
 Book Search List\
