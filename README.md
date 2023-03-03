@@ -1,6 +1,7 @@
 # new_start
 
-Im back! Still miss her tho
+Im back! Still miss her alot tho :(
+When will u be bacc
 
 The app is now available on testflight!\
 Email me if u wana join as a beta tester! ggwp12335@gmail.com\
