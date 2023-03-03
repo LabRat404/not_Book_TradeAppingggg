@@ -14,9 +14,7 @@ var ipaddr = globals.ip;
 class ISBN_info {
   final String title;
   final String publishedDate;
-
   ISBN_info({required this.title, required this.publishedDate});
-
   factory ISBN_info.fromJson(Map<String, dynamic> json) {
     final title = json['subtitle'] as String;
     final publishedDate = json['publishedDate'] as String;
@@ -83,13 +81,13 @@ class _ShowotherUserState extends State<ShowotherUser> {
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         });
-
     print(resaa);
     final data = await json.decode(resaa.body);
     setState(() {
       links = data["address"];
     });
   }
+  // us buy baby or urkaine body atonomy
 
   // getdata(dbisbn) async {
   //   var res = await http.post(
