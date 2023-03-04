@@ -108,7 +108,7 @@ class _ChatListState extends State<ChatList> {
       }
     }
     //print(whoimage[0]);
-    print("length : is :" + whoimage.length.toString());
+    //print("length : is :" + whoimage.length.toString());
     setState(() {
       _items = data;
       loadusernameimage = whoimage;
