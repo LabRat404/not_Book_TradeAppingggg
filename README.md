@@ -17,6 +17,8 @@ Home page: chat with user becomes a trade request\
 ~~ChatRecord: 3 dots add see user profile?(cannot  prompt)~~\
 ~~Chatter: add  upload image and take photo in chat~~\
 ~~Chatter: Auto Load~~\
+~~ShowTradeB (trade Busket) for displaying the trading items~~\
+Edit/CreateTradeB (trade Busket) for displaying the trading items\
 Chatter: Chat with  userbutton can show trade list \
 Settings: Privacy-> no display icon? \
 Settings: Dark mode?\
@@ -24,12 +26,11 @@ Settings: About -> website for intro\
 Settings: Change email/password\ In progress... (ahbee how u hash it QAQ)
 Settings: Delete account\
 (FE) Trade Interface: Selection list for selecting self and other inventory\
-(FE) TradeB (trade Busket) for displaying the trading items\
 (FE) Remember me function for savingup account credentials
 nsv bsr caps  change and book -> uploadbook
 
 Done List: \
-80% done???
+90% done???
 Upload page\
 Inventory List\
 Book Search List\
@@ -39,6 +40,7 @@ Better home page\
 Other user profile\
 Chatter\
 Chatter Record\
+TradeShowList\
 Basicsetting page\
 Auto refresh(Abord)\
 On Testflight\
