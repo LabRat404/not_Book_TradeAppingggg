@@ -21,6 +21,9 @@ var bucketSchema = new mongoose.Schema({
       "status":{
         "type": "String"
       },
+      "editing":{
+        "type": "String"
+      },
       
     "selflist": {
       "type": [

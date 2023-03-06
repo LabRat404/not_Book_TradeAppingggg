@@ -525,10 +525,22 @@ authRouter.post("/api/PhotoChat", async (req, res) => {
   }
 });
 
-authRouter.get("/gettradebusket/:randomhash", (req, res) => {
+authRouter.post("/api/gettradebusket", (req, res) => {
 
+  console.log('asdasdsadas');
+  console.log( req.body["self"]);
+  console.log( req.body["notself"]);
   TradeBucket
-  .find({randomhash : req.params["randomhash"]})
+  .find({$or: [
+    {
+      self: req.body["self"],
+      notself: req.body["notself"]
+    },
+    {
+      self: req.body["notself"],
+      notself: req.body["self"]
+    }
+  ]})
   .exec( (e, results) => {
       if (e)
         res.send("Error not known");
