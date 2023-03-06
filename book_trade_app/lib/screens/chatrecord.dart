@@ -6,6 +6,7 @@ import 'package:trade_app/provider/user_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:trade_app/screens/chatter.dart';
 import 'package:cron/cron.dart';
+import 'package:trade_app/screens/tradeshowlist.dart';
 import 'dart:async';
 import 'package:trade_app/screens/showOtherUser.dart';
 import 'package:trade_app/routes/ip.dart' as globals;
@@ -27,7 +28,7 @@ class ISBN_info {
 
 class ChatList extends StatefulWidget {
   const ChatList({Key? key}) : super(key: key);
-  static const String routeName = '/bookinfo';
+
   @override
   State<ChatList> createState() => _ChatListState();
 }
@@ -61,15 +62,23 @@ class _ChatListState extends State<ChatList> {
       readJson(myuser);
     });
   }
+
   // void didChangeDependencies() {
   //   debugPrint(
   //       'Child widget: didChangeDependencies(), counter = $realusername');
   //   super.didChangeDependencies();
   // }
-
+  // void opentrade(who) {
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+  //         builder: (context) => TradeShowList(otherusername: who)),
+  //   );
+  // }
   List _items = [];
   List loadusernameimage = [];
   // Fetch content from the json file
+
   Future<String> readJson(realusername) async {
     //load  the json here!!
     //fetch here
@@ -191,13 +200,9 @@ class _ChatListState extends State<ChatList> {
                                 trailing: PopupMenuButton(
                                   itemBuilder: (context) {
                                     return [
-                                      // PopupMenuItem(
-                                      //   value: 'edit',
-                                      //   child: Text('Edit'),
-                                      // ),
                                       PopupMenuItem(
                                         value: 'delete',
-                                        child: Text('Delete'),
+                                        child: Text('Delete Chat'),
                                         onTap: () async {
                                           var delhash =
                                               _items[index]["randomhash"];
