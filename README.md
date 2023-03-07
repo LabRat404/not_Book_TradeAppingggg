@@ -18,19 +18,19 @@ Home page: chat with user becomes a trade request\
 ~~Chatter: add  upload image and take photo in chat~~\
 ~~Chatter: Auto Load~~\
 ~~ShowTradeB (trade Busket) for displaying the trading items~~\
-Edit/CreateTradeB (trade Busket) for displaying the trading items\
-Chatter: Chat with  userbutton can show trade list \
+~~Edit/CreateTradeB (trade Busket) for displaying the trading items~~\
+~~Chatter: Chat with  userbutton can show trade list ~~\
+~~(FE) Trade Interface: Selection list for selecting self and other inventory~~\
+(FE) Remember me function for savingup account credentials
+nsv bsr caps  change and book -> uploadbook
 Settings: Privacy-> no display icon? \
 Settings: Dark mode?\
 Settings: About -> website for intro\
 Settings: Change email/password\ In progress... (ahbee how u hash it QAQ)
 Settings: Delete account\
-(FE) Trade Interface: Selection list for selecting self and other inventory\
-(FE) Remember me function for savingup account credentials
-nsv bsr caps  change and book -> uploadbook
 
 Done List: \
-90% done???
+Trade List Pages\
 Upload page\
 Inventory List\
 Book Search List\
