@@ -8,6 +8,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:trade_app/screens/chatter.dart';
 import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
 import 'package:trade_app/routes/ip.dart' as globals;
+import 'dart:async';
+import 'package:trade_app/screens/tradeCreateList.dart';
 
 var ipaddr = globals.ip;
 
@@ -139,19 +141,47 @@ class _ShowotherUserState extends State<ShowotherUser> {
                             ButtonBar(children: [
                               ElevatedButton.icon(
                                 icon: Icon(Icons.chat_outlined),
-                                label: Text("Chat with user " + username),
+                                label: Text("Trade with user " + username),
                                 onPressed: () async {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content: Text('Trade Request Sent!')),
-                                  );
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          Chatter(title: username),
-                                    ),
-                                  );
+                                  http.Response showInfo = await http.post(
+                                      Uri.parse(
+                                          'http://$ipaddr/api/gettradebusket'),
+                                      body: jsonEncode({
+                                        "self": self,
+                                        "notself": username,
+                                      }),
+                                      headers: <String, String>{
+                                        'Content-Type':
+                                            'application/json; charset=UTF-8',
+                                      });
+                                  //var showInfo = await rootBundle.loadString('assets/tradebucket.json');
+                                  print('asdsadsad');
+                                  print(showInfo.body.toString());
+                                  if (showInfo.body.toString() == "Empty") {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content: Text(
+                                              'Please create a Trade Offer')),
+                                    );
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => TradeCreateList(
+                                            otherusername: username),
+                                      ),
+                                    );
+                                  } else {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            Chatter(title: username),
+                                      ),
+                                    );
+                                  }
+                                  // ScaffoldMessenger.of(context).showSnackBar(
+                                  //   const SnackBar(content: Text('Trade Request Sent!')),
+                                  // );
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.green,
@@ -189,24 +219,6 @@ class _ShowotherUserState extends State<ShowotherUser> {
                           ),
                           ButtonBar(
                             children: [
-                              if (username != self)
-                                ElevatedButton.icon(
-                                  icon: Icon(Icons.recycling),
-                                  label: Text("Trade with user " + username),
-                                  onPressed: () async {
-                                    print("Trade!Book hash is " +
-                                        _items[index]["name"]);
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          content: Text(
-                                              "Still developing (ノಠ益ಠ) ノ彡 ┻━┻")),
-                                    );
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.green,
-                                    shadowColor: Colors.orange,
-                                  ),
-                                ),
                               ElevatedButton.icon(
                                 icon: Icon(Icons.link),
                                 label: Text("Show more on Google Play Book"),

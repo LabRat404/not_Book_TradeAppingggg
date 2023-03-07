@@ -8,6 +8,18 @@ import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:trade_app/screens/chatter.dart';
 import 'package:trade_app/routes/ip.dart' as globals;
+import 'package:flutter/material.dart';
+import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
+import 'package:trade_app/widgets/reusable_widget.dart';
+import 'package:trade_app/provider/user_provider.dart';
+import 'package:provider/provider.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
+import 'dart:async';
+import 'package:trade_app/screens/chatter.dart';
+import 'package:trade_app/screens/tradeCreateList.dart';
+import 'package:trade_app/routes/ip.dart' as globals;
 
 var ipaddr = globals.ip;
 
@@ -39,6 +51,7 @@ class _SearchPageState extends State<SearchPage> {
     });
   }
 
+  String myselff = '';
   List _items = [];
   Future<void> readJson(realusername) async {
     //load  the json here!!
@@ -53,6 +66,7 @@ class _SearchPageState extends State<SearchPage> {
     setState(() {
       _items = data;
       _items_full = _items;
+      myselff = realusername;
     });
   }
 
@@ -133,25 +147,58 @@ class _SearchPageState extends State<SearchPage> {
                                   if (_items[index]["username"] != self)
                                     ElevatedButton.icon(
                                       icon: Icon(Icons.chat_outlined),
-                                      label: Text("Chat with user " +
+                                      label: Text("Trade with user " +
                                           _items[index]["username"]),
                                       onPressed: () async {
-                                        print("Trade!Book hash is " +
-                                            _items[index]["name"]);
-                                        // ScaffoldMessenger.of(context)
-                                        //     .showSnackBar(
-                                        //   const SnackBar(
-                                        //       content:
-                                        //           Text('Trade Request Sent!')),
+                                        http.Response showInfo = await http.post(
+                                            Uri.parse(
+                                                'http://$ipaddr/api/gettradebusket'),
+                                            body: jsonEncode({
+                                              "self": myselff,
+                                              "notself": _items[index]
+                                                      ["username"]
+                                                  .toString(),
+                                            }),
+                                            headers: <String, String>{
+                                              'Content-Type':
+                                                  'application/json; charset=UTF-8',
+                                            });
+                                        //var showInfo = await rootBundle.loadString('assets/tradebucket.json');
+                                        print('asdsadsad');
+                                        print(showInfo.body.toString());
+                                        if (showInfo.body.toString() ==
+                                            "Empty") {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                                content: Text(
+                                                    'Please create a Trade Offer')),
+                                          );
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  TradeCreateList(
+                                                      otherusername:
+                                                          _items[index]
+                                                                  ["username"]
+                                                              .toString()),
+                                            ),
+                                          );
+                                        } else {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => Chatter(
+                                                  title: _items[index]
+                                                          ["username"]
+                                                      .toString()),
+                                            ),
+                                          );
+                                        }
+                                        // ScaffoldMessenger.of(context).showSnackBar(
+                                        //   const SnackBar(content: Text('Trade Request Sent!')),
                                         // );
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => Chatter(
-                                                title: _items[index]
-                                                    ["username"]),
-                                          ),
-                                        );
                                       },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.green,

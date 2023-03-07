@@ -1,110 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:trade_app/screens/data.dart';
-import 'package:trade_app/screens/chatter.dart';
-import 'package:trade_app/screens/tradeSelectList.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
-import 'package:chat_bubbles/chat_bubbles.dart';
-import 'package:audioplayers/audioplayers.dart';
-import "package:cached_network_image/cached_network_image.dart";
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:trade_app/provider/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'dart:math';
-import 'dart:math' as math;
 import 'package:intl/intl.dart';
 import 'package:cron/cron.dart';
 import 'dart:async';
 import 'package:trade_app/routes/ip.dart' as globals;
-import 'package:trade_app/screens/showOtherUser.dart';
-import 'package:flutter/material.dart';
-import 'package:trade_app/widgets/reusable_widget.dart';
-import 'package:trade_app/screens/bookInfodetail.dart';
-import 'package:trade_app/screens/tradeshowlist.dart';
-import '/../widgets/camera.dart';
-import 'package:trade_app/provider/user_provider.dart';
-
-import 'dart:async';
-import 'dart:io';
-import 'dart:convert';
 import 'package:trade_app/widgets/nav_bar.dart';
-import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
-import 'package:flutter/foundation.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
-import 'package:trade_app/services/auth/connector.dart';
-import 'package:trade_app/routes/ip.dart' as globals;
-
-import 'package:trade_app/screens/bookInfodetail.dart';
-import '/../widgets/camera.dart';
-import 'dart:io';
-import 'package:flutter/foundation.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:image_picker/image_picker.dart';
-
-import 'package:google_fonts/google_fonts.dart';
-import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:trade_app/widgets/reusable_widget.dart';
-import 'package:trade_app/provider/user_provider.dart';
-import 'dart:async';
-import 'dart:io';
-import 'dart:convert';
-import 'package:trade_app/widgets/nav_bar.dart';
-import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
-import 'package:flutter/foundation.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 import 'package:trade_app/screens/bookInfodetail_forsearch.dart';
-import 'package:provider/provider.dart';
-import 'package:trade_app/provider/user_provider.dart';
-import 'package:http/http.dart' as http;
-import 'package:url_launcher/url_launcher.dart';
-import 'package:trade_app/screens/chatter.dart';
-import 'package:trade_app/routes/ip.dart' as globals;
 import 'package:tabbed_sliverlist/tabbed_sliverlist.dart';
-import 'package:chat_bubbles/chat_bubbles.dart';
-import 'package:audioplayers/audioplayers.dart';
-import "package:cached_network_image/cached_network_image.dart";
-import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:trade_app/widgets/reusable_widget.dart';
-import 'package:provider/provider.dart';
-import 'package:trade_app/provider/user_provider.dart';
-import 'package:http/http.dart' as http;
-import 'package:url_launcher/url_launcher.dart';
-import 'package:trade_app/widgets/nav_bar.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
-import 'package:trade_app/screens/information_page.dart';
-import 'package:trade_app/screens/login_page.dart';
-import 'package:trade_app/screens/avatarchange.dart';
-import 'package:trade_app/widgets/reusable_widget.dart';
-import 'package:trade_app/provider/user_provider.dart';
-import 'package:provider/provider.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
-import 'package:trade_app/services/auth/connector.dart';
-import 'package:trade_app/provider/user_provider.dart';
-import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:trade_app/widgets/nav_bar.dart';
-import '../../constants/error_handling.dart';
-import 'package:trade_app/screens/login_page.dart';
-import 'package:provider/provider.dart';
-import 'package:trade_app/provider/user_provider.dart';
 
 var ipaddr = globals.ip;
 
@@ -183,11 +89,14 @@ class _TradeListState extends State<TradeList> {
       dataself = await json.decode(notself.body);
       datanotself = await json.decode(self.body);
     }
-    for (int i = 0; i < info[0]['selflist'].length; i++) {
-      names.add(info[0]['selflist'][i]);
-    }
-    for (int i = 0; i < info[0]['notselflist'].length; i++) {
-      names.add(info[0]['notselflist'][i]);
+    print(info[0]);
+    if (showInfo.body != "done") {
+      for (int i = 0; i < info[0]['selflist'].length; i++) {
+        names.add(info[0]['selflist'][i]);
+      }
+      for (int i = 0; i < info[0]['notselflist'].length; i++) {
+        names.add(info[0]['notselflist'][i]);
+      }
     }
 
     for (int i = 0; i < dataself.length; i++) {
@@ -255,7 +164,7 @@ class _TradeListState extends State<TradeList> {
               });
           if (res.body == "done") {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text("Done")),
+              SnackBar(content: Text("Trade Offer Changed")),
             );
           } else {
             ScaffoldMessenger.of(context).showSnackBar(

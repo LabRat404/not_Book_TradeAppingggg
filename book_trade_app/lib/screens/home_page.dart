@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
 import 'package:trade_app/screens/chatter.dart';
+import 'package:trade_app/screens/tradeCreateList.dart';
 import 'package:trade_app/routes/ip.dart' as globals;
 
 var ipaddr = globals.ip;
@@ -32,6 +33,7 @@ class _HomePageState extends State<HomePage> {
     //loadBookData();
   }
 
+  String myselff = '';
   late List _items = [];
   // Fetch content from the json file
   Future<void> readJson(realusername) async {
@@ -48,6 +50,7 @@ class _HomePageState extends State<HomePage> {
     final data = await json.decode(resaa.body);
     setState(() {
       _items = data;
+      myselff = realusername;
     });
   }
 
@@ -212,20 +215,45 @@ class _HomePageState extends State<HomePage> {
                   ElevatedButton.icon(
                     icon: Icon(Icons.chat_outlined),
                     label: Text(
-                        "Chat with user " + _items[i]["username"].toString()),
+                        "Trade with user " + _items[i]["username"].toString()),
                     onPressed: () async {
-                      // print(
-                      //     "Trade!Book hash is " + _items[i]["name"].toString());
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Trade Request Sent!')),
-                      );
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              Chatter(title: _items[i]["username"].toString()),
-                        ),
-                      );
+                      http.Response showInfo = await http
+                          .post(Uri.parse('http://$ipaddr/api/gettradebusket'),
+                              body: jsonEncode({
+                                "self": myselff,
+                                "notself": _items[i]["username"].toString(),
+                              }),
+                              headers: <String, String>{
+                            'Content-Type': 'application/json; charset=UTF-8',
+                          });
+                      //var showInfo = await rootBundle.loadString('assets/tradebucket.json');
+                      print('asdsadsad');
+                      print(showInfo.body.toString());
+                      if (showInfo.body.toString() == "Empty") {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              content: Text('Please create a Trade Offer')),
+                        );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TradeCreateList(
+                                otherusername:
+                                    _items[i]["username"].toString()),
+                          ),
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Chatter(
+                                title: _items[i]["username"].toString()),
+                          ),
+                        );
+                      }
+                      // ScaffoldMessenger.of(context).showSnackBar(
+                      //   const SnackBar(content: Text('Trade Request Sent!')),
+                      // );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
@@ -295,7 +323,7 @@ class _HomePageState extends State<HomePage> {
           bm,
           loopBOM,
           heading,
-          SizedBox(height: 30.0),
+          SizedBox(height: 15.0),
           loopRec(),
         ],
       ),

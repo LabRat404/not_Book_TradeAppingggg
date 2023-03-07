@@ -172,6 +172,15 @@ class _UploadPageState extends State<UploadPage> {
       print("this is booktitle ->" + booktitle);
       print("this is author ->" + author);
       // if (result != null) {
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Item uploaded! ')),
+      );
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        NavBar.routeName,
+        (route) => false,
+      );
       AuthService().uploadIng(
         name: name2,
         url: url2,
@@ -495,17 +504,6 @@ class _UploadPageState extends State<UploadPage> {
                               child: Text("Submit"),
                               onPressed: () async {
                                 await uploading(realusername);
-                                ScaffoldMessenger.of(context)
-                                    .removeCurrentSnackBar();
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text('Item uploaded! ')),
-                                );
-                                Navigator.pushNamedAndRemoveUntil(
-                                  context,
-                                  NavBar.routeName,
-                                  (route) => false,
-                                );
                               })
                         ],
                       );

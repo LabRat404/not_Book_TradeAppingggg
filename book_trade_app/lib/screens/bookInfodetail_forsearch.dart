@@ -8,6 +8,18 @@ import 'package:trade_app/screens/showOtherUser.dart';
 import 'package:trade_app/screens/chatter.dart';
 import 'package:provider/provider.dart';
 import 'package:trade_app/routes/ip.dart' as globals;
+import 'package:flutter/material.dart';
+import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
+import 'package:trade_app/widgets/reusable_widget.dart';
+import 'package:trade_app/provider/user_provider.dart';
+import 'package:provider/provider.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
+import 'dart:async';
+import 'package:trade_app/screens/chatter.dart';
+import 'package:trade_app/screens/tradeCreateList.dart';
+import 'package:trade_app/routes/ip.dart' as globals;
 
 var ipaddr = globals.ip;
 
@@ -22,12 +34,17 @@ class InfoDetailPageSearch extends StatefulWidget {
 class _InfoDetailPageSearchState extends State<InfoDetailPageSearch> {
   void initState() {
     super.initState();
-    readJson();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final help = Provider.of<UserProvider>(context, listen: false);
+      String realusername = help.user.name;
+      readJson(realusername);
+    });
   }
 
+  String myselff = '';
   List<String> info = [];
   // Fetch content from the json file
-  Future<void> readJson() async {
+  Future<void> readJson(realusername) async {
     String hashname = widget.hashname;
     http.Response resa = await http.get(
         //localhost
@@ -64,6 +81,7 @@ class _InfoDetailPageSearchState extends State<InfoDetailPageSearch> {
     bcomments = data2[0]["comments"].toString();
     if (data2[0]["dbISBN"] != null) bdbISBN = data2[0]["dbISBN"].toString();
     setState(() {
+      myselff = realusername;
       info.addAll([
         btitle,
         bauthors,
@@ -123,19 +141,47 @@ class _InfoDetailPageSearchState extends State<InfoDetailPageSearch> {
                         if (info[3] != self)
                           ElevatedButton.icon(
                             icon: Icon(Icons.recycling),
-                            label: Text("Chat with user " + info[3]),
+                            label: Text("Trade with user " + info[3]),
                             onPressed: () async {
-                              // print("Trade!Book hash is " + info[7]);
+                              http.Response showInfo = await http.post(
+                                  Uri.parse(
+                                      'http://$ipaddr/api/gettradebusket'),
+                                  body: jsonEncode({
+                                    "self": myselff,
+                                    "notself": info[3],
+                                  }),
+                                  headers: <String, String>{
+                                    'Content-Type':
+                                        'application/json; charset=UTF-8',
+                                  });
+                              //var showInfo = await rootBundle.loadString('assets/tradebucket.json');
+                              print('asdsadsad');
+                              print(showInfo.body.toString());
+                              if (showInfo.body.toString() == "Empty") {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content:
+                                          Text('Please create a Trade Offer')),
+                                );
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        TradeCreateList(otherusername: info[3]),
+                                  ),
+                                );
+                              } else {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        Chatter(title: info[3]),
+                                  ),
+                                );
+                              }
                               // ScaffoldMessenger.of(context).showSnackBar(
-                              //   const SnackBar(
-                              //       content: Text('Trade Request Sent!')),
+                              //   const SnackBar(content: Text('Trade Request Sent!')),
                               // );
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Chatter(title: info[3]),
-                                ),
-                              );
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.green,

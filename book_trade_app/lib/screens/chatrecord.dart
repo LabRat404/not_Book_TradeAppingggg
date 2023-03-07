@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:trade_app/screens/chatter.dart';
 import 'package:cron/cron.dart';
 import 'dart:async';
-import 'package:trade_app/screens/showOtherUser.dart';
+
 import 'package:trade_app/routes/ip.dart' as globals;
 
 var ipaddr = globals.ip;
