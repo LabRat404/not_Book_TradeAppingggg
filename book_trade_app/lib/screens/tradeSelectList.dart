@@ -3,8 +3,63 @@ import 'package:trade_app/screens/data.dart';
 import 'package:trade_app/screens/chatter.dart';
 import 'package:trade_app/screens/tradeSelectList.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:chat_bubbles/chat_bubbles.dart';
+import 'package:audioplayers/audioplayers.dart';
+import "package:cached_network_image/cached_network_image.dart";
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:trade_app/provider/user_provider.dart';
+import 'package:provider/provider.dart';
+import 'dart:math';
+import 'dart:math' as math;
+import 'package:intl/intl.dart';
+import 'package:cron/cron.dart';
+import 'dart:async';
+import 'package:trade_app/routes/ip.dart' as globals;
+import 'package:trade_app/screens/showOtherUser.dart';
+import 'package:flutter/material.dart';
+import 'package:trade_app/widgets/reusable_widget.dart';
+import 'package:trade_app/screens/bookInfodetail.dart';
+import 'package:trade_app/screens/tradeshowlist.dart';
+import '/../widgets/camera.dart';
+import 'package:trade_app/provider/user_provider.dart';
+
+import 'dart:async';
+import 'dart:io';
+import 'dart:convert';
+import 'package:trade_app/widgets/nav_bar.dart';
+import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter/foundation.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:trade_app/services/auth/connector.dart';
+import 'package:trade_app/routes/ip.dart' as globals;
+
+import 'package:trade_app/screens/bookInfodetail.dart';
+import '/../widgets/camera.dart';
+import 'dart:io';
+import 'package:flutter/foundation.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:image_picker/image_picker.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:trade_app/widgets/reusable_widget.dart';
+import 'package:trade_app/provider/user_provider.dart';
+import 'dart:async';
+import 'dart:io';
+import 'dart:convert';
+import 'package:trade_app/widgets/nav_bar.dart';
+import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter/foundation.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:trade_app/screens/bookInfodetail_forsearch.dart';
 import 'package:provider/provider.dart';
 import 'package:trade_app/provider/user_provider.dart';
@@ -83,15 +138,28 @@ class _TradeListState extends State<TradeList> {
   List _notmylist = [];
   List _notmyboollist = [];
   List emptyList = [];
+  bool reverse = false;
+  String me = '';
+  String her = '';
   Future<void> readJson(realusername, otherusername) async {
     List tmp1 = [];
     List tmp2 = [];
     List names = [];
+    bool flag = false;
     //Import the tradebucket.json
+    http.Response showInfo =
+        await http.post(Uri.parse('http://$ipaddr/api/gettradebusket'),
+            body: jsonEncode({
+              "self": realusername,
+              "notself": otherusername,
+            }),
+            headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        });
+    //var showInfo = await rootBundle.loadString('assets/tradebucket.json');
+    final info = await json.decode(showInfo.body);
 
-    var showInfo = await rootBundle.loadString('assets/tradebucket.json');
-    final info = await json.decode(showInfo);
-    //imprt self book list
+    //import self book list
     http.Response self = await http.get(
         Uri.parse('http://$ipaddr/api/grabuserlist/$realusername'),
         headers: <String, String>{
@@ -111,14 +179,15 @@ class _TradeListState extends State<TradeList> {
       dataself = await json.decode(self.body);
       datanotself = await json.decode(notself.body);
     } else {
+      flag = true;
       dataself = await json.decode(notself.body);
       datanotself = await json.decode(self.body);
     }
-    for (int i = 0; i < info['selflist'].length; i++) {
-      names.add(info['selflist'][i]['name']);
+    for (int i = 0; i < info[0]['selflist'].length; i++) {
+      names.add(info[0]['selflist'][i]);
     }
-    for (int i = 0; i < info['notselflist'].length; i++) {
-      names.add(info['notselflist'][i]['name']);
+    for (int i = 0; i < info[0]['notselflist'].length; i++) {
+      names.add(info[0]['notselflist'][i]);
     }
 
     for (int i = 0; i < dataself.length; i++) {
@@ -140,6 +209,9 @@ class _TradeListState extends State<TradeList> {
       _notmylist = datanotself;
       _myboollist = tmp1;
       _notmyboollist = tmp2;
+      reverse = flag;
+      me = realusername;
+      her = otherusername;
     });
   }
 
@@ -152,16 +224,79 @@ class _TradeListState extends State<TradeList> {
       },
     );
     Widget continueButton = TextButton(
-      child: Text("Confirm"),
-      onPressed: () {
-        print('confirmed');
-        print(_myboollist);
-        print(_notmyboollist);
+      child: const Text("Confirm"),
+      onPressed: () async {
+        String tmp = '';
+        List _newmylist = [];
+        List _newnotmylist = [];
+        for (int i = 0; i < _mylist.length; i++) {
+          if (_myboollist[i]) {
+            _newmylist.add(_mylist[i]["name"]);
+          }
+        }
+        for (int i = 0; i < _notmylist.length; i++) {
+          if (_notmyboollist[i]) {
+            _newnotmylist.add(_notmylist[i]["name"]);
+          }
+        }
+
+        if (reverse) {
+          http.Response res =
+              await http.put(Uri.parse('http://$ipaddr/api/changetradebusket'),
+                  body: jsonEncode({
+                    "self": her,
+                    "notself": me,
+                    "selflist": _newnotmylist,
+                    "notselflist": _newmylist
+                    //rmb rever the list to generate
+                  }),
+                  headers: <String, String>{
+                'Content-Type': 'application/json; charset=UTF-8',
+              });
+          if (res.body == "done") {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text("Done")),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text("not done")),
+            );
+          }
+        } else {
+          http.Response res =
+              await http.put(Uri.parse('http://$ipaddr/api/changetradebusket'),
+                  body: jsonEncode({
+                    "self": me,
+                    "notself": her,
+                    "selflist": _newmylist,
+                    "notselflist": _newnotmylist
+                    //rmb rever the list to generate
+                  }),
+                  headers: <String, String>{
+                'Content-Type': 'application/json; charset=UTF-8',
+              });
+          if (res.body == "done") {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text("Done")),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text("not done")),
+            );
+          }
+        }
+        Random random = new Random();
+        sendmsg(me, her, 'Trade Offer Changed', random.nextInt(100000) + 10);
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          NavBar.routeName,
+          (route) => false,
+        );
       },
     );
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("Confirm new trade offer? "),
+      title: const Text("Confirm new trade offer? "),
       content: Text(
           "Please confirm the new trade offer with ${widget.otherusername}"),
       actions: [
@@ -285,4 +420,23 @@ class _TradeListState extends State<TradeList> {
           ]),
     );
   }
+}
+
+void sendmsg(self, her, msg, random) async {
+  // print(msg),
+  var resul = await http.post(
+      //localhost
+      //Uri.parse('http://172.20.10.3:3000/api/bookinfo'),
+      Uri.parse('http://$ipaddr/api/createnloadChat'),
+      body: jsonEncode({
+        "self": self,
+        "notself": her,
+        "msg": msg,
+        "randomhash": random,
+        "dates":
+            new DateFormat('yyyy-MM-dd').format(new DateTime.now()).toString(),
+      }),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      });
 }

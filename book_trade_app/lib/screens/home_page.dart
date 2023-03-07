@@ -295,6 +295,7 @@ class _HomePageState extends State<HomePage> {
           bm,
           loopBOM,
           heading,
+          SizedBox(height: 30.0),
           loopRec(),
         ],
       ),

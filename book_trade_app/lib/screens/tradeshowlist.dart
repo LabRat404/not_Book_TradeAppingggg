@@ -63,8 +63,6 @@ class TradeShowList extends StatefulWidget {
 List _items_full = [];
 
 class _TradeShowListState extends State<TradeShowList> {
-  var listitems = ['item1', 'item2', 'item3'];
-
   @override
   void initState() {
     //print("Hi Im loading");
@@ -77,12 +75,9 @@ class _TradeShowListState extends State<TradeShowList> {
       final help = Provider.of<UserProvider>(context, listen: false);
       String realusername = help.user.name;
       readJson(realusername, widget.otherusername);
-      print("self" + realusername.toString());
-      print("notself" + widget.otherusername.toString());
     });
   }
 
-  List _items = [];
   List _mylist = [];
   List _notmylist = [];
   List emptyList = [];
@@ -91,8 +86,18 @@ class _TradeShowListState extends State<TradeShowList> {
     List tmp2 = [];
     List names = [];
     //Import the tradebucket.json
-    var showInfo = await rootBundle.loadString('assets/tradebucket.json');
-    final info = await json.decode(showInfo);
+    http.Response showInfo =
+        await http.post(Uri.parse('http://$ipaddr/api/gettradebusket'),
+            body: jsonEncode({
+              "self": realusername,
+              "notself": otherusername,
+            }),
+            headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        });
+    //var showInfo = await rootBundle.loadString('assets/tradebucket.json');
+    final info = await json.decode(showInfo.body);
+    print(info);
     //imprt self book list
     http.Response self = await http.get(
         Uri.parse('http://$ipaddr/api/grabuserlist/$realusername'),
@@ -116,11 +121,11 @@ class _TradeShowListState extends State<TradeShowList> {
       dataself = await json.decode(notself.body);
       datanotself = await json.decode(self.body);
     }
-    for (int i = 0; i < info['selflist'].length; i++) {
-      names.add(info['selflist'][i]['name']);
+    for (int i = 0; i < info[0]['selflist'].length; i++) {
+      names.add(info[0]['selflist'][i]);
     }
-    for (int i = 0; i < info['notselflist'].length; i++) {
-      names.add(info['notselflist'][i]['name']);
+    for (int i = 0; i < info[0]['notselflist'].length; i++) {
+      names.add(info[0]['notselflist'][i]);
     }
 
     for (int i = 0; i < dataself.length; i++) {
@@ -162,7 +167,9 @@ class _TradeShowListState extends State<TradeShowList> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => TradeList()),
+                MaterialPageRoute(
+                    builder: (context) =>
+                        TradeList(otherusername: widget.otherusername)),
               );
             },
           ),
