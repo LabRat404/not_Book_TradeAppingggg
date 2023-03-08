@@ -12,7 +12,7 @@ To Do List (FE_Iron lol):
 WinDoriaHeartBack(So far far away QAQ)\
 ~~Chatter: (Chat Icon using hardcode)~~\
 ~~Showotheruser_page: remove duplicated chat with user~~\
-Home page: chat with user becomes a trade request\
+~~Home page: chat with user becomes a trade request~~\
 ~~Upload page: Remove the Add optional  parameters menu,  maybe remake the interface~~\
 ~~ChatRecord: 3 dots add see user profile?(cannot  prompt)~~\
 ~~Chatter: add  upload image and take photo in chat~~\
