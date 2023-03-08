@@ -19,7 +19,7 @@ WinDoriaHeartBack(So far far away QAQ)\
 ~~Chatter: Auto Load~~\
 ~~ShowTradeB (trade Busket) for displaying the trading items~~\
 ~~Edit/CreateTradeB (trade Busket) for displaying the trading items~~\
-~~Chatter: Chat with  userbutton can show trade list ~~\
+~~Chatter: Chat with  userbutton can show trade list~~\
 ~~(FE) Trade Interface: Selection list for selecting self and other inventory~~\
 (FE) Remember me function for savingup account credentials
 nsv bsr caps  change and book -> uploadbook
