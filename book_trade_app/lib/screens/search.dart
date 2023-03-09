@@ -8,18 +8,8 @@ import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:trade_app/screens/chatter.dart';
 import 'package:trade_app/routes/ip.dart' as globals;
-import 'package:flutter/material.dart';
-import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
-import 'package:trade_app/widgets/reusable_widget.dart';
-import 'package:trade_app/provider/user_provider.dart';
-import 'package:provider/provider.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
-import 'package:trade_app/screens/chatter.dart';
 import 'package:trade_app/screens/tradeCreateList.dart';
-import 'package:trade_app/routes/ip.dart' as globals;
 
 var ipaddr = globals.ip;
 
