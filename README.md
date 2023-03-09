@@ -46,5 +46,7 @@ Auto refresh(Abord)\
 On Testflight\
 Real useable app on apple Beta Test with 2 testers\
 
+Self note: The security of this app is bad af :(\
+Image uploadpart shd be handled at node instead of client\
 
 Wish you all a good day!\
