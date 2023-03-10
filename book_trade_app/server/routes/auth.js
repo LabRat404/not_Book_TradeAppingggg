@@ -71,11 +71,6 @@ authRouter.post("/api/signup", async (req, res) => {
     })
     user = await user.save();
     res.json(user);
-
-    // 200 OK
-    // get the data from client, 
-    // post that data in db
-    // return that data to the user
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
@@ -555,11 +550,15 @@ authRouter.post("/api/gettradebusket", (req, res) => {
     })
     .exec((e, results) => {
       if (e)
-        res.send("Error not known");
-      else if (results == null)
-        res.send("404 not found. No records found!", 404);
+        res.send("Error");
+      else if (results.length == 0) {
+        res.send("Empty");
+        console.log('Empty');
+      }
+
       else {
         res.send(results);
+        console.log('notempty');
       }
     }
     );
@@ -591,6 +590,53 @@ authRouter.put("/api/changetradebusket", (req, res) => {
         console.log(results);
         results[0].save();
         res.send("done");
+        //console.log(results  + "ASdasdsadasdsad test" + req.body['url']);
+      }
+    }
+    );
+
+
+});
+authRouter.post("/api/createtradebusket", (req, res) => {
+
+  TradeBucket
+    .find({
+      $or: [
+        {
+          self: req.body["self"],
+          notself: req.body["notself"]
+        },
+        {
+          self: req.body["notself"],
+          notself: req.body["self"]
+        }
+      ]
+    })
+    .exec((e, results) => {
+      if (e)
+        res.send("Error not known");
+      else if (results.length == 0) {
+        TradeBucket
+          .create({
+
+            self: req.body['self'],
+            notself: req.body['notself'],
+            randomhash: req.body["randomhash"],
+            lastdate: req.body["dates"],
+            status: req.body["status"],
+            editing: req.body["editing"],
+            selflist: req.body["selflist"],
+            notselflist: req.body["notselflist"],
+            //data2["chatter"][i]["images"]
+            //{dates: new Date()}, {user: req.body["self"],text: msg}
+          })
+        //cretae the trade busket
+        console.log("creating ");
+        res.send("done");
+      }
+      else {
+
+        res.send("notempty...");
         //console.log(results  + "ASdasdsadasdsad test" + req.body['url']);
       }
     }
