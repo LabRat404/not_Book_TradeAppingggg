@@ -17,8 +17,6 @@ class TradeShowList extends StatefulWidget {
   _TradeShowListState createState() => _TradeShowListState();
 }
 
-List _items_full = [];
-
 class _TradeShowListState extends State<TradeShowList> {
   @override
   void initState() {

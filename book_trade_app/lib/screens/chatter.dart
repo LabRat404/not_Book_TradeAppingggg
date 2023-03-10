@@ -64,12 +64,6 @@ class _ChatterState extends State<Chatter> {
 
   Future<Directory?>? _tempDirectory;
 
-  void _requestTempDirectory() {
-    setState(() {
-      _tempDirectory = getTemporaryDirectory();
-    });
-  }
-
   List<XFile>? _imageFileList;
   void _setImageFileListFromFile(XFile? value) {
     _imageFileList = value == null ? null : <XFile>[value];
@@ -137,14 +131,11 @@ class _ChatterState extends State<Chatter> {
       request.fields['title'] = "dummyImage";
       request.headers['Authorization'] = "Client-ID " + "4556ad76cb684d8";
 
-      String tempPath = "";
       String appDocPath = "";
       Directory appDocDir = await getApplicationDocumentsDirectory();
       appDocPath = appDocDir.path;
 
       //get item num api
-      final File newImage =
-          await File(_imageFileList![0].path).copy('$appDocPath/tmp.png');
       var picture = http.MultipartFile.fromBytes('image',
           (await rootBundle.load('$appDocPath/tmp.png')).buffer.asUint8List(),
           filename: 'test1.png');
@@ -156,15 +147,6 @@ class _ChatterState extends State<Chatter> {
 
       Random random = new Random();
       final now = new DateTime.now();
-
-      var res = await http.post(
-          //localhost
-          //Uri.parse('http://172.20.10.3:3000/api/bookinfo'),
-          Uri.parse('http://$ipaddr/api/bookinfo'),
-          body: jsonEncode({"book_isbn": ISBNController.text}),
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          });
 
       var returnstring =
           await http.post(Uri.parse('http://$ipaddr/api/PhotoChat'),
@@ -339,7 +321,6 @@ class _ChatterState extends State<Chatter> {
         });
 
     // print(resaa);
-    print("Im reading and doinng...");
     //final data = await json.decode(response);
     final abc = await json.decode(data.body);
     setState(() {
@@ -396,9 +377,6 @@ class _ChatterState extends State<Chatter> {
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         });
-
-    String test = await readJson(self);
-
     readJson(self);
   }
 

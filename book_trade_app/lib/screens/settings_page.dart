@@ -26,7 +26,6 @@ class _SettingsPageState extends State<SettingsPage> {
   //String realusername = 'doria';
 
   void initState() {
-    print("Hi  Im loading settings");
     super.initState();
     //var realusername = context.watch<UserProvider>().user.name;
     // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {

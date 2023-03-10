@@ -12,19 +12,6 @@ import 'package:trade_app/routes/ip.dart' as globals;
 
 var ipaddr = globals.ip;
 
-class ISBN_info {
-  final String title;
-  final String publishedDate;
-
-  ISBN_info({required this.title, required this.publishedDate});
-
-  factory ISBN_info.fromJson(Map<String, dynamic> json) {
-    final title = json['subtitle'] as String;
-    final publishedDate = json['publishedDate'] as String;
-    return ISBN_info(title: title, publishedDate: publishedDate);
-  }
-}
-
 class ChatList extends StatefulWidget {
   const ChatList({Key? key}) : super(key: key);
   static const String routeName = '/bookinfo';
@@ -132,20 +119,7 @@ class _ChatListState extends State<ChatList> {
   }
 
   delchat() {}
-  // getdata(dbisbn) async {
-  //   var res = await http.post(
-  //       //localhost
-  //       //Uri.parse('http://172.20.10.3:3000/api/bookinfo'),
-  //       Uri.parse('http://172.20.10.3:3000/api/bookinfo'),
-  //       body: jsonEncode({"book_isbn": 0984782869}),
-  //       headers: <String, String>{
-  //         'Content-Type': 'application/json; charset=UTF-8',
-  //       });
-  //   var resBody = json.decode(res.toString());
-  //   debugPrint(resBody['title']); // can print title
-  //   print(resBody['title']);
-  //   return "asdasdsad";
-  // }
+
   List<String> items = List<String>.generate(10, (i) => '$i');
   @override
   Widget build(BuildContext context) {
@@ -240,9 +214,7 @@ class _ChatListState extends State<ChatList> {
                                       // )
                                     ];
                                   },
-                                  onSelected: (String value) {
-                                    print('You Click on po up menu item');
-                                  },
+                                  onSelected: (String value) {},
                                 ),
                                 onTap: () async {
                                   final text = await Navigator.push(

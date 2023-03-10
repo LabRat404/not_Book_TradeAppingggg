@@ -21,8 +21,6 @@ class TradeList extends StatefulWidget {
   _TradeListState createState() => _TradeListState();
 }
 
-List _items_full = [];
-
 class _TradeListState extends State<TradeList> {
   @override
   void initState() {
