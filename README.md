@@ -28,6 +28,7 @@ Settings: Dark mode?\
 Settings: About -> website for intro\
 Settings: Change email/password\ In progress... (ahbee how u hash it QAQ)
 Settings: Delete account\
+ready for migrating stash image server to AWS S3 
 
 Done List: \
 Trade List Pages\
