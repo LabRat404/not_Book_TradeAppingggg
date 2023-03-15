@@ -3,6 +3,7 @@ import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:trade_app/screens/register_page.dart';
 import 'package:trade_app/widgets/reusable_widget.dart';
 import 'package:trade_app/services/auth/connector.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   static String tag = 'login-page';
@@ -14,9 +15,9 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  bool _isChecked = false;
   @override
   void dispose() {
     emailController.dispose();
@@ -25,33 +26,13 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final slide = ImageSlideshow(
-      indicatorColor: Colors.blue,
-      onPageChanged: (value) {
-        debugPrint('Page changed: $value');
-      },
-      autoPlayInterval: 3000,
-      isLoop: true,
-      children: [
-        Image.network(
-            "http://books.google.com/books/content?id=-VfNSAAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"),
-        Image.network(
-            "http://books.google.com/books/content?id=fltxyAEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api"),
-        Image.network(
-            "http://books.google.com/books/content?id=T929zgEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api"),
-      ],
-    );
-    // final logo = Hero(
-    //   tag: 'hero',
-    //   child: CircleAvatar(
-    //     backgroundColor: Colors.transparent,
-    //     radius: 48.0,
-    //     child: Image.network(
-    //         'http://books.google.com/books/content?id=-VfNSAAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api'),
-    //   ),
-    // );
+  void initState() {
+    _loadUserEmailPassword();
+    super.initState();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     final email = TextFormField(
       controller: emailController,
       keyboardType: TextInputType.emailAddress,
@@ -122,6 +103,11 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
       onPressed: () {
+        //set remember me
+        if (_isChecked)
+          _handleRemeberme(true);
+        else
+          _handleRemeberme(false);
         // Validate returns true if the form is valid, or false otherwise.
         // print(emailController.text);
         // print(passwordController.text);
@@ -140,13 +126,17 @@ class _LoginPageState extends State<LoginPage> {
       child: const Text('Login'),
     );
 
-    // final forgotLabel = FlatButton(
-    //   child: Text(
-    //     'Forgot password?',
-    //     style: TextStyle(color: Colors.black54),
-    //   ),
-    //   onPressed: () {},
-    // );
+    final rememberDoria = CheckboxListTile(
+        controlAffinity: ListTileControlAffinity.leading,
+        title: Text("Remember Me",
+            style: TextStyle(color: Color(0xff646464), fontFamily: 'Rubic')),
+        activeColor: Color(0xff00C8E8),
+        value: _isChecked,
+        onChanged: (bool? value) {
+          setState(() {
+            _isChecked = value!;
+          });
+        });
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -167,7 +157,7 @@ class _LoginPageState extends State<LoginPage> {
             email,
             SizedBox(height: 8.0),
             password,
-            SizedBox(height: 24.0),
+            rememberDoria,
             loginButton,
             SizedBox(height: 5.0),
             register_button
@@ -175,5 +165,49 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  void _loadUserEmailPassword() async {
+    bool load = false;
+    try {
+      SharedPreferences _prefs = await SharedPreferences.getInstance();
+      load = _prefs.getBool("remember_me")!;
+    } catch (e) {
+      debugPrint(e as String?);
+    }
+
+    if (load) {
+      SharedPreferences _prefs = await SharedPreferences.getInstance();
+      var _email = _prefs.getString("email") ?? "";
+      var _password = _prefs.getString("password") ?? "";
+      var _remeberMe = _prefs.getBool("remember_me") ?? false;
+      if (_remeberMe) {
+        setState(() {
+          _isChecked = true;
+        });
+        emailController.text = _email ?? "";
+        passwordController.text = _password ?? "";
+      }
+    }
+  }
+
+  _handleRemeberme(bool value) {
+    if (value) {
+      SharedPreferences.getInstance().then(
+        (prefs) {
+          prefs.setBool("remember_me", value);
+          prefs.setString('email', emailController.text);
+          prefs.setString('password', passwordController.text);
+        },
+      );
+    } else {
+      SharedPreferences.getInstance().then(
+        (prefs) {
+          prefs.setBool("remember_me", value);
+          prefs.setString('email', '');
+          prefs.setString('password', '');
+        },
+      );
+    }
   }
 }
