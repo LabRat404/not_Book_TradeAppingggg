@@ -21,8 +21,7 @@ WinDoriaHeartBack(So far far away QAQ)\
 ~~Edit/CreateTradeB (trade Busket) for displaying the trading items~~\
 ~~Chatter: Chat with  userbutton can show trade list~~\
 ~~(FE) Trade Interface: Selection list for selecting self and other inventory~~\
-(FE) Remember me function for savingup account credentials
-nsv bsr caps  change and book -> uploadbook
+~~(FE) Remember me function for savingup account credentials~~\
 Settings: Privacy-> no display icon? \
 Settings: Dark mode?\
 Settings: About -> website for intro\

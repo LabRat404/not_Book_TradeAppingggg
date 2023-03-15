@@ -128,7 +128,7 @@ class _LoginPageState extends State<LoginPage> {
 
     final rememberDoria = CheckboxListTile(
         controlAffinity: ListTileControlAffinity.leading,
-        title: Text("Remember Me",
+        title: Text("Remember me",
             style: TextStyle(color: Color(0xff646464), fontFamily: 'Rubic')),
         activeColor: Color(0xff00C8E8),
         value: _isChecked,
