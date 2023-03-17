@@ -7,6 +7,19 @@ import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:trade_app/widgets/nav_bar.dart';
 import 'package:trade_app/routes/ip.dart' as globals;
+import 'package:flutter/material.dart';
+import 'package:trade_app/screens/chatter.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:trade_app/provider/user_provider.dart';
+import 'package:provider/provider.dart';
+import 'dart:math';
+import 'package:intl/intl.dart';
+import 'dart:async';
+import 'package:trade_app/routes/ip.dart' as globals;
+import 'package:trade_app/widgets/nav_bar.dart';
+import 'package:trade_app/screens/bookInfodetail_forsearch.dart';
+import 'package:tabbed_sliverlist/tabbed_sliverlist.dart';
 
 var ipaddr = globals.ip;
 
@@ -89,124 +102,209 @@ class _UserListState extends State<UserList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ReusableWidgets.LoginPageAppBar("Your Inventory"),
-      body: Padding(
-        padding: const EdgeInsets.all(25),
-        child: Column(
-          children: [
-            _items.isNotEmpty
-                ? Expanded(
-                    child: ListView.builder(
-                      itemCount: _items.length,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          clipBehavior: Clip.antiAlias,
-                          child: Column(
-                            children: [
-                              ListTile(
-                                title: Text("Book title: " +
-                                    _items[index]["booktitle"]),
-                                subtitle: Text(
-                                  "Book author: " +
-                                      _items[index]["author"] +
-                                      '\n' +
-                                      "ISBN code: " +
-                                      _items[index]["dbISBN"],
-                                  style: TextStyle(
-                                      color: Colors.black.withOpacity(0.6)),
-                                ),
-                              ),
-
-                              ButtonBar(
-                                alignment: MainAxisAlignment.start,
-                              ),
-                              //Image.network(_items[index]["smallThumbnail"]),
-                              Image.network(_items[index]["url"]),
-
-                              Padding(
-                                padding: const EdgeInsets.all(5),
-                                child: Text(
-                                  _items[index]["comments"],
-                                  style: TextStyle(
-                                      color: Colors.black.withOpacity(0.6)),
-                                ),
-                              ),
-                              ButtonBar(
-                                children: [
-                                  ElevatedButton.icon(
-                                    icon: Icon(Icons.playlist_remove),
-                                    label: Text("Remove Item"),
-                                    onPressed: () async {
-                                      var delname = _items[index]["name"];
-                                      var delhash = _items[index]["delhash"];
-                                      //print("input is:  " +_items[index]["name"]);
-                                      var res = await http.delete(
-                                          Uri.parse(
-                                              'http://$ipaddr/api/dellist/$delname'),
-                                          headers: <String, String>{
-                                            'Content-Type':
-                                                'application/json; charset=UTF-8',
-                                          });
-                                      var imguredel = await http.delete(
-                                          Uri.parse(
-                                              'https://api.imgur.com/3/image/$delhash'),
-                                          headers: <String, String>{
-                                            'Content-Type':
-                                                'application/json; charset=UTF-8',
-                                          });
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        const SnackBar(
-                                            content: Text('Item deleted!')),
-                                      );
-                                      Navigator.pushNamedAndRemoveUntil(
-                                        context,
-                                        NavBar.routeName,
-                                        (route) => false,
-                                      );
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.red,
-                                      shadowColor: Colors.orange,
-                                    ),
-                                  ),
-                                  ElevatedButton.icon(
-                                    icon: Icon(Icons.link),
-                                    label:
-                                        Text("Show more on Google Play Book"),
-                                    onPressed: () async {
-                                      if (await canLaunchUrl(Uri.parse(
-                                          _items[index]["googlelink"]))) {
-                                        launchUrl(Uri.parse(
-                                            _items[index]["googlelink"]));
-                                      }
-                                      //print(_items[index]["googlelink"]);
-                                    },
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                        );
-                      },
-                    ),
+      appBar: ReusableWidgets.LoginPageAppBar("Invstory"),
+      body: TabbedList(
+          tabLength: 2,
+          sliverTabBar: const SliverTabBar(
+              expandedHeight: 54,
+              tabBar: TabBar(
+                tabs: [
+                  Tab(
+                    text: 'Inventory',
+                  ),
+                  Tab(
+                    text: 'History',
                   )
-                : Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                ],
+              )),
+          tabLists: [
+            TabListBuilder(
+              uniquePageKey: 'page1',
+              length: _items.length,
+              builder: (BuildContext context, index) {
+                return Card(
+                  clipBehavior: Clip.antiAlias,
+                  child: Column(
                     children: [
-                      new Text(
-                        'Bring doria back so its not empty here!',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18),
+                      ListTile(
+                        title:
+                            Text("Book title: " + _items[index]["booktitle"]),
+                        subtitle: Text(
+                          "Book author: " +
+                              _items[index]["author"] +
+                              '\n' +
+                              "ISBN code: " +
+                              _items[index]["dbISBN"],
+                          style:
+                              TextStyle(color: Colors.black.withOpacity(0.6)),
+                        ),
                       ),
-                      Center(
-                        child: Image.asset('assets/empty.png'),
+
+                      ButtonBar(
+                        alignment: MainAxisAlignment.start,
                       ),
+                      //Image.network(_items[index]["smallThumbnail"]),
+                      Image.network(_items[index]["url"]),
+
+                      Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: Text(
+                          _items[index]["comments"],
+                          style:
+                              TextStyle(color: Colors.black.withOpacity(0.6)),
+                        ),
+                      ),
+                      ButtonBar(
+                        children: [
+                          ElevatedButton.icon(
+                            icon: Icon(Icons.playlist_remove),
+                            label: Text("Remove Item"),
+                            onPressed: () async {
+                              var delname = _items[index]["name"];
+                              var delhash = _items[index]["delhash"];
+                              //print("input is:  " +_items[index]["name"]);
+                              var res = await http.delete(
+                                  Uri.parse(
+                                      'http://$ipaddr/api/dellist/$delname'),
+                                  headers: <String, String>{
+                                    'Content-Type':
+                                        'application/json; charset=UTF-8',
+                                  });
+                              var imguredel = await http.delete(
+                                  Uri.parse(
+                                      'https://api.imgur.com/3/image/$delhash'),
+                                  headers: <String, String>{
+                                    'Content-Type':
+                                        'application/json; charset=UTF-8',
+                                  });
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Item deleted!')),
+                              );
+                              Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                NavBar.routeName,
+                                (route) => false,
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.red,
+                              shadowColor: Colors.orange,
+                            ),
+                          ),
+                          ElevatedButton.icon(
+                            icon: Icon(Icons.link),
+                            label: Text("Show more on Google Play Book"),
+                            onPressed: () async {
+                              if (await canLaunchUrl(
+                                  Uri.parse(_items[index]["googlelink"]))) {
+                                launchUrl(
+                                    Uri.parse(_items[index]["googlelink"]));
+                              }
+                              //print(_items[index]["googlelink"]);
+                            },
+                          ),
+                        ],
+                      )
                     ],
                   ),
-          ],
-        ),
-      ),
+                );
+              },
+              tabListPadding: const EdgeInsets.symmetric(horizontal: 10),
+            ),
+            TabListBuilder(
+              uniquePageKey: 'page2',
+              length: _items.length,
+              builder: (context, index) {
+                return Card(
+                  clipBehavior: Clip.antiAlias,
+                  child: Column(
+                    children: [
+                      ListTile(
+                        title:
+                            Text("Book title: " + _items[index]["booktitle"]),
+                        subtitle: Text(
+                          "Book author: " +
+                              _items[index]["author"] +
+                              '\n' +
+                              "ISBN code: " +
+                              _items[index]["dbISBN"],
+                          style:
+                              TextStyle(color: Colors.black.withOpacity(0.6)),
+                        ),
+                      ),
+
+                      ButtonBar(
+                        alignment: MainAxisAlignment.start,
+                      ),
+                      //Image.network(_items[index]["smallThumbnail"]),
+                      Image.network(_items[index]["url"]),
+
+                      Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: Text(
+                          _items[index]["comments"],
+                          style:
+                              TextStyle(color: Colors.black.withOpacity(0.6)),
+                        ),
+                      ),
+                      ButtonBar(
+                        children: [
+                          ElevatedButton.icon(
+                            icon: Icon(Icons.playlist_remove),
+                            label: Text("Remove Item"),
+                            onPressed: () async {
+                              var delname = _items[index]["name"];
+                              var delhash = _items[index]["delhash"];
+                              //print("input is:  " +_items[index]["name"]);
+                              var res = await http.delete(
+                                  Uri.parse(
+                                      'http://$ipaddr/api/dellist/$delname'),
+                                  headers: <String, String>{
+                                    'Content-Type':
+                                        'application/json; charset=UTF-8',
+                                  });
+                              var imguredel = await http.delete(
+                                  Uri.parse(
+                                      'https://api.imgur.com/3/image/$delhash'),
+                                  headers: <String, String>{
+                                    'Content-Type':
+                                        'application/json; charset=UTF-8',
+                                  });
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Item deleted!')),
+                              );
+                              Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                NavBar.routeName,
+                                (route) => false,
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.red,
+                              shadowColor: Colors.orange,
+                            ),
+                          ),
+                          ElevatedButton.icon(
+                            icon: Icon(Icons.link),
+                            label: Text("Show more on Google Play Book"),
+                            onPressed: () async {
+                              if (await canLaunchUrl(
+                                  Uri.parse(_items[index]["googlelink"]))) {
+                                launchUrl(
+                                    Uri.parse(_items[index]["googlelink"]));
+                              }
+                              //print(_items[index]["googlelink"]);
+                            },
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                );
+              },
+              tabListPadding: const EdgeInsets.symmetric(horizontal: 10),
+            )
+          ]),
     );
   }
 }
