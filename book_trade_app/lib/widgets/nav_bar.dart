@@ -44,7 +44,6 @@ class _NavBarState extends State<NavBar> {
             onTabChange: (value) => {
                   setState(() {
                     _selectedindex = value;
-                    print("pages: " + value.toString());
                   })
                 },
             gap: 0.5,
@@ -55,7 +54,7 @@ class _NavBarState extends State<NavBar> {
             tabs: [
               GButton(
                 icon: Icons.home_outlined,
-                text: 'home',
+                text: 'Home',
                 onPressed: () => {},
               ),
               GButton(
@@ -65,13 +64,13 @@ class _NavBarState extends State<NavBar> {
               ),
               GButton(
                 icon: Icons.bookmark_outline,
-                text: 'books',
+                text: 'Upload',
                 // onPressed: () => _slidingPanel(),
                 onPressed: () => {},
               ),
               GButton(
                 icon: Icons.collections_bookmark_outlined,
-                text: 'Inventory',
+                text: 'Invstory',
                 onPressed: () => {},
               ),
               GButton(
@@ -81,7 +80,7 @@ class _NavBarState extends State<NavBar> {
               ),
               GButton(
                 icon: Icons.settings_outlined,
-                text: 'setting',
+                text: 'Settings',
                 onPressed: () => {},
               ),
             ]));
