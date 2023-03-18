@@ -24,6 +24,18 @@ var bucketSchema = new mongoose.Schema({
       "editing":{
         "type": "String"
       },
+      "selfaccept":{
+        "type": "String"
+      },
+      "notselfaccept":{
+        "type": "String"
+      },
+      "selfconfirm":{
+        "type": "String"
+      },
+      "notselfconfirm":{
+        "type": "String"
+      },
       
     "selflist": {
       "type": [
