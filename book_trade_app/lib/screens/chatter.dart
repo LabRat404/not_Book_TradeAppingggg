@@ -508,6 +508,46 @@ class _ChatterState extends State<Chatter> {
               color: Colors.transparent,
             )
           ],
+          bottom: PreferredSize(
+            preferredSize: Size.fromHeight(40),
+            child: Container(
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              ElevatedButton.icon(
+                icon: Icon(Icons.recycling),
+                label: Text("View Trade Bucket"),
+                onPressed: () async {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            TradeShowList(otherusername: widget.title)),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color.fromARGB(255, 255, 137, 34),
+                  shadowColor: Colors.orange,
+                ),
+              ),
+              SizedBox(width: 5.0),
+              ElevatedButton.icon(
+                icon: Icon(Icons.library_add_check_outlined),
+                label: Text("Accept Trade Offer"),
+                onPressed: () async {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            TradeShowList(otherusername: widget.title)),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                  shadowColor: Colors.orange,
+                ),
+              ),
+            ])),
+          ),
         ),
         body: data2 != null
             ? Stack(
@@ -529,27 +569,7 @@ class _ChatterState extends State<Chatter> {
                               ? false
                               : true,
                         ),
-                        Center(
-                            child: ButtonBar(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                              ElevatedButton.icon(
-                                icon: Icon(Icons.recycling),
-                                label: Text("View Trade Bucket"),
-                                onPressed: () async {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => TradeShowList(
-                                            otherusername: widget.title)),
-                                  );
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.green,
-                                  shadowColor: Colors.orange,
-                                ),
-                              ),
-                            ])),
+
                         //printchat(),data2["chats"].forEach((value) {
                         //   value["chatter"].forEach((userchat) {
                         //     if (userchat["user"] == "tanjaii") {
