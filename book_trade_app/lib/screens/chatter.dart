@@ -21,6 +21,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:trade_app/screens/tradeCreateList.dart';
 
 var ipaddr = globals.ip;
 
@@ -295,14 +296,53 @@ class _ChatterState extends State<Chatter> {
   var data2;
   String linkicon = "";
   List _items = [];
-
+  bool onoff = false;
+  bool buttonstate = false;
+  String notselff = '';
+  bool showbar = false;
   // Fetch content from the json file
   Future<String> readJson(myuser) async {
     //load  the json here!!
     //fetch here
+    bool barshow = false;
     String notself = widget.title;
     // final String response = await rootBundle.loadString('assets/chatter.json');
     // final data = await json.decode(response);
+    bool offon = false;
+    bool statebutton = true;
+    http.Response showInfo =
+        await http.post(Uri.parse('http://$ipaddr/api/gettradebusket'),
+            body: jsonEncode({
+              "self": myuser,
+              "notself": notself,
+            }),
+            headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        });
+    if (showInfo.body.toString() == "Empty") {
+      barshow = true;
+    } else {
+      final info = await json.decode(showInfo.body);
+      if (info[0]['selfaccept'].toString() == '1' &&
+          info[0]['notselfaccept'].toString() == '1') {
+        statebutton = false;
+      }
+      if (info[0]['self'].toString() == myuser) {
+        if (info[0]['selfaccept'].toString() == '0') {
+          offon = true;
+        } else if (info[0]['selfconfirm'].toString() == '0' &&
+            info[0]['notselfaccept'].toString() == '1') {
+          offon = true;
+        }
+      } else {
+        if (info[0]['notselfaccept'].toString() == '0') {
+          offon = true;
+        } else if (info[0]['notselfconfirm'].toString() == '0' &&
+            info[0]['selfaccept'].toString() == '1') {
+          offon = true;
+        }
+      }
+    }
 
     http.Response data =
         await http.post(Uri.parse('http://$ipaddr/api/grabchat'),
@@ -327,6 +367,10 @@ class _ChatterState extends State<Chatter> {
       // _items = data["items"];
       // _items = data;
       //data2 = data;
+      showbar = barshow;
+      notselff = notself;
+      onoff = offon;
+      buttonstate = statebutton;
       linkicon = iconlink.body;
       data2 = abc[0];
     });
@@ -508,46 +552,136 @@ class _ChatterState extends State<Chatter> {
               color: Colors.transparent,
             )
           ],
-          bottom: PreferredSize(
-            preferredSize: Size.fromHeight(40),
-            child: Container(
-                child:
-                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              ElevatedButton.icon(
-                icon: Icon(Icons.recycling),
-                label: Text("View Trade Bucket"),
-                onPressed: () async {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            TradeShowList(otherusername: widget.title)),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromARGB(255, 255, 137, 34),
-                  shadowColor: Colors.orange,
-                ),
-              ),
-              SizedBox(width: 5.0),
-              ElevatedButton.icon(
-                icon: Icon(Icons.library_add_check_outlined),
-                label: Text("Accept Trade Offer"),
-                onPressed: () async {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            TradeShowList(otherusername: widget.title)),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                  shadowColor: Colors.orange,
-                ),
-              ),
-            ])),
-          ),
+          bottom: showbar
+              ? PreferredSize(
+                  preferredSize: Size.fromHeight(40),
+                  child: Container(
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                        ElevatedButton.icon(
+                          icon: Icon(Icons.recycling),
+                          label: Text("View Trade Bucket"),
+                          onPressed: () async {
+                            http.Response showInfo = await http.post(
+                                Uri.parse('http://$ipaddr/api/gettradebusket'),
+                                body: jsonEncode({
+                                  "self": self,
+                                  "notself": notselff,
+                                }),
+                                headers: <String, String>{
+                                  'Content-Type':
+                                      'application/json; charset=UTF-8',
+                                });
+                            //var showInfo = await rootBundle.loadString('assets/tradebucket.json');
+
+                            if (showInfo.body.toString() == "Empty") {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content:
+                                        Text('Please create a Trade Offer')),
+                              );
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      TradeCreateList(otherusername: notselff),
+                                ),
+                              );
+                            } else {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => TradeShowList(
+                                        otherusername: widget.title)),
+                              );
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color.fromARGB(255, 255, 137, 34),
+                            shadowColor: Colors.orange,
+                          ),
+                        ),
+                        SizedBox(width: 5.0),
+                        buttonstate
+                            ? onoff
+                                ? ElevatedButton.icon(
+                                    icon:
+                                        Icon(Icons.library_add_check_outlined),
+                                    label: Text("Accept Trade Offer"),
+                                    onPressed: () async {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                            content: Text("Trade Accepted!")),
+                                      );
+                                      readJson(self);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.green,
+                                      shadowColor: Colors.orange,
+                                    ),
+                                  )
+                                : ElevatedButton.icon(
+                                    icon:
+                                        Icon(Icons.library_add_check_outlined),
+                                    label: Text("Accept Trade Offer"),
+                                    onPressed: () async {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                            content: Text(
+                                                "Trade Accepted! Await ${widget.title} to accept!")),
+                                      );
+                                      readJson(self);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor:
+                                          Color.fromARGB(255, 52, 54, 52),
+                                      shadowColor: Colors.orange,
+                                    ),
+                                  )
+                            : onoff
+                                ? ElevatedButton.icon(
+                                    icon:
+                                        Icon(Icons.library_add_check_outlined),
+                                    label: Text("Confirm Trade Offer"),
+                                    onPressed: () async {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                            content: Text(
+                                                "Trade Confirmed! Thankyou!")),
+                                      );
+                                      readJson(self);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.green,
+                                      shadowColor: Colors.orange,
+                                    ),
+                                  )
+                                : ElevatedButton.icon(
+                                    icon:
+                                        Icon(Icons.library_add_check_outlined),
+                                    label: Text("Confirm Trade Offer"),
+                                    onPressed: () async {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                            content: Text(
+                                                "Trade Confirmed! Await ${widget.title} to accept!")),
+                                      );
+                                      readJson(self);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor:
+                                          Color.fromARGB(255, 52, 54, 52),
+                                      shadowColor: Colors.orange,
+                                    ),
+                                  ),
+                      ])),
+                )
+              : null,
         ),
         body: data2 != null
             ? Stack(

@@ -227,8 +227,7 @@ class _HomePageState extends State<HomePage> {
                             'Content-Type': 'application/json; charset=UTF-8',
                           });
                       //var showInfo = await rootBundle.loadString('assets/tradebucket.json');
-                      print('asdsadsad');
-                      print(showInfo.body.toString());
+
                       if (showInfo.body.toString() == "Empty") {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
