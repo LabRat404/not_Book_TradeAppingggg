@@ -299,7 +299,7 @@ class _ChatterState extends State<Chatter> {
   bool onoff = false;
   bool buttonstate = false;
   String notselff = '';
-  bool showbar = false;
+  bool showbar = true;
   // Fetch content from the json file
   Future<String> readJson(myuser) async {
     //load  the json here!!
@@ -320,7 +320,7 @@ class _ChatterState extends State<Chatter> {
           'Content-Type': 'application/json; charset=UTF-8',
         });
     if (showInfo.body.toString() == "Empty") {
-      barshow = true;
+      barshow = false;
     } else {
       final info = await json.decode(showInfo.body);
       if (info[0]['selfaccept'].toString() == '1' &&
