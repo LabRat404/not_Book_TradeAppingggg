@@ -154,8 +154,7 @@ class _UploadPageState extends State<UploadPage> {
       var picture = http.MultipartFile.fromBytes('image',
           (await rootBundle.load('$appDocPath/tmp.png')).buffer.asUint8List(),
           filename: 'test1.png');
-      print(picture.toString());
-
+      request.files.add(picture);
       var response = await request.send();
       var responseData = await response.stream.toBytes();
       var tmp2 = String.fromCharCodes(responseData);

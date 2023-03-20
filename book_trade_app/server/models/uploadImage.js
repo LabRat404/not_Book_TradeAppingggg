@@ -31,8 +31,12 @@ var imageSchema = new mongoose.Schema({
       
         type: String,
     },
+    state: {
+      
+        type: String,
+    },
     comments: {
-        required: true,
+       
         type: String,
     },
     googlelink: {
