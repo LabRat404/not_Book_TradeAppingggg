@@ -85,6 +85,7 @@ authRouter.post("/api/uploading", async (req, res) => {
       dbISBN: req.body['dbISBN'],
       comments: req.body['comments'],
       username: req.body['username'],
+      state: '0',
       booktitle: req.body['booktitle'],
       author: req.body['author'],
       googlelink: req.body['googlelink']
@@ -539,10 +540,12 @@ authRouter.post("/api/gettradebusket", (req, res) => {
     .find({
       $or: [
         {
+          status: 'inprogress',
           self: req.body["self"],
           notself: req.body["notself"]
         },
         {
+           status: 'inprogress',
           self: req.body["notself"],
           notself: req.body["self"]
         }
@@ -569,6 +572,143 @@ authRouter.put("/api/changetradebusket", (req, res) => {
     .find({
       $or: [
         {
+          status: 'inprogress',
+          self: req.body["self"],
+          notself: req.body["notself"]
+        },
+        {
+          status: 'inprogress',
+          self: req.body["notself"],
+          notself: req.body["self"]
+        }
+      ]
+    })
+    .exec((e, results) => {
+      if (e)
+        res.send("Error not known");
+      else if (results == null)
+        res.send("404 not found. No records found!", 404);
+      else {
+        console.log(req.body['selflist']);
+        results[0].selflist = req.body['selflist'];
+        results[0].notselflist = req.body['notselflist'];
+        results[0].selfaccept = '0',
+          results[0].notselfaccept = '0',
+          results[0].save();
+        res.send("done");
+        //console.log(results  + "ASdasdsadasdsad test" + req.body['url']);
+      }
+    }
+    );
+
+
+});
+authRouter.put("/api/changetradebusketstate", (req, res) => {
+console.log('sadsadasd');
+  TradeBucket
+    .find({
+      $or: [
+        {
+          status: 'inprogress',
+          self: req.body["self"],
+          notself: req.body["notself"]
+        },
+        {
+          status: 'inprogress',
+          self: req.body["notself"],
+          notself: req.body["self"]
+        }
+      ]
+    })
+    .exec((e, results) => {
+      if (e)
+        res.send("Error not known");
+      else if (results == null)
+        res.send("404 not found. No records found!", 404);
+      else {
+        if (req.body["self"] == results[0].self) {
+          if (results[0].selfaccept == '0')
+            results[0].selfaccept = '1';
+            else if(results[0].notselfaccept == '1')
+            results[0].selfconfirm = '1';
+        } else {
+          if (results[0].notselfaccept == '0')
+            results[0].notselfaccept = '1';
+          else if(results[0].selfaccept == '1')
+            results[0].notselfconfirm = '1';
+        }
+        results[0].save();
+        //if(results[0].notselfconfirm=='1')
+        res.send("done");
+        //console.log(results  + "ASdasdsadasdsad test" + req.body['url']);
+      }
+    }
+    );
+
+
+});
+
+authRouter.post("/api/createtradebusket", (req, res) => {
+
+  TradeBucket
+    .find({
+      $or: [
+        {
+          status: 'inprogress',
+          self: req.body["self"],
+          notself: req.body["notself"]
+        },
+        {
+          status: 'inprogress',
+          self: req.body["notself"],
+          notself: req.body["self"]
+        }
+      ]
+    })
+    .exec((e, results) => {
+      if (e)
+        res.send("Error not known");
+      else if (results.length == 0) {
+        TradeBucket
+          .create({
+
+            self: req.body['self'],
+            notself: req.body['notself'],
+            randomhash: req.body["randomhash"],
+            lastdate: req.body["dates"],
+            status:   'inprogress',
+            editing: req.body["editing"],
+            selflist: req.body["selflist"],
+            notselflist: req.body["notselflist"],
+            selfaccept: '0',
+            notselfaccept: '0',
+            selfconfirm: '0',
+            notselfconfirm: '0',
+
+            //data2["chatter"][i]["images"]
+            //{dates: new Date()}, {user: req.body["self"],text: msg}
+          })
+        //cretae the trade busket
+        console.log("creating ");
+        res.send("done");
+      }
+      else {
+
+        res.send("notempty...");
+        //console.log(results  + "ASdasdsadasdsad test" + req.body['url']);
+      }
+    }
+    );
+
+
+});
+
+authRouter.put("/api/deleteaccount", (req, res) => {
+  //to be imp
+  TradeBucket
+    .find({
+      $or: [
+        {
           self: req.body["self"],
           notself: req.body["notself"]
         },
@@ -590,53 +730,6 @@ authRouter.put("/api/changetradebusket", (req, res) => {
         console.log(results);
         results[0].save();
         res.send("done");
-        //console.log(results  + "ASdasdsadasdsad test" + req.body['url']);
-      }
-    }
-    );
-
-
-});
-authRouter.post("/api/createtradebusket", (req, res) => {
-
-  TradeBucket
-    .find({
-      $or: [
-        {
-          self: req.body["self"],
-          notself: req.body["notself"]
-        },
-        {
-          self: req.body["notself"],
-          notself: req.body["self"]
-        }
-      ]
-    })
-    .exec((e, results) => {
-      if (e)
-        res.send("Error not known");
-      else if (results.length == 0) {
-        TradeBucket
-          .create({
-
-            self: req.body['self'],
-            notself: req.body['notself'],
-            randomhash: req.body["randomhash"],
-            lastdate: req.body["dates"],
-            status: req.body["status"],
-            editing: req.body["editing"],
-            selflist: req.body["selflist"],
-            notselflist: req.body["notselflist"],
-            //data2["chatter"][i]["images"]
-            //{dates: new Date()}, {user: req.body["self"],text: msg}
-          })
-        //cretae the trade busket
-        console.log("creating ");
-        res.send("done");
-      }
-      else {
-
-        res.send("notempty...");
         //console.log(results  + "ASdasdsadasdsad test" + req.body['url']);
       }
     }
