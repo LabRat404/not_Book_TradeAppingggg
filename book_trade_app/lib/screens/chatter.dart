@@ -301,6 +301,22 @@ class _ChatterState extends State<Chatter> {
   String notselff = '';
   bool showbar = false;
   // Fetch content from the json file
+
+  //editing
+  Future<int> sendreq(String self) async {
+    String notself = widget.title;
+    http.Response re = (await http.put(
+        Uri.parse('http://$ipaddr/api/changetradebusketstate'),
+        body: jsonEncode({"self": self, "notself": notself}),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        }));
+    if (re.body.toString() == "done") {
+      return 0;
+    }
+    return -1;
+  }
+
   Future<String> readJson(myuser) async {
     //load  the json here!!
     //fetch here
@@ -522,7 +538,7 @@ class _ChatterState extends State<Chatter> {
               color: Colors.black,
             ),
             onTap: () {
-              Navigator.pop(context, "something");
+              Navigator.pop(context, "back to last page");
             },
           ),
           actions: [
@@ -605,10 +621,22 @@ class _ChatterState extends State<Chatter> {
                           icon: Icon(Icons.library_add_check_outlined),
                           label: Text("Accept Trade Offer"),
                           onPressed: () async {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text("Trade Accepted!")),
-                            );
-                            readJson(self);
+                            int re = await sendreq(self);
+                            if (re == 0) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text("Trade Accepted!")),
+                              );
+                              Random random = new Random();
+                              sendmsg(self, 'Trade Offer Accepted',
+                                  random.nextInt(100000) + 10);
+                              readJson(self);
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                    content:
+                                        Text("Error, please try again later")),
+                              );
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.green,
@@ -619,12 +647,22 @@ class _ChatterState extends State<Chatter> {
                           icon: Icon(Icons.library_add_check_outlined),
                           label: Text("Accept Trade Offer"),
                           onPressed: () async {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                  content: Text(
-                                      "Trade Accepted! Await ${widget.title} to accept!")),
-                            );
-                            readJson(self);
+                            int re = await sendreq(self);
+                            if (re == 0) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                    content: Text(
+                                        "Trade Accepted! Await ${widget.title} to accept!")),
+                              );
+
+                              readJson(self);
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                    content:
+                                        Text("Error, please try again later")),
+                              );
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Color.fromARGB(255, 52, 54, 52),
@@ -636,11 +674,23 @@ class _ChatterState extends State<Chatter> {
                           icon: Icon(Icons.library_add_check_outlined),
                           label: Text("Confirm Trade Offer"),
                           onPressed: () async {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                  content: Text("Trade Confirmed! Thankyou!")),
-                            );
-                            readJson(self);
+                            int re = await sendreq(self);
+                            if (re == 0) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                    content:
+                                        Text("Trade Confirmed! Thankyou!")),
+                              );
+                              sendmsg(self, 'Trade Offer Confirmed',
+                                  random.nextInt(100000) + 10);
+                              readJson(self);
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                    content:
+                                        Text("Error, please try again later")),
+                              );
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.green,
@@ -651,12 +701,21 @@ class _ChatterState extends State<Chatter> {
                           icon: Icon(Icons.library_add_check_outlined),
                           label: Text("Confirm Trade Offer"),
                           onPressed: () async {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                  content: Text(
-                                      "Trade Confirmed! Await ${widget.title} to accept!")),
-                            );
-                            readJson(self);
+                            int re = await sendreq(self);
+                            if (re == 0) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                    content: Text(
+                                        "Trade Confirmed! Await ${widget.title} to confirm!")),
+                              );
+                              readJson(self);
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                    content:
+                                        Text("Error, please try again later")),
+                              );
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Color.fromARGB(255, 52, 54, 52),
