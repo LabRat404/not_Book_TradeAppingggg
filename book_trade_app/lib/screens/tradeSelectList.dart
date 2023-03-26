@@ -88,6 +88,18 @@ class _TradeListState extends State<TradeList> {
       datanotself = await json.decode(self.body);
     }
     print(info[0]);
+    //removing history books
+    for (int i = 0; i < dataself.length; i++) {
+      if (dataself[i]['state'] == '1') {
+        dataself.remove(dataself[i]);
+      }
+    }
+    for (int i = 0; i < datanotself.length; i++) {
+      if (datanotself[i]['state'] == '1') {
+        datanotself.remove(datanotself[i]);
+      }
+    }
+
     if (showInfo.body != "done") {
       for (int i = 0; i < info[0]['selflist'].length; i++) {
         names.add(info[0]['selflist'][i]);

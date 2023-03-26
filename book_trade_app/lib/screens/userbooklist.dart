@@ -254,42 +254,6 @@ class _UserListState extends State<UserList> {
                             ButtonBar(
                               children: [
                                 ElevatedButton.icon(
-                                  icon: Icon(Icons.playlist_remove),
-                                  label: Text("Remove Item"),
-                                  onPressed: () async {
-                                    var delname = _items[index]["name"];
-                                    var delhash = _items[index]["delhash"];
-                                    //print("input is:  " +_items[index]["name"]);
-                                    var res = await http.delete(
-                                        Uri.parse(
-                                            'http://$ipaddr/api/dellist/$delname'),
-                                        headers: <String, String>{
-                                          'Content-Type':
-                                              'application/json; charset=UTF-8',
-                                        });
-                                    var imguredel = await http.delete(
-                                        Uri.parse(
-                                            'https://api.imgur.com/3/image/$delhash'),
-                                        headers: <String, String>{
-                                          'Content-Type':
-                                              'application/json; charset=UTF-8',
-                                        });
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          content: Text('Item deleted!')),
-                                    );
-                                    Navigator.pushNamedAndRemoveUntil(
-                                      context,
-                                      NavBar.routeName,
-                                      (route) => false,
-                                    );
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.red,
-                                    shadowColor: Colors.orange,
-                                  ),
-                                ),
-                                ElevatedButton.icon(
                                   icon: Icon(Icons.link),
                                   label: Text("Show more on Google Play Book"),
                                   onPressed: () async {

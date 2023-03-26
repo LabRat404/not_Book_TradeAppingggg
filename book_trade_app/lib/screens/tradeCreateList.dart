@@ -77,7 +77,19 @@ class _TradeCreateListState extends State<TradeCreateList> {
       dataself = await json.decode(notself.body);
       datanotself = await json.decode(self.body);
     }
+    //removing history books
+    for (int i = 0; i < dataself.length; i++) {
+      if (dataself[i]['state'] == '1') {
+        dataself.remove(dataself[i]);
+      }
+    }
+    for (int i = 0; i < datanotself.length; i++) {
+      if (datanotself[i]['state'] == '1') {
+        datanotself.remove(datanotself[i]);
+      }
+    }
 
+    //adding bool
     for (int i = 0; i < dataself.length; i++) {
       if (names.contains(dataself[i]['name'])) {
         tmp1.add(true);
