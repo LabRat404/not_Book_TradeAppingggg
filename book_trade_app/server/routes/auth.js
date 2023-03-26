@@ -604,7 +604,7 @@ authRouter.put("/api/changetradebusket", (req, res) => {
 
 });
 authRouter.put("/api/changetradebusketstate", (req, res) => {
-console.log('sadsadasd');
+
   TradeBucket
     .find({
       $or: [
@@ -638,6 +638,40 @@ console.log('sadsadasd');
             results[0].notselfconfirm = '1';
         }
         results[0].save();
+        if(results[0].notselfconfirm == '1' && results[0].selfconfirm == '1'){
+              results[0]['selflist'].forEach(names => {
+                Image2
+                .find({ name: names })
+                .exec((e, imageresults) => {
+                  if (e)
+                    res.send("Error not known");
+                  else if (imageresults == null)
+                    res.send("404 not found. No records found!", 404);
+                  else {
+                    imageresults[0].state ='1';
+                    imageresults[0].save();
+                  }
+                }
+                );
+                console.log(names);
+            });
+            results[0]['notselflist'].forEach(names => {
+              Image2
+              .find({ name: names })
+              .exec((e, imageresults) => {
+                if (e)
+                  res.send("Error not known");
+                else if (imageresults == null)
+                  res.send("404 not found. No records found!", 404);
+                else {
+                  imageresults[0].state ='1';
+                  imageresults[0].save();
+                }
+              }
+              );
+              console.log(names);
+            });
+        }
         //if(results[0].notselfconfirm=='1')
         res.send("done");
         //console.log(results  + "ASdasdsadasdsad test" + req.body['url']);
