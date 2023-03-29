@@ -141,6 +141,8 @@ class _TradeCreateListState extends State<TradeCreateList> {
         }
         Random random = new Random();
         final now = new DateTime.now();
+        print(
+            new DateFormat('yyyy-MM-dd').format(new DateTime.now()).toString());
         if (reverse) {
           http.Response res =
               await http.post(Uri.parse('http://$ipaddr/api/createtradebusket'),

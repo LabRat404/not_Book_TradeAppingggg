@@ -709,7 +709,7 @@ authRouter.post("/api/createtradebusket", (req, res) => {
             self: req.body['self'],
             notself: req.body['notself'],
             randomhash: req.body["randomhash"],
-            lastdate: req.body["dates"],
+            lastdate: req.body["lastdate"],
             status:   'inprogress',
             editing: req.body["editing"],
             selflist: req.body["selflist"],
