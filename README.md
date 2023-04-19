@@ -30,6 +30,7 @@ Settings: Delete account\
 ready for migrating stash image server to AWS S3 
 
 Done List: \
+Tested and works perfect on Andriod Pixale\
 Trade List Pages\
 Upload page\
 Inventory List\
