@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:trade_app/provider/user_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:trade_app/screens/chatter.dart';
+import 'package:trade_app/screens/GPTrec.dart';
 import 'package:cron/cron.dart';
 import 'dart:async';
 
@@ -153,16 +154,12 @@ class _ChatListState extends State<ChatList> {
                                   title: Text("GPT - Personal Book Advisor"),
                                   subtitle:
                                       Text("Ask me for some book advice!"),
-                                  onTap: () async {
-                                    // final text = await Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //     builder: (context) =>
-                                    //         Chatter(title: who),
-                                    //   ),
-                                    // );
-
-                                    // readJson(myselfname);
+                                  onTap: () {
+                                    final text = Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                GPTRECPage()));
                                   },
                                 ),
                                 Divider(
