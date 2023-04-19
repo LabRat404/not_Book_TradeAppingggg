@@ -1,0 +1,225 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.trade_app"
+4    android:versionCode="1"
+5    android:versionName="1.0.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+9        android:targetSdkVersion="33" />
+10    <!--
+11         The INTERNET permission is required for development. Specifically,
+12         the Flutter tool needs it to communicate with the running application
+13         to allow setting breakpoints, to provide hot reload, etc.
+14    -->
+15    <uses-permission android:name="android.permission.INTERNET" />
+15-->/Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/debug/AndroidManifest.xml:7:5-66
+15-->/Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/debug/AndroidManifest.xml:7:22-64
+16    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+16-->[:file_picker] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-80
+16-->[:file_picker] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:9:22-77
+17
+18    <queries>
+18-->[:file_picker] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:11:5-17:15
+19        <intent>
+19-->[:file_picker] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:12:9-16:18
+20            <action android:name="android.intent.action.GET_CONTENT" />
+20-->[:file_picker] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:13:13-72
+20-->[:file_picker] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:13:21-69
+21
+22            <data android:mimeType="*/*" />
+22-->[:file_picker] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:15:13-44
+22-->[:file_picker] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:15:19-41
+23        </intent>
+24    </queries>
+25
+26    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+26-->[:connectivity_plus] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/connectivity_plus/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-79
+26-->[:connectivity_plus] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/connectivity_plus/intermediates/merged_manifest/debug/AndroidManifest.xml:9:22-76
+27    <uses-permission android:name="android.permission.CAMERA" />
+27-->[:mobile_scanner] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/mobile_scanner/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-65
+27-->[:mobile_scanner] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/mobile_scanner/intermediates/merged_manifest/debug/AndroidManifest.xml:9:22-62
+28
+29    <application
+30        android:name="android.app.Application"
+31        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+31-->[androidx.core:core:1.8.0] /Users/tangjaii/.gradle/caches/transforms-3/d363e3b5616f580c766e3e2b3c05f27d/transformed/core-1.8.0/AndroidManifest.xml:24:18-86
+32        android:debuggable="true"
+33        android:icon="@mipmap/ic_launcher"
+34        android:label="trade_app" >
+35        <activity
+36            android:name="com.example.trade_app.MainActivity"
+37            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+38            android:exported="true"
+39            android:hardwareAccelerated="true"
+40            android:launchMode="singleTop"
+41            android:theme="@style/LaunchTheme"
+42            android:usesCleartextTraffic="true"
+43            android:windowSoftInputMode="adjustResize" >
+44
+45            <!--
+46                 Specifies an Android theme to apply to this Activity as soon as
+47                 the Android process has started. This theme is visible to the user
+48                 while the Flutter UI initializes. After that, this theme continues
+49                 to determine the Window background behind the Flutter UI.
+50            -->
+51            <meta-data
+52                android:name="io.flutter.embedding.android.NormalTheme"
+53                android:resource="@style/NormalTheme" />
+54
+55            <intent-filter>
+56                <action android:name="android.intent.action.MAIN" />
+57
+58                <category android:name="android.intent.category.LAUNCHER" />
+59            </intent-filter>
+60        </activity>
+61        <!--
+62             Don't delete the meta-data below.
+63             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+64        -->
+65        <meta-data
+66            android:name="flutterEmbedding"
+67            android:value="2" />
+68
+69        <provider
+69-->[:image_picker_android] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-18:20
+70            android:name="io.flutter.plugins.imagepicker.ImagePickerFileProvider"
+70-->[:image_picker_android] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-82
+71            android:authorities="com.example.trade_app.flutter.image_provider"
+71-->[:image_picker_android] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:12:13-74
+72            android:exported="false"
+72-->[:image_picker_android] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:13:13-37
+73            android:grantUriPermissions="true" >
+73-->[:image_picker_android] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:14:13-47
+74            <meta-data
+74-->[:image_picker_android] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:15:13-17:75
+75                android:name="android.support.FILE_PROVIDER_PATHS"
+75-->[:image_picker_android] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:16:17-67
+76                android:resource="@xml/flutter_image_picker_file_paths" />
+76-->[:image_picker_android] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:17:17-72
+77        </provider>
+78
+79        <activity
+79-->[:url_launcher_android] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-13:74
+80            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
+80-->[:url_launcher_android] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-74
+81            android:exported="false"
+81-->[:url_launcher_android] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:12:13-37
+82            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+82-->[:url_launcher_android] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:13:13-71
+83
+84        <uses-library
+84-->[androidx.window:window:1.0.0-beta04] /Users/tangjaii/.gradle/caches/transforms-3/49bc944d29f70d45aa5add8e43e3247e/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:25:9-27:40
+85            android:name="androidx.window.extensions"
+85-->[androidx.window:window:1.0.0-beta04] /Users/tangjaii/.gradle/caches/transforms-3/49bc944d29f70d45aa5add8e43e3247e/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:26:13-54
+86            android:required="false" />
+86-->[androidx.window:window:1.0.0-beta04] /Users/tangjaii/.gradle/caches/transforms-3/49bc944d29f70d45aa5add8e43e3247e/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:27:13-37
+87        <uses-library
+87-->[androidx.window:window:1.0.0-beta04] /Users/tangjaii/.gradle/caches/transforms-3/49bc944d29f70d45aa5add8e43e3247e/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:28:9-30:40
+88            android:name="androidx.window.sidecar"
+88-->[androidx.window:window:1.0.0-beta04] /Users/tangjaii/.gradle/caches/transforms-3/49bc944d29f70d45aa5add8e43e3247e/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:29:13-51
+89            android:required="false" />
+89-->[androidx.window:window:1.0.0-beta04] /Users/tangjaii/.gradle/caches/transforms-3/49bc944d29f70d45aa5add8e43e3247e/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:30:13-37
+90
+91        <service
+91-->[androidx.camera:camera-camera2:1.1.0] /Users/tangjaii/.gradle/caches/transforms-3/23364144ca75424e407a947c75004576/transformed/jetified-camera-camera2-1.1.0/AndroidManifest.xml:26:9-35:19
+92            android:name="androidx.camera.core.impl.MetadataHolderService"
+92-->[androidx.camera:camera-camera2:1.1.0] /Users/tangjaii/.gradle/caches/transforms-3/23364144ca75424e407a947c75004576/transformed/jetified-camera-camera2-1.1.0/AndroidManifest.xml:27:13-75
+93            android:enabled="false"
+93-->[androidx.camera:camera-camera2:1.1.0] /Users/tangjaii/.gradle/caches/transforms-3/23364144ca75424e407a947c75004576/transformed/jetified-camera-camera2-1.1.0/AndroidManifest.xml:28:13-36
+94            android:exported="false" >
+94-->[androidx.camera:camera-camera2:1.1.0] /Users/tangjaii/.gradle/caches/transforms-3/23364144ca75424e407a947c75004576/transformed/jetified-camera-camera2-1.1.0/AndroidManifest.xml:29:13-37
+95            <meta-data
+95-->[androidx.camera:camera-camera2:1.1.0] /Users/tangjaii/.gradle/caches/transforms-3/23364144ca75424e407a947c75004576/transformed/jetified-camera-camera2-1.1.0/AndroidManifest.xml:32:13-34:89
+96                android:name="androidx.camera.core.impl.MetadataHolderService.DEFAULT_CONFIG_PROVIDER"
+96-->[androidx.camera:camera-camera2:1.1.0] /Users/tangjaii/.gradle/caches/transforms-3/23364144ca75424e407a947c75004576/transformed/jetified-camera-camera2-1.1.0/AndroidManifest.xml:33:17-103
+97                android:value="androidx.camera.camera2.Camera2Config$DefaultProvider" />
+97-->[androidx.camera:camera-camera2:1.1.0] /Users/tangjaii/.gradle/caches/transforms-3/23364144ca75424e407a947c75004576/transformed/jetified-camera-camera2-1.1.0/AndroidManifest.xml:34:17-86
+98        </service>
+99        <service
+99-->[com.google.android.gms:play-services-mlkit-barcode-scanning:18.0.0] /Users/tangjaii/.gradle/caches/transforms-3/5c6e7baf6fb2b3692d55a2dd3d53beb7/transformed/jetified-play-services-mlkit-barcode-scanning-18.0.0/AndroidManifest.xml:9:9-15:19
+100            android:name="com.google.mlkit.common.internal.MlKitComponentDiscoveryService"
+100-->[com.google.android.gms:play-services-mlkit-barcode-scanning:18.0.0] /Users/tangjaii/.gradle/caches/transforms-3/5c6e7baf6fb2b3692d55a2dd3d53beb7/transformed/jetified-play-services-mlkit-barcode-scanning-18.0.0/AndroidManifest.xml:10:13-91
+101            android:directBootAware="true"
+101-->[com.google.mlkit:common:18.0.0] /Users/tangjaii/.gradle/caches/transforms-3/a8d3f9dd24ace6c94bfc985ffc73f968/transformed/jetified-common-18.0.0/AndroidManifest.xml:17:13-43
+102            android:exported="false" >
+102-->[com.google.android.gms:play-services-mlkit-barcode-scanning:18.0.0] /Users/tangjaii/.gradle/caches/transforms-3/5c6e7baf6fb2b3692d55a2dd3d53beb7/transformed/jetified-play-services-mlkit-barcode-scanning-18.0.0/AndroidManifest.xml:11:13-37
+103            <meta-data
+103-->[com.google.android.gms:play-services-mlkit-barcode-scanning:18.0.0] /Users/tangjaii/.gradle/caches/transforms-3/5c6e7baf6fb2b3692d55a2dd3d53beb7/transformed/jetified-play-services-mlkit-barcode-scanning-18.0.0/AndroidManifest.xml:12:13-14:85
+104                android:name="com.google.firebase.components:com.google.mlkit.vision.barcode.internal.BarcodeRegistrar"
+104-->[com.google.android.gms:play-services-mlkit-barcode-scanning:18.0.0] /Users/tangjaii/.gradle/caches/transforms-3/5c6e7baf6fb2b3692d55a2dd3d53beb7/transformed/jetified-play-services-mlkit-barcode-scanning-18.0.0/AndroidManifest.xml:13:17-120
+105                android:value="com.google.firebase.components.ComponentRegistrar" />
+105-->[com.google.android.gms:play-services-mlkit-barcode-scanning:18.0.0] /Users/tangjaii/.gradle/caches/transforms-3/5c6e7baf6fb2b3692d55a2dd3d53beb7/transformed/jetified-play-services-mlkit-barcode-scanning-18.0.0/AndroidManifest.xml:14:17-82
+106            <meta-data
+106-->[com.google.mlkit:vision-common:17.0.0] /Users/tangjaii/.gradle/caches/transforms-3/6121614ac855993e2a9fb21868b51e27/transformed/jetified-vision-common-17.0.0/AndroidManifest.xml:12:13-14:85
+107                android:name="com.google.firebase.components:com.google.mlkit.vision.common.internal.VisionCommonRegistrar"
+107-->[com.google.mlkit:vision-common:17.0.0] /Users/tangjaii/.gradle/caches/transforms-3/6121614ac855993e2a9fb21868b51e27/transformed/jetified-vision-common-17.0.0/AndroidManifest.xml:13:17-124
+108                android:value="com.google.firebase.components.ComponentRegistrar" />
+108-->[com.google.mlkit:vision-common:17.0.0] /Users/tangjaii/.gradle/caches/transforms-3/6121614ac855993e2a9fb21868b51e27/transformed/jetified-vision-common-17.0.0/AndroidManifest.xml:14:17-82
+109            <meta-data
+109-->[com.google.mlkit:common:18.0.0] /Users/tangjaii/.gradle/caches/transforms-3/a8d3f9dd24ace6c94bfc985ffc73f968/transformed/jetified-common-18.0.0/AndroidManifest.xml:20:13-22:85
+110                android:name="com.google.firebase.components:com.google.mlkit.common.internal.CommonComponentRegistrar"
+110-->[com.google.mlkit:common:18.0.0] /Users/tangjaii/.gradle/caches/transforms-3/a8d3f9dd24ace6c94bfc985ffc73f968/transformed/jetified-common-18.0.0/AndroidManifest.xml:21:17-120
+111                android:value="com.google.firebase.components.ComponentRegistrar" />
+111-->[com.google.mlkit:common:18.0.0] /Users/tangjaii/.gradle/caches/transforms-3/a8d3f9dd24ace6c94bfc985ffc73f968/transformed/jetified-common-18.0.0/AndroidManifest.xml:22:17-82
+112        </service>
+113
+114        <provider
+114-->[com.google.mlkit:common:18.0.0] /Users/tangjaii/.gradle/caches/transforms-3/a8d3f9dd24ace6c94bfc985ffc73f968/transformed/jetified-common-18.0.0/AndroidManifest.xml:9:9-13:38
+115            android:name="com.google.mlkit.common.internal.MlKitInitProvider"
+115-->[com.google.mlkit:common:18.0.0] /Users/tangjaii/.gradle/caches/transforms-3/a8d3f9dd24ace6c94bfc985ffc73f968/transformed/jetified-common-18.0.0/AndroidManifest.xml:10:13-78
+116            android:authorities="com.example.trade_app.mlkitinitprovider"
+116-->[com.google.mlkit:common:18.0.0] /Users/tangjaii/.gradle/caches/transforms-3/a8d3f9dd24ace6c94bfc985ffc73f968/transformed/jetified-common-18.0.0/AndroidManifest.xml:11:13-69
+117            android:exported="false"
+117-->[com.google.mlkit:common:18.0.0] /Users/tangjaii/.gradle/caches/transforms-3/a8d3f9dd24ace6c94bfc985ffc73f968/transformed/jetified-common-18.0.0/AndroidManifest.xml:12:13-37
+118            android:initOrder="99" />
+118-->[com.google.mlkit:common:18.0.0] /Users/tangjaii/.gradle/caches/transforms-3/a8d3f9dd24ace6c94bfc985ffc73f968/transformed/jetified-common-18.0.0/AndroidManifest.xml:13:13-35
+119
+120        <activity
+120-->[com.google.android.gms:play-services-base:18.0.1] /Users/tangjaii/.gradle/caches/transforms-3/3ff720be07735976176520d1c05fb799/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:9-22:45
+121            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+121-->[com.google.android.gms:play-services-base:18.0.1] /Users/tangjaii/.gradle/caches/transforms-3/3ff720be07735976176520d1c05fb799/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:19-85
+122            android:exported="false"
+122-->[com.google.android.gms:play-services-base:18.0.1] /Users/tangjaii/.gradle/caches/transforms-3/3ff720be07735976176520d1c05fb799/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:22:19-43
+123            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+123-->[com.google.android.gms:play-services-base:18.0.1] /Users/tangjaii/.gradle/caches/transforms-3/3ff720be07735976176520d1c05fb799/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:21:19-78
+124
+125        <meta-data
+125-->[com.google.android.gms:play-services-basement:18.0.0] /Users/tangjaii/.gradle/caches/transforms-3/601d4158b382ad9f634d3bbb23a34c83/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:21:9-23:69
+126            android:name="com.google.android.gms.version"
+126-->[com.google.android.gms:play-services-basement:18.0.0] /Users/tangjaii/.gradle/caches/transforms-3/601d4158b382ad9f634d3bbb23a34c83/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:22:13-58
+127            android:value="@integer/google_play_services_version" />
+127-->[com.google.android.gms:play-services-basement:18.0.0] /Users/tangjaii/.gradle/caches/transforms-3/601d4158b382ad9f634d3bbb23a34c83/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:23:13-66
+128
+129        <service
+129-->[com.google.android.datatransport:transport-backend-cct:2.3.3] /Users/tangjaii/.gradle/caches/transforms-3/dc7c65a3010064290ad75bc9ded151e5/transformed/jetified-transport-backend-cct-2.3.3/AndroidManifest.xml:29:9-35:19
+130            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+130-->[com.google.android.datatransport:transport-backend-cct:2.3.3] /Users/tangjaii/.gradle/caches/transforms-3/dc7c65a3010064290ad75bc9ded151e5/transformed/jetified-transport-backend-cct-2.3.3/AndroidManifest.xml:30:13-103
+131            android:exported="false" >
+131-->[com.google.android.datatransport:transport-backend-cct:2.3.3] /Users/tangjaii/.gradle/caches/transforms-3/dc7c65a3010064290ad75bc9ded151e5/transformed/jetified-transport-backend-cct-2.3.3/AndroidManifest.xml:31:13-37
+132            <meta-data
+132-->[com.google.android.datatransport:transport-backend-cct:2.3.3] /Users/tangjaii/.gradle/caches/transforms-3/dc7c65a3010064290ad75bc9ded151e5/transformed/jetified-transport-backend-cct-2.3.3/AndroidManifest.xml:32:13-34:39
+133                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+133-->[com.google.android.datatransport:transport-backend-cct:2.3.3] /Users/tangjaii/.gradle/caches/transforms-3/dc7c65a3010064290ad75bc9ded151e5/transformed/jetified-transport-backend-cct-2.3.3/AndroidManifest.xml:33:17-94
+134                android:value="cct" />
+134-->[com.google.android.datatransport:transport-backend-cct:2.3.3] /Users/tangjaii/.gradle/caches/transforms-3/dc7c65a3010064290ad75bc9ded151e5/transformed/jetified-transport-backend-cct-2.3.3/AndroidManifest.xml:34:17-36
+135        </service>
+136        <service
+136-->[com.google.android.datatransport:transport-runtime:2.2.6] /Users/tangjaii/.gradle/caches/transforms-3/9f6b077e57e6a6558af0f12467efdf97/transformed/jetified-transport-runtime-2.2.6/AndroidManifest.xml:26:9-30:19
+137            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+137-->[com.google.android.datatransport:transport-runtime:2.2.6] /Users/tangjaii/.gradle/caches/transforms-3/9f6b077e57e6a6558af0f12467efdf97/transformed/jetified-transport-runtime-2.2.6/AndroidManifest.xml:27:13-117
+138            android:exported="false"
+138-->[com.google.android.datatransport:transport-runtime:2.2.6] /Users/tangjaii/.gradle/caches/transforms-3/9f6b077e57e6a6558af0f12467efdf97/transformed/jetified-transport-runtime-2.2.6/AndroidManifest.xml:28:13-37
+139            android:permission="android.permission.BIND_JOB_SERVICE" >
+139-->[com.google.android.datatransport:transport-runtime:2.2.6] /Users/tangjaii/.gradle/caches/transforms-3/9f6b077e57e6a6558af0f12467efdf97/transformed/jetified-transport-runtime-2.2.6/AndroidManifest.xml:29:13-69
+140        </service>
+141
+142        <receiver
+142-->[com.google.android.datatransport:transport-runtime:2.2.6] /Users/tangjaii/.gradle/caches/transforms-3/9f6b077e57e6a6558af0f12467efdf97/transformed/jetified-transport-runtime-2.2.6/AndroidManifest.xml:32:9-34:40
+143            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+143-->[com.google.android.datatransport:transport-runtime:2.2.6] /Users/tangjaii/.gradle/caches/transforms-3/9f6b077e57e6a6558af0f12467efdf97/transformed/jetified-transport-runtime-2.2.6/AndroidManifest.xml:33:13-132
+144            android:exported="false" />
+144-->[com.google.android.datatransport:transport-runtime:2.2.6] /Users/tangjaii/.gradle/caches/transforms-3/9f6b077e57e6a6558af0f12467efdf97/transformed/jetified-transport-runtime-2.2.6/AndroidManifest.xml:34:13-37
+145    </application>
+146
+147</manifest>

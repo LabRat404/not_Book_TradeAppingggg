@@ -201,7 +201,7 @@ class _HomePageState extends State<HomePage> {
                     }
                   },
                   icon: Image.network(_items[i]["url"],
-                      width: 140, height: 180, fit: BoxFit.fill),
+                      width: 120, height: 140, fit: BoxFit.fill),
                   label: Text(
                     _items[i]["booktitle"] + '\n' + 'By ' + _items[i]["author"],
                     style: TextStyle(
@@ -316,9 +316,10 @@ class _HomePageState extends State<HomePage> {
     var username = context.watch<UserProvider>().user.name;
     return Scaffold(
       appBar: ReusableWidgets.LoginPageAppBar('Welcome Back! $username'),
+      resizeToAvoidBottomInset: false,
       body: Column(
         children: <Widget>[
-          SizedBox(height: 30.0),
+          SizedBox(height: 10.0),
           bm,
           loopBOM,
           heading,

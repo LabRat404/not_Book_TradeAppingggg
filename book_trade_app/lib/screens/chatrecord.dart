@@ -71,6 +71,10 @@ class _ChatListState extends State<ChatList> {
 
     List whoimage = [];
 
+    //for GPT
+    data.insert(0, data[0]);
+
+    //get load img
     for (int i = 0; i < data.length; i++) {
       String nameping = data[i]["notself"];
       if (nameping.toString() == realusername.toString()) {
@@ -139,99 +143,130 @@ class _ChatListState extends State<ChatList> {
                         child: ListView.builder(
                           itemCount: _items.length,
                           itemBuilder: (context, index) {
-                            int long = _items[index]["chatter"].length;
-                            String who = "";
-                            if (_items[index]["notself"] == myselfname)
-                              who = _items[index]["self"];
-                            else
-                              who = _items[index]["notself"];
-                            return Column(children: <Widget>[
-                              ListTile(
-                                leading: CircleAvatar(
-                                  backgroundImage:
-                                      NetworkImage(loadusernameimage[index]),
-                                ),
-                                title: Text(
-                                  who,
-                                ),
-                                subtitle: _items[index]["chatter"][long - 1]
-                                            ["images"] !=
-                                        null
-                                    ? Text("images")
-                                    : Text(_items[index]["chatter"][long - 1]
-                                        ["text"]),
-                                // : Text(_items[index]["chatter"][long - 1]
-                                //     ["text"]),
-                                trailing: PopupMenuButton(
-                                  itemBuilder: (context) {
-                                    return [
-                                      // PopupMenuItem(
-                                      //   value: 'edit',
-                                      //   child: Text('Edit'),
-                                      // ),
-                                      PopupMenuItem(
-                                        value: 'delete',
-                                        child: Text('Delete'),
-                                        onTap: () async {
-                                          var delhash =
-                                              _items[index]["randomhash"];
-                                          var delres = await http.delete(
-                                              Uri.parse(
-                                                  'http://$ipaddr/api/delchat/$delhash'),
-                                              headers: <String, String>{
-                                                'Content-Type':
-                                                    'application/json; charset=UTF-8',
-                                              });
-                                          if (delres.body.toString() == 'ok') {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              const SnackBar(
-                                                  content:
-                                                      Text('Chat deleted!')),
-                                            );
-                                            var test2 =
-                                                await readJson(myselfname);
-                                          }
-                                        },
-                                      ),
-                                      // PopupMenuItem(
-                                      //   value: 'View profile',
-                                      //   child: Text('View profile'),
-                                      //   onTap: () async {
-                                      //     // print("Trade!Book hash is " + info[7]);
-                                      //     Navigator.pop(
-                                      //       context,
-                                      //       MaterialPageRoute(
-                                      //         builder: (context) =>
-                                      //             ShowotherUser(
-                                      //                 otherusername:
-                                      //                     _items[index]
-                                      //                         ["notself"]),
-                                      //       ),
-                                      //     );
-                                      //     print("testing...");
-                                      //   },
-                                      // )
-                                    ];
+                            if (index == 0) {
+                              return Column(children: <Widget>[
+                                ListTile(
+                                  leading: CircleAvatar(
+                                    backgroundImage: NetworkImage(
+                                        "https://ballinyourcourt.files.wordpress.com/2023/01/chatgpt-icon-logo-png.png"),
+                                  ),
+                                  title: Text("GPT - Personal Book Advisor"),
+                                  subtitle:
+                                      Text("Ask me for some book advice!"),
+                                  onTap: () async {
+                                    // final text = await Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //     builder: (context) =>
+                                    //         Chatter(title: who),
+                                    //   ),
+                                    // );
+
+                                    // readJson(myselfname);
                                   },
-                                  onSelected: (String value) {},
                                 ),
-                                onTap: () async {
-                                  final text = await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => Chatter(title: who),
-                                    ),
-                                  );
-                                  print(text);
-                                  readJson(myselfname);
-                                },
-                              ),
-                              Divider(
-                                  color: Colors.grey,
-                                  endIndent: 24,
-                                  indent: 24),
-                            ]);
+                                Divider(
+                                    color: Colors.grey,
+                                    endIndent: 24,
+                                    indent: 24),
+                              ]);
+                            } else {
+                              int long = _items[index]["chatter"].length;
+                              String who = "";
+                              if (_items[index]["notself"] == myselfname)
+                                who = _items[index]["self"];
+                              else
+                                who = _items[index]["notself"];
+                              return Column(children: <Widget>[
+                                ListTile(
+                                  leading: CircleAvatar(
+                                    backgroundImage:
+                                        NetworkImage(loadusernameimage[index]),
+                                  ),
+                                  title: Text(
+                                    who,
+                                  ),
+                                  subtitle: _items[index]["chatter"][long - 1]
+                                              ["images"] !=
+                                          null
+                                      ? Text("images")
+                                      : Text(_items[index]["chatter"][long - 1]
+                                          ["text"]),
+                                  // : Text(_items[index]["chatter"][long - 1]
+                                  //     ["text"]),
+                                  trailing: PopupMenuButton(
+                                    itemBuilder: (context) {
+                                      return [
+                                        // PopupMenuItem(
+                                        //   value: 'edit',
+                                        //   child: Text('Edit'),
+                                        // ),
+                                        PopupMenuItem(
+                                          value: 'delete',
+                                          child: Text('Delete'),
+                                          onTap: () async {
+                                            var delhash =
+                                                _items[index]["randomhash"];
+                                            var delres = await http.delete(
+                                                Uri.parse(
+                                                    'http://$ipaddr/api/delchat/$delhash'),
+                                                headers: <String, String>{
+                                                  'Content-Type':
+                                                      'application/json; charset=UTF-8',
+                                                });
+                                            if (delres.body.toString() ==
+                                                'ok') {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                const SnackBar(
+                                                    content:
+                                                        Text('Chat deleted!')),
+                                              );
+                                              var test2 =
+                                                  await readJson(myselfname);
+                                            }
+                                          },
+                                        ),
+                                        // PopupMenuItem(
+                                        //   value: 'View profile',
+                                        //   child: Text('View profile'),
+                                        //   onTap: () async {
+                                        //     // print("Trade!Book hash is " + info[7]);
+                                        //     Navigator.pop(
+                                        //       context,
+                                        //       MaterialPageRoute(
+                                        //         builder: (context) =>
+                                        //             ShowotherUser(
+                                        //                 otherusername:
+                                        //                     _items[index]
+                                        //                         ["notself"]),
+                                        //       ),
+                                        //     );
+                                        //     print("testing...");
+                                        //   },
+                                        // )
+                                      ];
+                                    },
+                                    onSelected: (String value) {},
+                                  ),
+                                  onTap: () async {
+                                    final text = await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            Chatter(title: who),
+                                      ),
+                                    );
+                                    print(text);
+                                    readJson(myselfname);
+                                  },
+                                ),
+                                Divider(
+                                    color: Colors.grey,
+                                    endIndent: 24,
+                                    indent: 24),
+                              ]);
+                            }
                           },
                         ),
                       )

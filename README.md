@@ -1,5 +1,5 @@
 # new_start
-
+Aceecpted the fact yet still miss u QAQ, anyways love u <3\
 
 The app is now available on testflight!\
 Email me if u wana join as a beta tester! ggwp12335@gmail.com\
@@ -8,6 +8,8 @@ Email me if u wana join as a beta tester! ggwp12335@gmail.com\
 To Do List (FE_Iron lol):
 
 WinDoriaHeartBack(So far far away QAQ)\
+Added GPT CHAT\
+Implmenting book recomandations from GPT\  
 ~~Chatter: (Chat Icon using hardcode)~~\
 ~~Showotheruser_page: remove duplicated chat with user~~\
 ~~Home page: chat with user becomes a trade request~~\
