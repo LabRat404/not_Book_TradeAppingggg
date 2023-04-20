@@ -44,7 +44,6 @@ class _GPTRECPageState extends State<GPTRECPage> {
       String realusername = help.user.name;
       readJson(realusername);
     });
-    //loadBookData();
   }
 
   final TextEditingController _controller = TextEditingController();
@@ -72,13 +71,19 @@ class _GPTRECPageState extends State<GPTRECPage> {
   }
 
   //I dont like this, its hard coding and I tried not to, but maybe will fix it later
-  Future<void> loadBookData() async {
-    List<String> BookOfMonth = [
-      "9781603095020",
-      "9781503519770",
-      "9781447220039",
-    ];
+  Future<void> loadBookData(searchString) async {
+    List<dynamic> BookOfMonth = [];
 
+    http.Response ress = await http.get(
+        Uri.parse('http://$ipaddr/api/grabGPT/$searchString'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        });
+    final Booklist = await json.decode(ress.body);
+    print(Booklist.toString());
+    BookOfMonth = Booklist;
+    print(BookOfMonth);
+    print("hasdasdfasdad");
     for (var i = 0; i < BookOfMonth.length; i++) {
       var res = await http.post(
           //localhost
@@ -97,19 +102,25 @@ class _GPTRECPageState extends State<GPTRECPage> {
       String binfoLink = "Not found";
       String blink = "Not found";
       if (data1["title"] != null) btitle = data1["title"].toString();
-      if (data1["authors"] != null) bauthors = data1["authors"].toString();
+      if (data1["authors"] != null) bauthors = data1["authors"][0].toString();
       if (data1["infoLink"] != null) binfoLink = data1["infoLink"].toString();
-      if (data1["imageLinks"] != null)
+      if (data1["imageLinks"] != null) {
         blink = data1["imageLinks"]["smallThumbnail"].toString();
-      print(btitle);
-      setState(() {
-        _items[i]["googlelink"] = binfoLink;
-        _items[i]["url"] = blink;
-        _items[i]["title"] = btitle;
-        _items[i]["authors"] = bauthors;
-      });
-
-      print(_items.toString());
+        setState(() {
+          _items[i]["googlelink"] = binfoLink;
+          _items[i]["url"] = blink;
+          _items[i]["booktitle"] = btitle;
+          _items[i]["author"] = bauthors;
+        });
+      } else {
+        setState(() {
+          _items[i]["googlelink"] = "https://imgur.com/E72yFZP";
+          _items[i]["url"] =
+              "https://i.kym-cdn.com/entries/icons/original/000/027/528/519.png";
+          _items[i]["booktitle"] = "Sorry I Lied";
+          _items[i]["author"] = "GPT-3";
+        });
+      }
     }
   }
 
@@ -181,7 +192,6 @@ class _GPTRECPageState extends State<GPTRECPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: _buttons
@@ -194,8 +204,7 @@ class _GPTRECPageState extends State<GPTRECPage> {
                               onPressed: entry.value['cooldown']
                                   ? null
                                   : () async {
-                                      loadBookData();
-
+                                      loadBookData(entry.value['text']);
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
                                         SnackBar(
@@ -221,7 +230,7 @@ class _GPTRECPageState extends State<GPTRECPage> {
                                           i++) {
                                         setState(() {
                                           _buttons[i]['cooldown'] = true;
-                                          Timer(Duration(seconds: 3), () {
+                                          Timer(Duration(seconds: 5), () {
                                             setState(() {
                                               _buttons[i]['cooldown'] = false;
                                             });
@@ -253,7 +262,11 @@ class _GPTRECPageState extends State<GPTRECPage> {
                 SizedBox(height: 5.0),
                 Text(
                   "Click on the books to learn more! ",
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  "Truth is hard and GPT lies! (sometimes)",
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 5.0),
                 ImageSlideshow(
@@ -277,12 +290,13 @@ class _GPTRECPageState extends State<GPTRECPage> {
                                 }
                               },
                               icon: Image.network(_items[i]["url"],
-                                  width: 120, height: 140, fit: BoxFit.fill),
+                                  width: 180, height: 200, fit: BoxFit.fill),
                               label: Text(
                                 _items[i]["booktitle"] +
                                     '\n' +
-                                    'By ' +
-                                    _items[i]["author"],
+                                    'By [ ' +
+                                    _items[i]["author"] +
+                                    ' ]',
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,

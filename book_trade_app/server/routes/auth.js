@@ -193,6 +193,65 @@ authRouter.get("/api/grabrec/:notthis", async (req, res) => {
     );
 });
 
+authRouter.get("/api/grabGPT/:search", async (req, res) => {
+
+  const axios = require('axios');
+    console.log(req.params["search"]);
+
+    const searchString = req.params["search"];
+
+    const prompt = `List 3 '${searchString}' related book's from both 'new york times and Amazon' and rank them with relevance, reply text with just ‘the book title’`;
+    console.log(prompt);
+axios.post('https://api.openai.com/v1/engines/text-davinci-003/completions', {
+  prompt,
+  temperature: 0.4,
+  max_tokens: 200,
+  top_p: 1.0,
+  frequency_penalty: 0.52,
+  presence_penalty: 0.5,
+  stop: ["4."]
+}, {
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer r ${process.env.OPENAI_API_KEY}`
+  }
+}).then(response => {
+
+  const result = response.data.choices[0].text.trim();
+  console.log(result);
+  const regex = /^\d+\.\s(.+)$/gm;
+const matches = result.matchAll(regex);
+const bookTitles = [];
+for (const match of matches) {
+  bookTitles.push(match[1].trimEnd());
+}
+  console.log(bookTitles);
+
+  const isbnPromises = bookTitles.map(title => {
+    return axios.get(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(title)}`)
+      .then(response => {
+        const book = response.data.items[0];
+        const isbn = book.volumeInfo.industryIdentifiers.find(identifier => identifier.type === 'ISBN_13').identifier;
+        return isbn;
+      })
+      .catch(error => {
+        console.log(`Error fetching ISBN for "${title}": ${error}`);
+        return null;
+      });
+  });
+  
+  Promise.all(isbnPromises)
+    .then(isbns => {
+      console.log(isbns);
+      res.send(isbns);
+    });
+  
+}).catch(error => {
+  console.log(error);
+  res.status(404).send("x");
+});
+
+});
 
 authRouter.put("/api/changeavatar/:username", async (req, res) => {
   //console.log(req.params["username"]+ req.body['url']);
@@ -436,9 +495,6 @@ authRouter.post("/api/createnloadChat", async (req, res) => {
         } else { res.send(null); }
       }
       );
-    // get the data from client, 
-    // post that data in db
-    // return that data to the user
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
