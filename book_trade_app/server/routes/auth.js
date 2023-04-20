@@ -213,7 +213,7 @@ axios.post('https://api.openai.com/v1/engines/text-davinci-003/completions', {
 }, {
   headers: {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer r ${process.env.OPENAI_API_KEY}`
+    'Authorization': `Bearer keyyy`
   }
 }).then(response => {
 

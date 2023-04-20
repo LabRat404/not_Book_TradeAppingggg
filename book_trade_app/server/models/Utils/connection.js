@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const { default: mongoose } = require('mongoose');
 const PORT = 3000;
 const app = express();
+const DB =
 
 dotenv.config();
 
