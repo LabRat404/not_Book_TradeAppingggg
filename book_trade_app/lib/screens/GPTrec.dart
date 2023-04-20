@@ -80,10 +80,8 @@ class _GPTRECPageState extends State<GPTRECPage> {
           'Content-Type': 'application/json; charset=UTF-8',
         });
     final Booklist = await json.decode(ress.body);
-    print(Booklist.toString());
+
     BookOfMonth = Booklist;
-    print(BookOfMonth);
-    print("hasdasdfasdad");
     for (var i = 0; i < BookOfMonth.length; i++) {
       var res = await http.post(
           //localhost
