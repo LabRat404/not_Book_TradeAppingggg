@@ -30,7 +30,6 @@ class _HomePageState extends State<HomePage> {
       String realusername = help.user.name;
       readJson(realusername);
     });
-    //loadBookData();
   }
 
   String myselff = '';
@@ -312,7 +311,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    //loadBookData();
     var username = context.watch<UserProvider>().user.name;
     return Scaffold(
       appBar: ReusableWidgets.LoginPageAppBar('Welcome Back! $username'),

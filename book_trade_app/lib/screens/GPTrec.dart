@@ -15,6 +15,18 @@ import 'dart:async';
 import 'package:trade_app/screens/chatter.dart';
 import 'package:trade_app/screens/tradeCreateList.dart';
 import 'package:trade_app/routes/ip.dart' as globals;
+import 'package:flutter/material.dart';
+import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
+import 'package:trade_app/widgets/reusable_widget.dart';
+import 'package:trade_app/provider/user_provider.dart';
+import 'package:provider/provider.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
+import 'dart:async';
+import 'package:trade_app/screens/chatter.dart';
+import 'package:trade_app/screens/tradeCreateList.dart';
+import 'package:trade_app/routes/ip.dart' as globals;
 
 var ipaddr = globals.ip;
 
@@ -24,8 +36,82 @@ class GPTRECPage extends StatefulWidget {
 }
 
 class _GPTRECPageState extends State<GPTRECPage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final help = Provider.of<UserProvider>(context, listen: false);
+      String realusername = help.user.name;
+      readJson(realusername);
+    });
+    //loadBookData();
+  }
+
   final TextEditingController _controller = TextEditingController();
   List<Map<String, dynamic>> _buttons = [];
+
+  String myselff = '';
+  late List _items = [];
+  // Fetch content from the json file
+  Future<void> readJson(realusername) async {
+    //load  the json here!!
+    //fetch here
+
+    http.Response resaa = await http.get(
+        Uri.parse('http://$ipaddr/api/grabrec/$realusername'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        });
+    //print(resaa);
+
+    final data = await json.decode(resaa.body);
+    setState(() {
+      _items = data;
+      myselff = realusername;
+    });
+  }
+
+  //I dont like this, its hard coding and I tried not to, but maybe will fix it later
+  Future<void> loadBookData() async {
+    List<String> BookOfMonth = [
+      "9781603095020",
+      "9781503519770",
+      "9781447220039",
+    ];
+
+    for (var i = 0; i < BookOfMonth.length; i++) {
+      var res = await http.post(
+          //localhost
+          //Uri.parse('http://172.20.10.3:3000/api/bookinfo'),
+          Uri.parse('http://$ipaddr/api/bookinfo'),
+          body: jsonEncode({"book_isbn": BookOfMonth[i]}),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          });
+      //print("res" + res.body);
+
+      final data1 = await json.decode(res.body);
+
+      String btitle = "Not found";
+      String bauthors = "Not found";
+      String binfoLink = "Not found";
+      String blink = "Not found";
+      if (data1["title"] != null) btitle = data1["title"].toString();
+      if (data1["authors"] != null) bauthors = data1["authors"].toString();
+      if (data1["infoLink"] != null) binfoLink = data1["infoLink"].toString();
+      if (data1["imageLinks"] != null)
+        blink = data1["imageLinks"]["smallThumbnail"].toString();
+      print(btitle);
+      setState(() {
+        _items[i]["googlelink"] = binfoLink;
+        _items[i]["url"] = blink;
+        _items[i]["title"] = btitle;
+        _items[i]["authors"] = bauthors;
+      });
+
+      print(_items.toString());
+    }
+  }
 
   void _addButton() {
     String text = _controller.text.trim();
@@ -107,7 +193,9 @@ class _GPTRECPageState extends State<GPTRECPage> {
                             ElevatedButton(
                               onPressed: entry.value['cooldown']
                                   ? null
-                                  : () {
+                                  : () async {
+                                      loadBookData();
+
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
                                         SnackBar(
@@ -162,75 +250,67 @@ class _GPTRECPageState extends State<GPTRECPage> {
                       )
                       .toList(),
                 ),
-                SizedBox(height: 20.0),
+                SizedBox(height: 5.0),
                 Text(
-                  "Click on the book to learn more! ",
+                  "Click on the books to learn more! ",
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 20.0),
+                SizedBox(height: 5.0),
                 ImageSlideshow(
                   indicatorColor: Colors.white,
-                  onPageChanged: (value) {},
+                  onPageChanged: (value) {
+                    //debugPrint('Page changed: $value');
+                  },
                   autoPlayInterval: 3000,
                   isLoop: true,
                   children: [
-                    TextButton.icon(
-                      style: ButtonStyle(backgroundColor: null),
-                      onPressed: () async {
-                        if (await canLaunchUrl(Uri.parse(
-                            "http://books.google.com.hk/books?id=ClWQEAAAQBAJ&dq=isbn:9781603095020&hl=&source=gbs_api"))) {
-                          launchUrl(Uri.parse(
-                              "http://books.google.com.hk/books?id=ClWQEAAAQBAJ&dq=isbn:9781603095020&hl=&source=gbs_api"));
-                        }
-                      },
-                      icon: Image.network(
-                          "http://books.google.com/books/content?id=ClWQEAAAQBAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api"),
-                      label: Text(
-                        'Animal Stories' + '\n' + 'By ' + 'Peter Hoey',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
+                    if (_items.isNotEmpty)
+                      for (int i = 0; i < _items.length; i++)
+                        Column(
+                          children: [
+                            TextButton.icon(
+                              style: ButtonStyle(backgroundColor: null),
+                              onPressed: () async {
+                                if (await canLaunchUrl(
+                                    Uri.parse(_items[i]["googlelink"]))) {
+                                  launchUrl(Uri.parse(_items[i]["googlelink"]));
+                                }
+                              },
+                              icon: Image.network(_items[i]["url"],
+                                  width: 120, height: 140, fit: BoxFit.fill),
+                              label: Text(
+                                _items[i]["booktitle"] +
+                                    '\n' +
+                                    'By ' +
+                                    _items[i]["author"],
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                    else
+                      TextButton.icon(
+                        style: ButtonStyle(backgroundColor: null),
+                        onPressed: () async {
+                          if (await canLaunchUrl(Uri.parse(
+                              "http://books.google.com.hk/books?id=AEO7bwAACAAJ&dq=isbn:9781406317848&hl=&source=gbs_api"))) {
+                            launchUrl(Uri.parse(
+                                "http://books.google.com.hk/books?id=AEO7bwAACAAJ&dq=isbn:9781406317848&hl=&source=gbs_api"));
+                          }
+                        },
+                        icon: Image.network(
+                            "http://books.google.com/books/content?id=AEO7bwAACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api"),
+                        label: Text(
+                          "Rosen's Sad Book" + '\n' + 'By ' + 'Michael Rosen',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ),
-                    TextButton.icon(
-                      style: ButtonStyle(backgroundColor: null),
-                      onPressed: () async {
-                        if (await canLaunchUrl(Uri.parse(
-                            "https://play.google.com/store/books/details?id=APbMBQAAQBAJ&source=gbs_api"))) {
-                          launchUrl(Uri.parse(
-                              "https://play.google.com/store/books/details?id=APbMBQAAQBAJ&source=gbs_api"));
-                        }
-                      },
-                      icon: Image.network(
-                          "http://books.google.com/books/content?id=APbMBQAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api"),
-                      label: Text(
-                        'La-La Land' + '\n' + 'By ' + 'Jean Thompson',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    TextButton.icon(
-                      style: ButtonStyle(backgroundColor: null),
-                      onPressed: () async {
-                        if (await canLaunchUrl(Uri.parse(
-                            "http://books.google.com.hk/books?id=f1CuuQAACAAJ&dq=isbn:9781447220039&hl=&source=gbs_api"))) {
-                          launchUrl(Uri.parse(
-                              "http://books.google.com.hk/books?id=f1CuuQAACAAJ&dq=isbn:9781447220039&hl=&source=gbs_api"));
-                        }
-                      },
-                      icon: Image.network(
-                          "http://books.google.com/books/content?id=f1CuuQAACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api"),
-                      label: Text(
-                        'Jaws' + '\n' + 'By ' + 'Peter Benchley',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
+                      )
                   ],
                 ),
                 Expanded(

@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 application
-INJECTED from /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/main/AndroidManifest.xml:3:4-34:19
+INJECTED from /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/main/AndroidManifest.xml:3:4-35:19
 MERGED from [:image_picker_android] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-19:19
 MERGED from [:image_picker_android] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-19:19
 MERGED from [:url_launcher_android] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-14:19
@@ -38,11 +38,11 @@ MERGED from [com.google.android.odml:image:1.0.0-beta1] /Users/tangjaii/.gradle/
 	android:name
 		INJECTED from /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/main/AndroidManifest.xml
 manifest
-ADDED from /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/main/AndroidManifest.xml:1:1-35:12
-INJECTED from /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/main/AndroidManifest.xml:1:1-35:12
-INJECTED from /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/main/AndroidManifest.xml:1:1-35:12
-INJECTED from /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/main/AndroidManifest.xml:1:1-35:12
-MERGED from /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/main/AndroidManifest.xml:1:1-35:12
+ADDED from /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/main/AndroidManifest.xml:1:1-43:12
+INJECTED from /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/main/AndroidManifest.xml:1:1-43:12
+INJECTED from /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/main/AndroidManifest.xml:1:1-43:12
+INJECTED from /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/main/AndroidManifest.xml:1:1-43:12
+MERGED from /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/main/AndroidManifest.xml:1:1-43:12
 MERGED from [:file_picker] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-19:12
 MERGED from [:image_picker_android] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-21:12
 MERGED from [:flutter_plugin_android_lifecycle] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/flutter_plugin_android_lifecycle/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
@@ -127,14 +127,32 @@ INJECTED from /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/
 		INJECTED from /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/debug/AndroidManifest.xml
 	android:versionName
 		INJECTED from /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/main/AndroidManifest.xml
-		ADDED from /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/main/AndroidManifest.xml:1:1-35:12
+		ADDED from /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/main/AndroidManifest.xml:1:1-43:12
 		INJECTED from /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/debug/AndroidManifest.xml
 	android:versionCode
 		INJECTED from /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/main/AndroidManifest.xml
-		ADDED from /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/main/AndroidManifest.xml:1:1-35:12
+		ADDED from /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/main/AndroidManifest.xml:1:1-43:12
 		INJECTED from /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/debug/AndroidManifest.xml
 	xmlns:android
 		ADDED from /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/main/AndroidManifest.xml:1:11-69
+queries
+ADDED from /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/main/AndroidManifest.xml:36:5-42:11
+MERGED from [:file_picker] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:11:5-17:15
+MERGED from [:file_picker] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:11:5-17:15
+intent#action:name:android.intent.action.VIEW+category:name:android.intent.category.BROWSABLE+data:scheme:https
+ADDED from /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/main/AndroidManifest.xml:37:5-41:14
+action#android.intent.action.VIEW
+ADDED from /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/main/AndroidManifest.xml:38:9-61
+	android:name
+		ADDED from /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/main/AndroidManifest.xml:38:17-58
+category#android.intent.category.BROWSABLE
+ADDED from /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/main/AndroidManifest.xml:39:9-70
+	android:name
+		ADDED from /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/main/AndroidManifest.xml:39:19-67
+data
+ADDED from /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/main/AndroidManifest.xml:40:9-40
+	android:scheme
+		ADDED from /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/main/AndroidManifest.xml:40:15-37
 uses-sdk
 INJECTED from /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/android/app/src/main/AndroidManifest.xml
@@ -309,18 +327,12 @@ uses-permission#android.permission.READ_EXTERNAL_STORAGE
 ADDED from [:file_picker] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-80
 	android:name
 		ADDED from [:file_picker] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:9:22-77
-queries
-ADDED from [:file_picker] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:11:5-17:15
 intent#action:name:android.intent.action.GET_CONTENT+data:mimeType:*/*
 ADDED from [:file_picker] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:12:9-16:18
 action#android.intent.action.GET_CONTENT
 ADDED from [:file_picker] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:13:13-72
 	android:name
 		ADDED from [:file_picker] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:13:21-69
-data
-ADDED from [:file_picker] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:15:13-44
-	android:mimeType
-		ADDED from [:file_picker] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:15:19-41
 provider#io.flutter.plugins.imagepicker.ImagePickerFileProvider
 ADDED from [:image_picker_android] /Users/tangjaii/Documents/GitHub/new_start/book_trade_app/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-18:20
 	android:grantUriPermissions

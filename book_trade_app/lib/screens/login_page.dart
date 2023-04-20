@@ -149,7 +149,7 @@ class _LoginPageState extends State<LoginPage> {
           children: <Widget>[
             SizedBox(height: 60.0),
             heading,
-            SizedBox(height: 75.0),
+            SizedBox(height: 45.0),
             //logo,
             bg,
             //slide,
