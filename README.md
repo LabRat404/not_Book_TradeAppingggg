@@ -1,8 +1,8 @@
 # new_start
-Aceecpted the fact yet still miss u QAQ, anyways love u <3\
+Aceecpted the fact yet still miss u QAQ, anyways love u <3
 
 The app is now available on testflight!\
-Email me if u wana join as a beta tester! ggwp12335@gmail.com\
+Email me if u wana join as a beta tester! ggwp12335@gmail.com
 
 
 To Do List (FE_Iron lol):
@@ -45,9 +45,9 @@ TradeShowList\
 Basicsetting page\
 Auto refresh(Abord)\
 On Testflight\
-Real useable app on apple Beta Test with 2 testers\
+Real useable app on apple Beta Test with 2 testers
 
 Self note: The security of this app is bad af :(\
-Image uploadpart shd be handled at node instead of client\
+Image uploadpart shd be handled at node instead of client
 
-Wish you all a good day!\
+Wish you all a good day!
